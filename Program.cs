@@ -16,7 +16,7 @@ namespace SSData
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmSSDataView());
+            Application.Run(new FrmMain());
         }
     }
 }

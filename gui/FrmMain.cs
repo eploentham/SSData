@@ -10,30 +10,14 @@ using System.Windows.Forms;
 
 namespace SSData
 {
-    public partial class FrmSSDataView : Form
+    public partial class FrmMain : Form
     {
         Boolean drag = false;
         Point startPoint = new Point(0, 0);
-        public FrmSSDataView()
+        public FrmMain()
         {
             InitializeComponent();
         }
-
-        private void FrmSSDataView_Resize(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void tile3_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void FrmSSDataView_KeyDown(object sender, KeyEventArgs e)
-        {
-            
-        }
-
         private void FrmSSDataView_MouseDown(object sender, MouseEventArgs e)
         {
             drag = true;
@@ -52,6 +36,11 @@ namespace SSData
         private void FrmSSDataView_MouseUp(object sender, MouseEventArgs e)
         {
             drag = false;
+        }
+
+        private void tilExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
