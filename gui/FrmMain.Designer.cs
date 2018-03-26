@@ -1,4 +1,6 @@
-﻿namespace SSData
+﻿using C1.Win.C1Themes;
+
+namespace SSData
 {
     partial class FrmMain
     {
@@ -74,12 +76,14 @@
             this.tilSSDataView.BackColor = System.Drawing.Color.LightCoral;
             this.tilSSDataView.Name = "tilSSDataView";
             this.tilSSDataView.Text = "ข้อมูลประจำเดือน";
+            this.tilSSDataView.Click += new System.EventHandler(this.tilSSDataView_Click);
             // 
             // tilSSDataAdd
             // 
             this.tilSSDataAdd.BackColor = System.Drawing.Color.Teal;
             this.tilSSDataAdd.Name = "tilSSDataAdd";
             this.tilSSDataAdd.Text = "ทำข้อมูลใหม่";
+            this.tilSSDataAdd.Click += new System.EventHandler(this.tilSSDataAdd_Click);
             // 
             // tilExit
             // 
@@ -124,7 +128,7 @@
         private C1.Win.C1Tile.Tile tilSSDataView;
         private C1.Win.C1Tile.Tile tilSSDataAdd;
         private C1.Win.C1Tile.Tile tilExit;
-        private C1.Win.C1Themes.C1ThemeController c1ThemeController1;
+        private C1ThemeController c1ThemeController1;
         private C1.Win.C1SuperTooltip.C1SuperTooltip c1SuperTooltip1;
     }
 }

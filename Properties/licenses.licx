@@ -1,5 +1,11 @@
-FarPoint.Win.Spread.FpSpread, FarPoint.Win.Spread, Version=11.40.20177.0, Culture=neutral, PublicKeyToken=327c3516b1b18457
 C1.Win.C1SuperTooltip.C1SuperLabel, C1.Win.C1SuperTooltip.2, Version=2.0.20173.282, Culture=neutral, PublicKeyToken=79882d576c6336da
-C1.Win.C1SuperTooltip.C1SuperTooltip, C1.Win.C1SuperTooltip.2, Version=2.0.20173.282, Culture=neutral, PublicKeyToken=79882d576c6336da
 C1.Win.C1Tile.C1TileControl, C1.Win.C1TileControl.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=79882d576c6336da
-C1.Win.C1Themes.C1ThemeController, C1.Win.C1Themes.2, Version=2.0.20173.282, Culture=neutral, PublicKeyToken=594a0605db190bb9
+
+FarPoint.Win.Spread.FpSpread, FarPoint.Win.Spread, Version=11.40.20177.0, Culture=neutral, PublicKeyToken=327c3516b1b18457
+C1.Win.C1Input.C1TextBox, C1.Win.C1Input.2, Version=2.0.20173.282, Culture=neutral, PublicKeyToken=7e7ff60f0c214f9a
+C1.Win.C1Input.C1Button, C1.Win.C1Input.2, Version=2.0.20173.282, Culture=neutral, PublicKeyToken=7e7ff60f0c214f9a
+C1.Win.C1SuperTooltip.C1SuperTooltip, C1.Win.C1SuperTooltip.2, Version=2.0.20173.282, Culture=neutral, PublicKeyToken=79882d576c6336da
+C1.Win.C1List.C1Combo, C1.Win.C1List.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=6b24f8f981dbd7bc
+C1.Win.C1Input.C1Label, C1.Win.C1Input.2, Version=2.0.20173.282, Culture=neutral, PublicKeyToken=7e7ff60f0c214f9a
+C1.Win.C1InputPanel.C1InputPanel, C1.Win.C1InputPanel.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=79882d576c6336da
+C1.Win.C1Themes.C1ThemeController, C1.Win.C1Themes.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=594a0605db190bb9
