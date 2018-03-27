@@ -14,7 +14,8 @@ namespace SSData.object1
         Random r = new Random();
         public String getGenID()
         {
-            return r.Next().ToString();
+            //return r.Next().ToString();
+            return DateTime.Now.Ticks.ToString();
         }
     }
 }

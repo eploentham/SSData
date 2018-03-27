@@ -30,7 +30,6 @@ namespace SSData
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             C1.Win.C1Tile.PanelElement panelElement1 = new C1.Win.C1Tile.PanelElement();
             C1.Win.C1Tile.ImageElement imageElement1 = new C1.Win.C1Tile.ImageElement();
             C1.Win.C1Tile.TextElement textElement1 = new C1.Win.C1Tile.TextElement();
@@ -40,7 +39,7 @@ namespace SSData
             this.tilSSDataAdd = new C1.Win.C1Tile.Tile();
             this.tilExit = new C1.Win.C1Tile.Tile();
             this.c1ThemeController1 = new C1.Win.C1Themes.C1ThemeController();
-            this.c1SuperTooltip1 = new C1.Win.C1SuperTooltip.C1SuperTooltip(this.components);
+            this.tile1 = new C1.Win.C1Tile.Tile();
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,6 +69,7 @@ namespace SSData
             this.group1.Tiles.Add(this.tilSSDataView);
             this.group1.Tiles.Add(this.tilSSDataAdd);
             this.group1.Tiles.Add(this.tilExit);
+            this.group1.Tiles.Add(this.tile1);
             // 
             // tilSSDataView
             // 
@@ -96,10 +96,10 @@ namespace SSData
             // 
             this.c1ThemeController1.Theme = "Office2010Black";
             // 
-            // c1SuperTooltip1
+            // tile1
             // 
-            this.c1SuperTooltip1.Font = new System.Drawing.Font("Tahoma", 8F);
-            this.c1SuperTooltip1.RightToLeft = System.Windows.Forms.RightToLeft.Inherit;
+            this.tile1.Name = "tile1";
+            this.tile1.Text = "Drug Catalogue";
             // 
             // FrmMain
             // 
@@ -129,6 +129,6 @@ namespace SSData
         private C1.Win.C1Tile.Tile tilSSDataAdd;
         private C1.Win.C1Tile.Tile tilExit;
         private C1ThemeController c1ThemeController1;
-        private C1.Win.C1SuperTooltip.C1SuperTooltip c1SuperTooltip1;
+        private C1.Win.C1Tile.Tile tile1;
     }
 }

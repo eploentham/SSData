@@ -10,6 +10,7 @@ namespace SSData.object1
     {
         public String hostDBMainHIS = "", userDBMainHIS = "", passDBMainHIS = "", nameDBMainHIS = "", portDBMainHIS = "";
         public String hostDBSSData = "", userDBSSData = "", passDBSSData = "", nameDBSSData = "", portDBSSData = "";
-        
+
+        public String HCODE = "", branchId="";
     }
 }

@@ -1,4 +1,4 @@
-﻿using C1.Win.C1List;
+﻿
 using SSData.objdb;
 using SSData.object1;
 using System;
@@ -15,6 +15,7 @@ namespace SSData.control
         public InitConfig iniC;
         private IniFile iniF;
         public ConnectDB conn;
+        public MainHISDB mHisDB;
 
         public SSDataControl()
         {
@@ -37,6 +38,7 @@ namespace SSData.control
             iniC = new InitConfig();
             GetConfig();
             conn = new ConnectDB(iniC);
+            mHisDB = new MainHISDB(conn);
         }
         public void GetConfig()
         {
@@ -54,7 +56,10 @@ namespace SSData.control
             
             iniC.userDBMainHIS = iniF.Read("userDBMainHIS");
             iniC.userDBSSData = iniF.Read("userDBSSData");
-            
+
+            iniC.HCODE = iniF.Read("HCODE");
+            iniC.branchId = iniF.Read("branch_id");
+
         }
         public String getValueCboItem(ComboBox c)
         {
@@ -69,23 +74,51 @@ namespace SSData.control
                 return iSale.Value;
             }
         }
-        public C1Combo setCboYear(C1Combo c)
+        public ComboBox setCboYear(ComboBox c)
         {
-            c.ClearItems();
-            c.AddItem(DateTime.Now.Year.ToString());
-            c.AddItem(String.Concat(DateTime.Now.Year-1));
-            c.AddItem(String.Concat(DateTime.Now.Year-2));
-            //c.Items.Clear();
-            //c.Items.Add(System.DateTime.Now.Year + 543);
-            //c.Items.Add(System.DateTime.Now.Year + 543 - 1);
-            //c.Items.Add(System.DateTime.Now.Year + 543 - 2);
-            //c.SelectedIndex = c.FindStringExact(String.Concat(System.DateTime.Now.Year + 543));
+            c.Items.Clear();
+            c.Items.Add(System.DateTime.Now.Year);
+            c.Items.Add(System.DateTime.Now.Year - 1);
+            c.Items.Add(System.DateTime.Now.Year - 2);
+            c.SelectedIndex = c.FindStringExact(String.Concat(System.DateTime.Now.Year));
             return c;
         }
-        public C1Combo setCboMonth(C1Combo c)
+        public String datetoDB(object dt)
         {
-            c.ClearItems();
-            //c.Items.Clear();
+            DateTime dt1 = new DateTime();
+            try
+            {
+                if (dt == null)
+                {
+                    return "";
+                }
+                else if (dt == "")
+                {
+                    return "";
+                }
+                else
+                {
+                    dt1 = DateTime.Parse(dt.ToString());
+                    if (dt1.Year <= 1500)
+                    {
+                        return String.Concat((dt1.Year), "-") + dt1.Month.ToString("00") + "-" + dt1.Day.ToString("00");
+                    }
+                    else
+                    {
+                        return dt1.Year.ToString() + "-" + dt1.Month.ToString("00") + "-" + dt1.Day.ToString("00");
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        public ComboBox setCboMonth(ComboBox c)
+        {
+            //c.ClearItems();
+            c.Items.Clear();
             var items = new[]{
                 new{Text = "มกราคม", Value="01"},
                 new{Text = "กุมภาพันธ์", Value="02"},
@@ -161,40 +194,7 @@ namespace SSData.control
             {
                 return "";
             }
-        }
-        public String datetoDB(object dt)
-        {
-            DateTime dt1 = new DateTime();
-            try
-            {
-                if (dt == null)
-                {
-                    return "";
-                }
-                else if (dt == "")
-                {
-                    return "";
-                }
-                else
-                {
-                    dt1 = DateTime.Parse(dt.ToString());
-                    if (dt1.Year <= 1500)
-                    {
-                        return String.Concat((dt1.Year + 543), "-") + dt1.Month.ToString("00") + "-" + dt1.Day.ToString("00");
-                    }
-                    else
-                    {
-                        return dt1.Year.ToString() + "-" + dt1.Month.ToString("00") + "-" + dt1.Day.ToString("00");
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-
-        }
+        }        
         public String dateDBtoShow(String dt)
         {
             if (dt != "")

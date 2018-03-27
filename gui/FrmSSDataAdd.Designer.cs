@@ -30,9 +30,10 @@ namespace SSData
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSSDataAdd));
             this.c1ThemeController1 = new C1.Win.C1Themes.C1ThemeController();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cboMonth = new System.Windows.Forms.ComboBox();
+            this.cboYear = new System.Windows.Forms.ComboBox();
             this.btnOk = new C1.Win.C1Input.C1Button();
             this.btnView = new C1.Win.C1Input.C1Button();
             this.pB1 = new System.Windows.Forms.ProgressBar();
@@ -48,9 +49,7 @@ namespace SSData
             this.c1Button1 = new C1.Win.C1Input.C1Button();
             this.c1Button2 = new C1.Win.C1Input.C1Button();
             this.txtCnt = new C1.Win.C1Input.C1TextBox();
-            this.cboYear = new C1.Win.C1List.C1Combo();
             this.label3 = new System.Windows.Forms.Label();
-            this.cboMonth = new C1.Win.C1List.C1Combo();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -79,8 +78,6 @@ namespace SSData
             ((System.ComponentModel.ISupportInitialize)(this.c1Button1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.c1Button2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCnt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboYear)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboMonth)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.c1TextBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnPath)).BeginInit();
@@ -90,14 +87,14 @@ namespace SSData
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.groupBox1.Controls.Add(this.cboMonth);
+            this.groupBox1.Controls.Add(this.cboYear);
             this.groupBox1.Controls.Add(this.btnOk);
             this.groupBox1.Controls.Add(this.btnView);
             this.groupBox1.Controls.Add(this.pB1);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.txtCnt);
-            this.groupBox1.Controls.Add(this.cboYear);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.cboMonth);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
@@ -109,6 +106,28 @@ namespace SSData
             this.groupBox1.Text = "เตรียมข้อมูล";
             this.c1ThemeController1.SetTheme(this.groupBox1, "Office2007Blue");
             // 
+            // cboMonth
+            // 
+            this.cboMonth.BackColor = System.Drawing.Color.White;
+            this.cboMonth.ForeColor = System.Drawing.Color.Black;
+            this.cboMonth.FormattingEnabled = true;
+            this.cboMonth.Location = new System.Drawing.Point(124, 35);
+            this.cboMonth.Name = "cboMonth";
+            this.cboMonth.Size = new System.Drawing.Size(121, 21);
+            this.cboMonth.TabIndex = 26;
+            this.c1ThemeController1.SetTheme(this.cboMonth, "(default)");
+            // 
+            // cboYear
+            // 
+            this.cboYear.BackColor = System.Drawing.Color.White;
+            this.cboYear.ForeColor = System.Drawing.Color.Black;
+            this.cboYear.FormattingEnabled = true;
+            this.cboYear.Location = new System.Drawing.Point(364, 35);
+            this.cboYear.Name = "cboYear";
+            this.cboYear.Size = new System.Drawing.Size(121, 21);
+            this.cboYear.TabIndex = 25;
+            this.c1ThemeController1.SetTheme(this.cboYear, "(default)");
+            // 
             // btnOk
             // 
             this.btnOk.Location = new System.Drawing.Point(724, 23);
@@ -119,6 +138,7 @@ namespace SSData
             this.c1ThemeController1.SetTheme(this.btnOk, "Office2007Blue");
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnView
             // 
@@ -289,33 +309,6 @@ namespace SSData
             this.c1ThemeController1.SetTheme(this.txtCnt, "Office2007Blue");
             this.txtCnt.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
             // 
-            // cboYear
-            // 
-            this.cboYear.AddItemSeparator = ';';
-            this.cboYear.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cboYear.Caption = "";
-            this.cboYear.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.cboYear.DeadAreaBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.cboYear.EditorBackColor = System.Drawing.Color.White;
-            this.cboYear.EditorFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboYear.EditorForeColor = System.Drawing.Color.Black;
-            this.cboYear.FlatStyle = C1.Win.C1List.FlatModeEnum.Flat;
-            this.cboYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboYear.Images.Add(((System.Drawing.Image)(resources.GetObject("cboYear.Images"))));
-            this.cboYear.Location = new System.Drawing.Point(387, 35);
-            this.cboYear.MatchEntryTimeout = ((long)(2000));
-            this.cboYear.MaxDropDownItems = ((short)(5));
-            this.cboYear.MaxLength = 32767;
-            this.cboYear.MouseCursor = System.Windows.Forms.Cursors.Default;
-            this.cboYear.Name = "cboYear";
-            this.cboYear.RowDivider.Style = C1.Win.C1List.LineStyleEnum.None;
-            this.cboYear.RowSubDividerColor = System.Drawing.Color.DarkGray;
-            this.cboYear.Size = new System.Drawing.Size(121, 19);
-            this.cboYear.TabIndex = 11;
-            this.cboYear.Text = "c1Combo2";
-            this.c1ThemeController1.SetTheme(this.cboYear, "Office2007Blue");
-            this.cboYear.PropBag = resources.GetString("cboYear.PropBag");
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -327,33 +320,6 @@ namespace SSData
             this.label3.TabIndex = 10;
             this.label3.Text = "ประจำปี :";
             this.c1ThemeController1.SetTheme(this.label3, "Office2007Blue");
-            // 
-            // cboMonth
-            // 
-            this.cboMonth.AddItemSeparator = ';';
-            this.cboMonth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cboMonth.Caption = "";
-            this.cboMonth.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.cboMonth.DeadAreaBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.cboMonth.EditorBackColor = System.Drawing.Color.White;
-            this.cboMonth.EditorFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboMonth.EditorForeColor = System.Drawing.Color.Black;
-            this.cboMonth.FlatStyle = C1.Win.C1List.FlatModeEnum.Flat;
-            this.cboMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboMonth.Images.Add(((System.Drawing.Image)(resources.GetObject("cboMonth.Images"))));
-            this.cboMonth.Location = new System.Drawing.Point(124, 35);
-            this.cboMonth.MatchEntryTimeout = ((long)(2000));
-            this.cboMonth.MaxDropDownItems = ((short)(5));
-            this.cboMonth.MaxLength = 32767;
-            this.cboMonth.MouseCursor = System.Windows.Forms.Cursors.Default;
-            this.cboMonth.Name = "cboMonth";
-            this.cboMonth.RowDivider.Style = C1.Win.C1List.LineStyleEnum.None;
-            this.cboMonth.RowSubDividerColor = System.Drawing.Color.DarkGray;
-            this.cboMonth.Size = new System.Drawing.Size(121, 19);
-            this.cboMonth.TabIndex = 9;
-            this.cboMonth.Text = "c1Combo1";
-            this.c1ThemeController1.SetTheme(this.cboMonth, "Office2007Blue");
-            this.cboMonth.PropBag = resources.GetString("cboMonth.PropBag");
             // 
             // label2
             // 
@@ -533,8 +499,6 @@ namespace SSData
             ((System.ComponentModel.ISupportInitialize)(this.c1Button1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.c1Button2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCnt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboYear)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboMonth)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.c1TextBox4)).EndInit();
@@ -549,9 +513,7 @@ namespace SSData
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private C1.Win.C1List.C1Combo cboYear;
         private System.Windows.Forms.Label label3;
-        private C1.Win.C1List.C1Combo cboMonth;
         private C1.Win.C1Input.C1TextBox txtCnt;
         private System.Windows.Forms.GroupBox groupBox2;
         private C1.Win.C1Input.C1TextBox txtEmail2;
@@ -576,7 +538,9 @@ namespace SSData
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label9;        
+        private System.Windows.Forms.ComboBox cboMonth;
+        private System.Windows.Forms.ComboBox cboYear;
     }
 }
 
