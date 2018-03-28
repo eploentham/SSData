@@ -66,6 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="control\SSDataControl.cs" />
+    <Compile Include="gui\FrmDrugCatalogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gui\FrmDrugCatalogue.Designer.cs">
+      <DependentUpon>FrmDrugCatalogue.cs</DependentUpon>
+    </Compile>
     <Compile Include="gui\FrmSSDataAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,10 +90,12 @@
     <Compile Include="gui\FrmSSDataView.Designer.cs">
       <DependentUpon>FrmSSDataView.cs</DependentUpon>
     </Compile>
+    <Compile Include="objdb\BDrugCatalogueDB.cs" />
     <Compile Include="objdb\ConnectDB.cs" />
     <Compile Include="objdb\MainHISDB.cs" />
     <Compile Include="objdb\TSsdataDB.cs" />
     <Compile Include="objdb\TSsdataVisitDB.cs" />
+    <Compile Include="object1\BDrugCatalogue.cs" />
     <Compile Include="object1\ComboBoxItem.cs" />
     <Compile Include="object1\IniFile.cs" />
     <Compile Include="object1\InitConfig.cs" />
@@ -97,6 +105,9 @@
     <Compile Include="object1\Visit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="gui\FrmDrugCatalogue.resx">
+      <DependentUpon>FrmDrugCatalogue.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="gui\FrmSSDataAdd.resx">
       <DependentUpon>FrmSSDataAdd.cs</DependentUpon>
     </EmbeddedResource>

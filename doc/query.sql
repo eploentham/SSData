@@ -1,9 +1,9 @@
-declare @TableName sysname = '<EnterTableName>'
+declare @TableName sysname = 'b_drugcatalogue'
     declare @Result varchar(max) = 'public class ' + @TableName + '
     {'
 
     select @Result = @Result + '
-        public static string ' + ColumnName + ' { get { return "'+ColumnName+'"; } }
+        public String ' + ColumnName + ' { get; set; }
     '
     from
     (

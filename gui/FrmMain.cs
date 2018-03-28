@@ -78,5 +78,12 @@ namespace SSData
             frm.Show(this);
             this.Hide();
         }
+
+        private void tile1_Click(object sender, EventArgs e)
+        {
+            FrmDrugCatalogue frm = new FrmDrugCatalogue(sC, this);
+            frm.Show(this);
+            this.Hide();
+        }
     }
 }

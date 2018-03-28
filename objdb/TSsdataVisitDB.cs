@@ -15,6 +15,10 @@ namespace SSData.objdb
         public TSsdataVisitDB(ConnectDB c)
         {
             conn = c;
+            initConfig();
+        }
+        private void initConfig()
+        {
             ssdV = new TSsdataVisit();
             ssdV.birth_day = "birth_day";
             ssdV.branch_id = "branch_id";

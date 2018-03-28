@@ -38,8 +38,8 @@ namespace SSData
             this.tilSSDataView = new C1.Win.C1Tile.Tile();
             this.tilSSDataAdd = new C1.Win.C1Tile.Tile();
             this.tilExit = new C1.Win.C1Tile.Tile();
-            this.c1ThemeController1 = new C1.Win.C1Themes.C1ThemeController();
             this.tile1 = new C1.Win.C1Tile.Tile();
+            this.c1ThemeController1 = new C1.Win.C1Themes.C1ThemeController();
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,14 +92,15 @@ namespace SSData
             this.tilExit.Text = "ออกจากโปรแกรม";
             this.tilExit.Click += new System.EventHandler(this.tilExit_Click);
             // 
-            // c1ThemeController1
-            // 
-            this.c1ThemeController1.Theme = "Office2010Black";
-            // 
             // tile1
             // 
             this.tile1.Name = "tile1";
             this.tile1.Text = "Drug Catalogue";
+            this.tile1.Click += new System.EventHandler(this.tile1_Click);
+            // 
+            // c1ThemeController1
+            // 
+            this.c1ThemeController1.Theme = "Office2010Black";
             // 
             // FrmMain
             // 
