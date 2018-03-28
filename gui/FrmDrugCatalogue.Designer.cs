@@ -31,16 +31,17 @@
             this.grdView = new FarPoint.Win.Spread.FpSpread();
             this.grdView_Sheet1 = new FarPoint.Win.Spread.SheetView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnBrowe = new C1.Win.C1Input.C1Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnOk = new C1.Win.C1Input.C1Button();
             this.c1ThemeController1 = new C1.Win.C1Themes.C1ThemeController();
-            this.label1 = new System.Windows.Forms.Label();
-            this.c1Button1 = new C1.Win.C1Input.C1Button();
+            this.excel = new C1.C1Excel.C1XLBook();
             ((System.ComponentModel.ISupportInitialize)(this.grdView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnBrowe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.c1Button1)).BeginInit();
             this.SuspendLayout();
             // 
             // grdView
@@ -61,7 +62,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(232)))), ((int)(((byte)(190)))));
-            this.groupBox1.Controls.Add(this.c1Button1);
+            this.groupBox1.Controls.Add(this.btnBrowe);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btnOk);
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(93)))), ((int)(((byte)(5)))));
@@ -73,16 +74,17 @@
             this.groupBox1.Text = "groupBox1";
             this.c1ThemeController1.SetTheme(this.groupBox1, "Office2010Green");
             // 
-            // btnOk
+            // btnBrowe
             // 
-            this.btnOk.Location = new System.Drawing.Point(590, 19);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(118, 37);
-            this.btnOk.TabIndex = 25;
-            this.btnOk.Text = "นำเข้า";
-            this.c1ThemeController1.SetTheme(this.btnOk, "Office2010Green");
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnBrowe.Location = new System.Drawing.Point(79, 19);
+            this.btnBrowe.Name = "btnBrowe";
+            this.btnBrowe.Size = new System.Drawing.Size(48, 37);
+            this.btnBrowe.TabIndex = 27;
+            this.btnBrowe.Text = "...";
+            this.c1ThemeController1.SetTheme(this.btnBrowe, "Office2010Green");
+            this.btnBrowe.UseVisualStyleBackColor = true;
+            this.btnBrowe.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnBrowe.Click += new System.EventHandler(this.btnBrowe_Click);
             // 
             // label1
             // 
@@ -96,16 +98,16 @@
             this.label1.Text = "นำเข้าข้อมูล :";
             this.c1ThemeController1.SetTheme(this.label1, "Office2010Green");
             // 
-            // c1Button1
+            // btnOk
             // 
-            this.c1Button1.Location = new System.Drawing.Point(79, 19);
-            this.c1Button1.Name = "c1Button1";
-            this.c1Button1.Size = new System.Drawing.Size(48, 37);
-            this.c1Button1.TabIndex = 27;
-            this.c1Button1.Text = "...";
-            this.c1ThemeController1.SetTheme(this.c1Button1, "Office2010Green");
-            this.c1Button1.UseVisualStyleBackColor = true;
-            this.c1Button1.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnOk.Location = new System.Drawing.Point(590, 19);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(118, 37);
+            this.btnOk.TabIndex = 25;
+            this.btnOk.Text = "นำเข้า";
+            this.c1ThemeController1.SetTheme(this.btnOk, "Office2010Green");
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
             // 
             // FrmDrugCatalogue
             // 
@@ -126,9 +128,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnBrowe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.c1Button1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -141,6 +143,7 @@
         private C1.Win.C1Input.C1Button btnOk;
         private C1.Win.C1Themes.C1ThemeController c1ThemeController1;
         private System.Windows.Forms.Label label1;
-        private C1.Win.C1Input.C1Button c1Button1;
+        private C1.Win.C1Input.C1Button btnBrowe;
+        private C1.C1Excel.C1XLBook excel;
     }
 }

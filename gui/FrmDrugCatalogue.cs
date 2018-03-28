@@ -1,4 +1,5 @@
-﻿using SSData.control;
+﻿using C1.C1Excel;
+using SSData.control;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +17,7 @@ namespace SSData.gui
         Form par;
         SSDataControl sC;
         int colCode = 0, colProd = 1, colTmt = 2, colSpec = 3, colGene = 4, colTrad = 5, colDfs = 6, colDos = 7, colStr = 8, colCont = 9;
-        int colDist=10, colManu=11, colIsed=12, colNdc=13, colUnitS=14, colUnitP=15, colUpF=16, colDatC=17, colDatU=18, colDatE=19, colID=20;
+        int colDist =10, colManu=11, colIsed=12, colNdc=13, colUnitS=14, colUnitP=15, colUpF=16, colDatC=17, colDatU=18, colDatE=19, colID=20;
 
         public FrmDrugCatalogue(SSDataControl sc, Form par1)
         {
@@ -32,6 +33,23 @@ namespace SSData.gui
         private void FrmDrugCatalogue_Load(object sender, EventArgs e)
         {
 
+        }
+        private void btnBrowe_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.DefaultExt = "xls";
+            dlg.FileName = "*.xls";
+            if (dlg.ShowDialog() != DialogResult.OK)
+                return;
+            // clear everything
+            excel.Clear();
+            foreach (XLSheet sheet in excel.Sheets)
+            {
+                LoadSheet(sheet);
+            }
+
+            // load book
+            excel.Load(dlg.FileName);
         }
         private void setGrdViewH()
         {
@@ -123,6 +141,28 @@ namespace SSData.gui
             grdView.Sheets[0].Columns[0].CellType = objNumCell;
             grdView.Sheets[0].Columns[1].CellType = datecell;
             grdView.Sheets[0].Columns[2].CellType = ctest;
+        }
+        private void LoadSheet(XLSheet sheet)
+        {
+            // load cells
+            for (int r = 0; r < sheet.Rows.Count; r++)
+            {
+                for (int c = 0; c < sheet.Columns.Count; c++)
+                {
+                    // get cell
+                    XLCell cell = sheet.GetCell(r, c);
+                    if (cell == null) continue;
+
+                    // apply content
+                    //flex[r + frows, c + fcols] = cell.Value;
+                    grdView.Sheets[0].SetText(r, c, cell.Value.ToString());
+
+                    // apply style
+                    ////CellStyle cs = StyleFromExcel(flex, cell.Style);
+                    ////if (cs != null)
+                    ////    flex.SetCellStyle(r + frows, c + fcols, cs);
+                }
+            }
         }
         private void setResize()
         {
