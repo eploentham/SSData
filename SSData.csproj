@@ -38,6 +38,7 @@
     <Reference Include="C1.Win.Bitmap.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=944ae1ea0e47ca04" />
     <Reference Include="C1.Win.C1Command.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=e808566f358766d8, processorArchitecture=MSIL" />
     <Reference Include="C1.Win.C1Input.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=7e7ff60f0c214f9a, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1Ribbon.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
     <Reference Include="C1.Win.C1Themes.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=594a0605db190bb9, processorArchitecture=MSIL" />
     <Reference Include="C1.Win.C1TileControl.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
     <Reference Include="FarPoint.CalcEngine, Version=11.40.20177.0, Culture=neutral, PublicKeyToken=327c3516b1b18457" />
@@ -87,6 +88,12 @@
     <Compile Include="gui\FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="gui\FrmSSDataTextEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gui\FrmSSDataTextEdit.Designer.cs">
+      <DependentUpon>FrmSSDataTextEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="gui\FrmSSDataView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +124,9 @@
     <EmbeddedResource Include="gui\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="gui\FrmSSDataTextEdit.resx">
+      <DependentUpon>FrmSSDataTextEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="gui\FrmSSDataView.resx">
       <DependentUpon>FrmSSDataView.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,6 +139,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -143,6 +154,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Pinned.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Unpinned.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

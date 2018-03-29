@@ -62,6 +62,17 @@ namespace SSData
             this.label4 = new System.Windows.Forms.Label();
             this.btnGen = new C1.Win.C1Input.C1Button();
             this.pB2 = new System.Windows.Forms.ProgressBar();
+            this.c1Button9 = new C1.Win.C1Input.C1Button();
+            this.c1Button10 = new C1.Win.C1Input.C1Button();
+            this.btnOpenOPS = new C1.Win.C1Input.C1Button();
+            this.btnOpenBD = new C1.Win.C1Input.C1Button();
+            this.btnOpenBT = new C1.Win.C1Input.C1Button();
+            this.c1TextBox1 = new C1.Win.C1Input.C1TextBox();
+            this.c1TextBox2 = new C1.Win.C1Input.C1TextBox();
+            this.c1TextBox3 = new C1.Win.C1Input.C1TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnOk)).BeginInit();
@@ -82,6 +93,14 @@ namespace SSData
             ((System.ComponentModel.ISupportInitialize)(this.c1TextBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnGen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1Button9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1Button10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpenOPS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpenBD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpenBT)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1TextBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1TextBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1TextBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -348,6 +367,17 @@ namespace SSData
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.c1TextBox3);
+            this.groupBox3.Controls.Add(this.c1TextBox2);
+            this.groupBox3.Controls.Add(this.c1TextBox1);
+            this.groupBox3.Controls.Add(this.btnOpenOPS);
+            this.groupBox3.Controls.Add(this.btnOpenBD);
+            this.groupBox3.Controls.Add(this.btnOpenBT);
+            this.groupBox3.Controls.Add(this.c1Button10);
+            this.groupBox3.Controls.Add(this.c1Button9);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.label8);
@@ -452,11 +482,11 @@ namespace SSData
             // 
             // btnGen
             // 
-            this.btnGen.Location = new System.Drawing.Point(761, 19);
+            this.btnGen.Location = new System.Drawing.Point(477, 92);
             this.btnGen.Name = "btnGen";
-            this.btnGen.Size = new System.Drawing.Size(89, 37);
+            this.btnGen.Size = new System.Drawing.Size(126, 37);
             this.btnGen.TabIndex = 25;
-            this.btnGen.Text = "gen data";
+            this.btnGen.Text = "gen XML BillTran";
             this.c1ThemeController1.SetTheme(this.btnGen, "Office2007Blue");
             this.btnGen.UseVisualStyleBackColor = true;
             this.btnGen.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
@@ -467,6 +497,140 @@ namespace SSData
             this.pB2.Name = "pB2";
             this.pB2.Size = new System.Drawing.Size(844, 23);
             this.pB2.TabIndex = 19;
+            // 
+            // c1Button9
+            // 
+            this.c1Button9.Location = new System.Drawing.Point(477, 153);
+            this.c1Button9.Name = "c1Button9";
+            this.c1Button9.Size = new System.Drawing.Size(126, 37);
+            this.c1Button9.TabIndex = 33;
+            this.c1Button9.Text = "gen XML BillDisp";
+            this.c1ThemeController1.SetTheme(this.c1Button9, "Office2007Blue");
+            this.c1Button9.UseVisualStyleBackColor = true;
+            this.c1Button9.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // c1Button10
+            // 
+            this.c1Button10.Location = new System.Drawing.Point(477, 217);
+            this.c1Button10.Name = "c1Button10";
+            this.c1Button10.Size = new System.Drawing.Size(126, 37);
+            this.c1Button10.TabIndex = 34;
+            this.c1Button10.Text = "gen XML OPServices";
+            this.c1ThemeController1.SetTheme(this.c1Button10, "Office2007Blue");
+            this.c1Button10.UseVisualStyleBackColor = true;
+            this.c1Button10.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // btnOpenOPS
+            // 
+            this.btnOpenOPS.Location = new System.Drawing.Point(652, 217);
+            this.btnOpenOPS.Name = "btnOpenOPS";
+            this.btnOpenOPS.Size = new System.Drawing.Size(139, 37);
+            this.btnOpenOPS.TabIndex = 37;
+            this.btnOpenOPS.Text = "open XML OPServices";
+            this.c1ThemeController1.SetTheme(this.btnOpenOPS, "Office2007Blue");
+            this.btnOpenOPS.UseVisualStyleBackColor = true;
+            this.btnOpenOPS.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // btnOpenBD
+            // 
+            this.btnOpenBD.Location = new System.Drawing.Point(652, 153);
+            this.btnOpenBD.Name = "btnOpenBD";
+            this.btnOpenBD.Size = new System.Drawing.Size(139, 37);
+            this.btnOpenBD.TabIndex = 36;
+            this.btnOpenBD.Text = "open XML BillDisp";
+            this.c1ThemeController1.SetTheme(this.btnOpenBD, "Office2007Blue");
+            this.btnOpenBD.UseVisualStyleBackColor = true;
+            this.btnOpenBD.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // btnOpenBT
+            // 
+            this.btnOpenBT.Location = new System.Drawing.Point(652, 92);
+            this.btnOpenBT.Name = "btnOpenBT";
+            this.btnOpenBT.Size = new System.Drawing.Size(139, 37);
+            this.btnOpenBT.TabIndex = 35;
+            this.btnOpenBT.Text = "open XML BillTran";
+            this.c1ThemeController1.SetTheme(this.btnOpenBT, "Office2007Blue");
+            this.btnOpenBT.UseVisualStyleBackColor = true;
+            this.btnOpenBT.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnOpenBT.Click += new System.EventHandler(this.btnOpenBT_Click);
+            // 
+            // c1TextBox1
+            // 
+            this.c1TextBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(147)))), ((int)(((byte)(207)))));
+            this.c1TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.c1TextBox1.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.c1TextBox1.Location = new System.Drawing.Point(285, 102);
+            this.c1TextBox1.Name = "c1TextBox1";
+            this.c1TextBox1.Size = new System.Drawing.Size(186, 18);
+            this.c1TextBox1.TabIndex = 38;
+            this.c1TextBox1.Tag = null;
+            this.c1ThemeController1.SetTheme(this.c1TextBox1, "Office2007Blue");
+            this.c1TextBox1.Value = "email address";
+            this.c1TextBox1.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // c1TextBox2
+            // 
+            this.c1TextBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(147)))), ((int)(((byte)(207)))));
+            this.c1TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.c1TextBox2.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.c1TextBox2.Location = new System.Drawing.Point(285, 163);
+            this.c1TextBox2.Name = "c1TextBox2";
+            this.c1TextBox2.Size = new System.Drawing.Size(186, 18);
+            this.c1TextBox2.TabIndex = 39;
+            this.c1TextBox2.Tag = null;
+            this.c1ThemeController1.SetTheme(this.c1TextBox2, "Office2007Blue");
+            this.c1TextBox2.Value = "email address";
+            this.c1TextBox2.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // c1TextBox3
+            // 
+            this.c1TextBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(147)))), ((int)(((byte)(207)))));
+            this.c1TextBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.c1TextBox3.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.c1TextBox3.Location = new System.Drawing.Point(285, 227);
+            this.c1TextBox3.Name = "c1TextBox3";
+            this.c1TextBox3.Size = new System.Drawing.Size(186, 18);
+            this.c1TextBox3.TabIndex = 40;
+            this.c1TextBox3.Tag = null;
+            this.c1ThemeController1.SetTheme(this.c1TextBox3, "Office2007Blue");
+            this.c1TextBox3.Value = "email address";
+            this.c1TextBox3.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(215, 104);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(52, 13);
+            this.label5.TabIndex = 41;
+            this.label5.Text = "filename :";
+            this.c1ThemeController1.SetTheme(this.label5, "Office2007Blue");
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label7.ForeColor = System.Drawing.Color.Black;
+            this.label7.Location = new System.Drawing.Point(215, 165);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(52, 13);
+            this.label7.TabIndex = 42;
+            this.label7.Text = "filename :";
+            this.c1ThemeController1.SetTheme(this.label7, "Office2007Blue");
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label11.ForeColor = System.Drawing.Color.Black;
+            this.label11.Location = new System.Drawing.Point(215, 229);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(52, 13);
+            this.label11.TabIndex = 43;
+            this.label11.Text = "filename :";
+            this.c1ThemeController1.SetTheme(this.label11, "Office2007Blue");
             // 
             // FrmSSDataAdd
             // 
@@ -504,6 +668,14 @@ namespace SSData
             ((System.ComponentModel.ISupportInitialize)(this.c1TextBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnPath)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnGen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1Button9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1Button10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpenOPS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpenBD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpenBT)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1TextBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1TextBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1TextBox3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -541,6 +713,17 @@ namespace SSData
         private System.Windows.Forms.Label label9;        
         private System.Windows.Forms.ComboBox cboMonth;
         private System.Windows.Forms.ComboBox cboYear;
+        private C1.Win.C1Input.C1Button c1Button10;
+        private C1.Win.C1Input.C1Button c1Button9;
+        private C1.Win.C1Input.C1TextBox c1TextBox3;
+        private C1.Win.C1Input.C1TextBox c1TextBox2;
+        private C1.Win.C1Input.C1TextBox c1TextBox1;
+        private C1.Win.C1Input.C1Button btnOpenOPS;
+        private C1.Win.C1Input.C1Button btnOpenBD;
+        private C1.Win.C1Input.C1Button btnOpenBT;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label5;
     }
 }
 

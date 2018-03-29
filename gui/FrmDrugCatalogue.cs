@@ -18,6 +18,7 @@ namespace SSData.gui
         SSDataControl sC;
         int colCode = 0, colProd = 1, colTmt = 2, colSpec = 3, colGene = 4, colTrad = 5, colDfs = 6, colDos = 7, colStr = 8, colCont = 9;
         int colDist =10, colManu=11, colIsed=12, colNdc=13, colUnitS=14, colUnitP=15, colUpF=16, colDatC=17, colDatU=18, colDatE=19, colID=20;
+        int conCnt = 21;
 
         public FrmDrugCatalogue(SSDataControl sc, Form par1)
         {
@@ -29,6 +30,7 @@ namespace SSData.gui
             sC = sc;
             par = par1;
             setGrdViewH();
+            setGrdViewH1();
         }
         private void FrmDrugCatalogue_Load(object sender, EventArgs e)
         {
@@ -39,17 +41,18 @@ namespace SSData.gui
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.DefaultExt = "xls";
             dlg.FileName = "*.xls";
-            if (dlg.ShowDialog() != DialogResult.OK)
-                return;
-            // clear everything
-            excel.Clear();
-            foreach (XLSheet sheet in excel.Sheets)
+            if (dlg.ShowDialog() == DialogResult.OK)
             {
-                LoadSheet(sheet);
+                // clear everything
+                excel.Clear();
+                excel.Load(dlg.FileName);
+                foreach (XLSheet sheet in excel.Sheets)
+                {
+                    LoadSheet(sheet);
+                }
+                // load book
+                
             }
-
-            // load book
-            excel.Load(dlg.FileName);
         }
         private void setGrdViewH()
         {
@@ -76,6 +79,8 @@ namespace SSData.gui
             datecell.DateTimeFormat = FarPoint.Win.Spread.CellType.DateTimeFormat.ShortDateWithTime;
 
             FarPoint.Win.Spread.CellType.CurrencyCellType ctest = new FarPoint.Win.Spread.CellType.CurrencyCellType();
+            FarPoint.Win.Spread.CellType.TextCellType objTextCell = new FarPoint.Win.Spread.CellType.TextCellType();
+
             ctest.SetCalculatorText("Accept", "Cancel");
 
             //grdView.sheet
@@ -115,54 +120,189 @@ namespace SSData.gui
 
             grdView.Sheets[0].Columns[colID].Visible = false;
 
-            grdView.Sheets[0].Columns[colCode].Width = 250;
-            grdView.Sheets[0].Columns[colProd].Width = 250;
-            grdView.Sheets[0].Columns[colTmt].Width = 250;
-            grdView.Sheets[0].Columns[colSpec].Width = 250;
+            grdView.Sheets[0].Columns[colCode].Width = 120;
+            grdView.Sheets[0].Columns[colProd].Width = 120;
+            grdView.Sheets[0].Columns[colTmt].Width = 80;
+            grdView.Sheets[0].Columns[colSpec].Width = 80;
             grdView.Sheets[0].Columns[colGene].Width = 250;
             grdView.Sheets[0].Columns[colTrad].Width = 250;
-            grdView.Sheets[0].Columns[colDfs].Width = 250;
+            grdView.Sheets[0].Columns[colDfs].Width = 80;
             grdView.Sheets[0].Columns[colDos].Width = 250;
             grdView.Sheets[0].Columns[colStr].Width = 250;
             grdView.Sheets[0].Columns[colCont].Width = 250;
 
-            grdView.Sheets[0].Columns[colDist].Width = 250;
+            grdView.Sheets[0].Columns[colDist].Width = 80;
             grdView.Sheets[0].Columns[colManu].Width = 250;
-            grdView.Sheets[0].Columns[colIsed].Width = 250;
-            grdView.Sheets[0].Columns[colNdc].Width = 250;
-            grdView.Sheets[0].Columns[colUnitS].Width = 250;
-            grdView.Sheets[0].Columns[colUnitP].Width = 250;
-            grdView.Sheets[0].Columns[colUpF].Width = 250;
-            grdView.Sheets[0].Columns[colDatC].Width = 250;
-            grdView.Sheets[0].Columns[colDatU].Width = 250;
-            grdView.Sheets[0].Columns[colDatE].Width = 250;
+            grdView.Sheets[0].Columns[colIsed].Width = 80;
+            grdView.Sheets[0].Columns[colNdc].Width = 80;
+            grdView.Sheets[0].Columns[colUnitS].Width = 80;
+            grdView.Sheets[0].Columns[colUnitP].Width = 80;
+            grdView.Sheets[0].Columns[colUpF].Width = 80;
+            grdView.Sheets[0].Columns[colDatC].Width = 140;
+            grdView.Sheets[0].Columns[colDatU].Width = 140;
+            grdView.Sheets[0].Columns[colDatE].Width = 140;
             
 
-            grdView.Sheets[0].Columns[0].CellType = objNumCell;
-            grdView.Sheets[0].Columns[1].CellType = datecell;
-            grdView.Sheets[0].Columns[2].CellType = ctest;
+            grdView.Sheets[0].Columns[colCode].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colProd].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colTmt].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colSpec].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colGene].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colTrad].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colDfs].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colDos].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colStr].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colCont].CellType = objTextCell;
+
+            grdView.Sheets[0].Columns[colDist].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colManu].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colIsed].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colNdc].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colUnitS].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colUnitP].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colUpF].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colDatC].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colDatU].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colDatE].CellType = objTextCell;
+
+        }
+        private void setGrdViewH1()
+        {
+            FarPoint.Win.Spread.EnhancedInterfaceRenderer outlinelook = new FarPoint.Win.Spread.EnhancedInterfaceRenderer();
+            outlinelook.RangeGroupBackgroundColor = Color.LightGreen;
+            outlinelook.RangeGroupButtonBorderColor = Color.Red;
+            outlinelook.RangeGroupLineColor = Color.Blue;
+            grdView.InterfaceRenderer = outlinelook;
+
+            grdView.BorderStyle = BorderStyle.None;
+            grdView.Sheets[0].Columns[0, 2].AllowAutoFilter = true;
+            grdView.Sheets[0].Columns[0, 2].AllowAutoSort = true;
+            grdView.Sheets[0].AutoFilterMode = FarPoint.Win.Spread.AutoFilterMode.EnhancedContextMenu;
+
+            FarPoint.Win.Spread.CellType.NumberCellType objNumCell = new FarPoint.Win.Spread.CellType.NumberCellType();
+            objNumCell.DecimalPlaces = 0;
+            objNumCell.MinimumValue = 1;
+            objNumCell.MaximumValue = 9999;
+            objNumCell.ShowSeparator = false;
+
+            FarPoint.Win.Spread.CellType.DateTimeCellType datecell = new FarPoint.Win.Spread.CellType.DateTimeCellType();
+            datecell.DateSeparator = " | ";
+            datecell.TimeSeparator = ".";
+            datecell.DateTimeFormat = FarPoint.Win.Spread.CellType.DateTimeFormat.ShortDateWithTime;
+
+            FarPoint.Win.Spread.CellType.CurrencyCellType ctest = new FarPoint.Win.Spread.CellType.CurrencyCellType();
+            FarPoint.Win.Spread.CellType.TextCellType objTextCell = new FarPoint.Win.Spread.CellType.TextCellType();
+
+            ctest.SetCalculatorText("Accept", "Cancel");
+
+            ////grdView.sheet
+            //grdView.Sheets.Count = 2;
+            //grdView.Height = 330;
+            //grdView.Width = 765;
+            //grdView.Sheets[0].SheetName = "Drug Catalogue";
+            //grdView.Sheets[1].SheetName = "นำเข้า";
+            //grdView.Sheets[0].ColumnCount = 21;
+            //grdView.Sheets[0].RowCount = 1;
+            //grdView.Sheets[1].RowCount = 1;
+            grdView.Sheets[1].ColumnCount = 21;
+
+            grdView.Sheets[1].ColumnHeader.Cells[0, colCode].Text = "hospdrugcode";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colProd].Text = "productcat";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colTmt].Text = "tmtid";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colSpec].Text = "specprep";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colGene].Text = "genericname";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colTrad].Text = "tradename";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colDfs].Text = "dfscode";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colDos].Text = "dosageform";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colStr].Text = "strength";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colCont].Text = "content1";
+
+            grdView.Sheets[1].ColumnHeader.Cells[0, colDist].Text = "distributor";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colManu].Text = "manufactrer";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colIsed].Text = "ised";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colNdc].Text = "ndc24";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colUnitS].Text = "unitsize";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colUnitP].Text = "unitprice";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colUpF].Text = "updateflag";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colDatC].Text = "datechange";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colDatU].Text = "dateupdate";
+            grdView.Sheets[1].ColumnHeader.Cells[0, colDatE].Text = "dateeffect";
+
+            grdView.Sheets[1].ColumnHeader.Cells[0, colID].Text = "drugcat_id";
+            //grdView.Sheets[0].ColumnHeader.Cells[0, 0].Text = "hospdrugcode";
+
+            grdView.Sheets[1].Columns[colID].Visible = false;
+
+            grdView.Sheets[1].Columns[colCode].Width = 120;
+            grdView.Sheets[1].Columns[colProd].Width = 120;
+            grdView.Sheets[1].Columns[colTmt].Width = 80;
+            grdView.Sheets[1].Columns[colSpec].Width = 80;
+            grdView.Sheets[1].Columns[colGene].Width = 250;
+            grdView.Sheets[1].Columns[colTrad].Width = 250;
+            grdView.Sheets[1].Columns[colDfs].Width = 80;
+            grdView.Sheets[1].Columns[colDos].Width = 250;
+            grdView.Sheets[1].Columns[colStr].Width = 250;
+            grdView.Sheets[1].Columns[colCont].Width = 250;
+
+            grdView.Sheets[1].Columns[colDist].Width = 80;
+            grdView.Sheets[1].Columns[colManu].Width = 250;
+            grdView.Sheets[1].Columns[colIsed].Width = 80;
+            grdView.Sheets[1].Columns[colNdc].Width = 80;
+            grdView.Sheets[1].Columns[colUnitS].Width = 80;
+            grdView.Sheets[1].Columns[colUnitP].Width = 80;
+            grdView.Sheets[1].Columns[colUpF].Width = 80;
+            grdView.Sheets[1].Columns[colDatC].Width = 140;
+            grdView.Sheets[1].Columns[colDatU].Width = 140;
+            grdView.Sheets[1].Columns[colDatE].Width = 140;
+
+
+            grdView.Sheets[1].Columns[colCode].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colProd].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colTmt].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colSpec].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colGene].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colTrad].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colDfs].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colDos].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colStr].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colCont].CellType = objTextCell;
+
+            grdView.Sheets[1].Columns[colDist].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colManu].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colIsed].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colNdc].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colUnitS].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colUnitP].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colUpF].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colDatC].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colDatU].CellType = objTextCell;
+            grdView.Sheets[1].Columns[colDatE].CellType = objTextCell;
+
         }
         private void LoadSheet(XLSheet sheet)
         {
             // load cells
+            grdView.Sheets[1].RowCount = sheet.Rows.Count;
+            //grdView.Sheets[0].ColumnCount = sheet.Columns.Count;
             for (int r = 0; r < sheet.Rows.Count; r++)
             {
+                //String aaa = "";
+                //break;
                 for (int c = 0; c < sheet.Columns.Count; c++)
                 {
                     // get cell
                     XLCell cell = sheet.GetCell(r, c);
                     if (cell == null) continue;
-
                     // apply content
                     //flex[r + frows, c + fcols] = cell.Value;
-                    grdView.Sheets[0].SetText(r, c, cell.Value.ToString());
-
+                    grdView.Sheets[1].Cells[r, c].Value = cell.Value;
                     // apply style
                     ////CellStyle cs = StyleFromExcel(flex, cell.Style);
                     ////if (cs != null)
                     ////    flex.SetCellStyle(r + frows, c + fcols, cs);
                 }
             }
+            grdView.ActiveSheetIndex = 1;
         }
         private void setResize()
         {
