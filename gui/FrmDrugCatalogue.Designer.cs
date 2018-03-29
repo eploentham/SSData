@@ -36,6 +36,7 @@
             this.btnOk = new C1.Win.C1Input.C1Button();
             this.c1ThemeController1 = new C1.Win.C1Themes.C1ThemeController();
             this.excel = new C1.C1Excel.C1XLBook();
+            this.pB1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.grdView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -62,6 +63,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(232)))), ((int)(((byte)(190)))));
+            this.groupBox1.Controls.Add(this.pB1);
             this.groupBox1.Controls.Add(this.btnBrowe);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btnOk);
@@ -110,6 +112,13 @@
             this.btnOk.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
+            // pB1
+            // 
+            this.pB1.Location = new System.Drawing.Point(6, 71);
+            this.pB1.Name = "pB1";
+            this.pB1.Size = new System.Drawing.Size(844, 23);
+            this.pB1.TabIndex = 28;
+            // 
             // FrmDrugCatalogue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -146,5 +155,6 @@
         private System.Windows.Forms.Label label1;
         private C1.Win.C1Input.C1Button btnBrowe;
         private C1.C1Excel.C1XLBook excel;
+        private System.Windows.Forms.ProgressBar pB1;
     }
 }

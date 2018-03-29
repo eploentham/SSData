@@ -1,6 +1,7 @@
 ﻿using SSData.object1;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,7 +44,70 @@ namespace SSData.objdb
             dCL.unitprice = "unitprice";
             dCL.unitsize = "unitsize";
             dCL.updateflag = "updateflag";
+
+            dCL.table = "b_drugcatalogue";
+            dCL.pkField = "drugcat_id";
             
+        }
+        public String selectByCode(String code)
+        {
+            String re = "", sql = "";
+            DataTable dt = new DataTable();
+            sql = "Select "+dCL.drugcat_id+" From "+dCL.table + " Where "+dCL.drugcat_code+" = '"+code +"'";
+            dt = conn.selectDataNoClose(conn.connSSDataNoClose, sql);
+            if (dt.Rows.Count > 0)
+            {
+                re = dt.Rows[0][dCL.drugcat_id].ToString();
+            }
+
+            return re;
+        }
+        public String insertDrugCatalogue(BDrugCatalogue p)
+        {
+            String re = "";
+            re = selectByCode(p.drugcat_code);
+            if (re.Equals(""))
+            {
+                re = insert(p);
+            }
+            else
+            {
+                p.drugcat_id = re;
+                re = update(p);
+            }
+            return re;
+        }
+        public String update(BDrugCatalogue p)
+        {
+            String re = "";
+            String sql = "";
+            sql = "Update "+dCL.table+" Set " +
+                dCL.content1 + "='"+p.content1.Replace("'", "''") + "'"+
+                ","+ dCL.datechange + "='" + p.datechange + "'" +
+                "," + dCL.dateeffect + "='" + p.dateeffect + "'" +
+                "," + dCL.dateupdate + "='" + p.dateupdate + "'" +
+                "," + dCL.dfscode + "='" + p.dfscode + "'" +
+                "," + dCL.distributor + "='" + p.distributor + "'" +
+                "," + dCL.dosageform + "='" + p.dosageform.Replace("'", "''") + "'" +
+                "," + dCL.drugcat_code + "='" + p.drugcat_code + "'" +
+                "," + dCL.genericname + "='" + p.genericname.Replace("'", "''") + "'" +
+                "," + dCL.hospdrugcode + "='" + p.hospdrugcode + "'" +
+                "," + dCL.ised + "='" + p.ised + "'" +
+
+                "," + dCL.manufactrer + "='" + p.manufactrer.Replace("'", "''") + "'" +
+                "," + dCL.ndc24 + "='" + p.ndc24 + "'" +
+                "," + dCL.productcat + "='" + p.productcat.Replace("'", "''") + "'" +
+                "," + dCL.specprep + "='" + p.specprep + "'" +
+                "," + dCL.strength + "='" + p.strength + "'" +
+                "," + dCL.tmtid + "='" + p.tmtid + "'" +
+                "," + dCL.tradename + "='" + p.tradename.Replace("'", "''") + "'" +
+                "," + dCL.unitprice + "='" + p.unitprice + "'" +
+                "," + dCL.unitsize + "='" + p.unitsize + "'" +
+                "," + dCL.updateflag + "='" + p.updateflag + "'" 
+                ;
+
+            re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
+            return re;
         }
         public String insert(BDrugCatalogue p)
         {
@@ -59,13 +123,13 @@ namespace SSData.objdb
                 dCL.tradename + "," + dCL.unitprice + "," + dCL.unitsize + "," +
                 dCL.updateflag  +
                 ") " +
-                "Values('" + p.content1 + "','" + p.datechange + "','" + p.dateeffect + "','" +
+                "Values('" + p.content1.Replace("'","''") + "','" + p.datechange + "','" + p.dateeffect + "','" +
                 p.dateupdate + "','" + p.dfscode + "','" +
-                p.distributor + "','" + p.dosageform + "','" + p.drugcat_code + "','" +
-                p.genericname + "','" + p.hospdrugcode + "','" + p.ised + "','" +
-                p.manufactrer + "','" + p.ndc24 + "','" + p.productcat + "','" +
+                p.distributor + "','" + p.dosageform.Replace("'", "''") + "','" + p.drugcat_code + "','" +
+                p.genericname.Replace("'", "''") + "','" + p.hospdrugcode + "','" + p.ised + "','" +
+                p.manufactrer.Replace("'", "''") + "','" + p.ndc24 + "','" + p.productcat.Replace("'", "''") + "','" +
                 p.specprep + "','" + p.strength + "','" + p.tmtid + "','" +
-                p.tradename + "','" + p.unitprice + "','" + p.unitsize + "','" +
+                p.tradename.Replace("'", "''") + "','" + p.unitprice + "','" + p.unitsize + "','" +
                 p.updateflag + 
                 "') ";
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);

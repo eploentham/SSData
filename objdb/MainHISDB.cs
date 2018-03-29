@@ -1,4 +1,5 @@
-﻿using SSData.object1;
+﻿using FarPoint.Win.Spread;
+using SSData.object1;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,6 +19,7 @@ namespace SSData.objdb
         ConnectDB conn;
         TSsdataDB ssdDB;
         TSsdataVisitDB ssdVDB;
+        BDrugCatalogueDB dCDB;
 
         TSsdata ssd;
         public MainHISDB(ConnectDB c)
@@ -30,6 +32,7 @@ namespace SSData.objdb
             ssd = new TSsdata();
             ssdDB = new TSsdataDB(conn);
             ssdVDB = new TSsdataVisitDB(conn);
+            dCDB = new BDrugCatalogueDB(conn);
 
             sqlIPD = "SELECT DISTINCT " +
                         "patt08.MNC_HN_YR, patt08.MNC_HN_NO, patt08.MNC_DATE, patt08.MNC_PRE_NO, fint01.MNC_FN_TYP_CD,  " +
@@ -116,6 +119,50 @@ namespace SSData.objdb
             dt = conn.selectData(conn.connMainHIS, sqlOPD);
 
             return dt;
+        }
+        public void insertDrugCat(FpSpread grd, ProgressBar pb1)
+        {
+            int colCode = 0, colProd = 1, colTmt = 2, colSpec = 3, colGene = 4, colTrad = 5, colDfs = 6, colDos = 7, colStr = 8, colCont = 9;
+            int colDist = 10, colManu = 11, colIsed = 12, colNdc = 13, colUnitS = 14, colUnitP = 15, colUpF = 16, colDatC = 17, colDatU = 18, colDatE = 19, colID = 20;
+
+            pb1.Show();
+            conn.OpenConnectionSSData();
+            pb1.Minimum = 1;
+            pb1.Maximum = grd.Sheets[1].Rows.Count;
+            for(int i=0; i< grd.Sheets[1].Rows.Count; i++)
+            {
+                if(i == 0) continue;
+                BDrugCatalogue drug = new BDrugCatalogue();
+                drug.hospdrugcode = grd.Sheets[1].Cells[i, colCode].Value == null ? "" : grd.Sheets[1].Cells[i, colCode].Value.ToString();
+                drug.productcat = grd.Sheets[1].Cells[i, colProd].Value == null ? "" : grd.Sheets[1].Cells[i, colProd].Value.ToString();
+                drug.tmtid = grd.Sheets[1].Cells[i, colTmt].Value == null ? "" : grd.Sheets[1].Cells[i, colTmt].Value.ToString();
+                drug.specprep = grd.Sheets[1].Cells[i, colSpec].Value == null ? "" : grd.Sheets[1].Cells[i, colSpec].Value.ToString();
+                drug.genericname = grd.Sheets[1].Cells[i, colGene].Value == null ? "" : grd.Sheets[1].Cells[i, colGene].Value.ToString();
+                drug.tradename = grd.Sheets[1].Cells[i, colTrad].Value == null ? "" : grd.Sheets[1].Cells[i, colTrad].Value.ToString();
+                drug.dfscode = grd.Sheets[1].Cells[i, colDfs].Value == null ? "" : grd.Sheets[1].Cells[i, colDfs].Value.ToString();
+                drug.dosageform = grd.Sheets[1].Cells[i, colDos].Value == null ? "" : grd.Sheets[1].Cells[i, colDos].Value.ToString();
+                drug.strength = grd.Sheets[1].Cells[i, colStr].Value == null ? "" : grd.Sheets[1].Cells[i, colStr].Value.ToString();
+                drug.content1 = grd.Sheets[1].Cells[i, colCont].Value == null ? "" : grd.Sheets[1].Cells[i, colCont].Value.ToString();
+
+                drug.distributor = grd.Sheets[1].Cells[i, colDist].Value == null ? "" : grd.Sheets[1].Cells[i, colDist].Value.ToString();
+                drug.manufactrer = grd.Sheets[1].Cells[i, colManu].Value == null ? "" : grd.Sheets[1].Cells[i, colManu].Value.ToString();
+                drug.ised = grd.Sheets[1].Cells[i, colIsed].Value == null ? "" : grd.Sheets[1].Cells[i, colIsed].Value.ToString();
+                drug.ndc24 = grd.Sheets[1].Cells[i, colNdc].Value == null ? "" : grd.Sheets[1].Cells[i, colNdc].Value.ToString();
+                drug.unitsize = grd.Sheets[1].Cells[i, colUnitS].Value == null ? "" : grd.Sheets[1].Cells[i, colUnitS].Value.ToString();
+                drug.unitprice = grd.Sheets[1].Cells[i, colUnitP].Value == null ? "" : grd.Sheets[1].Cells[i, colUnitP].Value.ToString();
+                drug.updateflag = grd.Sheets[1].Cells[i, colUpF].Value == null ? "" : grd.Sheets[1].Cells[i, colUpF].Value.ToString();
+                drug.datechange = grd.Sheets[1].Cells[i, colDatC].Value == null ? "" : grd.Sheets[1].Cells[i, colDatC].Value.ToString();
+                drug.dateupdate = grd.Sheets[1].Cells[i, colDatU].Value == null ? "" : grd.Sheets[1].Cells[i, colDatU].Value.ToString();
+                drug.dateeffect = grd.Sheets[1].Cells[i, colDatE].Value == null ? "" : grd.Sheets[1].Cells[i, colDatE].Value.ToString();
+
+                drug.drugcat_id = grd.Sheets[1].Cells[i, colID].Value == null ? "" : grd.Sheets[1].Cells[i, colID].Value.ToString();
+                drug.genericname = grd.Sheets[1].Cells[i, colGene].Value == null ? "" : grd.Sheets[1].Cells[i, colGene].Value.ToString();
+
+                dCDB.insertDrugCatalogue(drug);
+                pb1.Value = i;
+            }
+            conn.CloseConnectionSSData();
+            pb1.Hide();
         }
         public void insertTSSData(String hcode, String branchId, String yearId, String monthId, ProgressBar pb1)
         {

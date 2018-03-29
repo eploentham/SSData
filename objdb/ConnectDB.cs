@@ -35,7 +35,7 @@ namespace SSData.objdb
         public DataTable selectData(SqlConnection con, String sql)
         {
             DataTable toReturn = new DataTable();
-            
+
             SqlCommand comMainhis = new SqlCommand();
             comMainhis.CommandText = sql;
             comMainhis.CommandType = CommandType.Text;
@@ -55,6 +55,33 @@ namespace SSData.objdb
             {
                 con.Close();
                 comMainhis.Dispose();
+                adapMainhis.Dispose();
+            }
+            return toReturn;
+        }
+        public DataTable selectDataNoClose(SqlConnection con, String sql)
+        {
+            DataTable toReturn = new DataTable();
+
+            //SqlCommand comMainhis = new SqlCommand();
+            comMainhisNoClose.CommandText = sql;
+            comMainhisNoClose.CommandType = CommandType.Text;
+            comMainhisNoClose.Connection = con;
+            SqlDataAdapter adapMainhis = new SqlDataAdapter(comMainhisNoClose);
+            try
+            {
+                //con.Open();
+                adapMainhis.Fill(toReturn);
+                //return toReturn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+            finally
+            {
+                //con.Close();
+                //comMainhis.Dispose();
                 adapMainhis.Dispose();
             }
             return toReturn;
