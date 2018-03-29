@@ -108,6 +108,7 @@
             this.c1ThemeController1.SetTheme(this.btnOk, "Office2010Green");
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // FrmDrugCatalogue
             // 

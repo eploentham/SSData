@@ -18,6 +18,12 @@ namespace SSData.gui
         SSDataControl sC;
         int colCode = 0, colProd = 1, colTmt = 2, colSpec = 3, colGene = 4, colTrad = 5, colDfs = 6, colDos = 7, colStr = 8, colCont = 9;
         int colDist =10, colManu=11, colIsed=12, colNdc=13, colUnitS=14, colUnitP=15, colUpF=16, colDatC=17, colDatU=18, colDatE=19, colID=20;
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+
+        }
+
         int conCnt = 21;
 
         public FrmDrugCatalogue(SSDataControl sc, Form par1)
@@ -50,8 +56,7 @@ namespace SSData.gui
                 {
                     LoadSheet(sheet);
                 }
-                // load book
-                
+                // load book                
             }
         }
         private void setGrdViewH()
@@ -296,6 +301,8 @@ namespace SSData.gui
                     // apply content
                     //flex[r + frows, c + fcols] = cell.Value;
                     grdView.Sheets[1].Cells[r, c].Value = cell.Value;
+                    if(c%2==0)
+                        grdView.Sheets[1].Rows[r].BackColor = Color.Yellow;
                     // apply style
                     ////CellStyle cs = StyleFromExcel(flex, cell.Style);
                     ////if (cs != null)
