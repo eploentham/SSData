@@ -1,0 +1,2 @@
+active,birth_day,branch_id,hcode,hcode_owner,hn_no,hn_yr,pid,patient_fname,patient_lname,prefix,pre_no,sex,ssdata_id,visit_date,visit_time,vn,vn_no,vn_seq,vn_sum,year_id,month_id,invno,billno,amount,paid,payplan,claimamt,otherpayplan,otherpay
+'1','1965-04-08','005','24036','2211041','5000031','2553','3102201753443','จิราพร','ผาพันธ์','น.ส.','55','F','21','2018-03-01','2018-03-01','54.1.1','54','1','1','2018','03','820','','','',''

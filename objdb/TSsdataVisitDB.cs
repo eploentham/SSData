@@ -43,14 +43,14 @@ namespace SSData.objdb
             ssdV.active = "active";
             ssdV.year_id = "year_id";
             ssdV.month_id = "month_id";
-            ssdV.invno = "month_id";
-            ssdV.billno = "month_id";
-            ssdV.amount = "month_id";
-            ssdV.paid = "month_id";
-            ssdV.payplan = "month_id";
-            ssdV.claimamt = "month_id";
-            ssdV.otherpayplan = "month_id";
-            ssdV.otherpay = "month_id";
+            ssdV.invno = "invno";
+            ssdV.billno = "billno";
+            ssdV.amount = "amount";
+            ssdV.paid = "paid";
+            ssdV.payplan = "payplan";
+            ssdV.claimamt = "claimamt";
+            ssdV.otherpayplan = "otherpayplan";
+            ssdV.otherpay = "otherpay";
 
             ssdV.table = "t_ssdata_visit";
             ssdV.pkField = "ssdata_visit_id";
@@ -79,7 +79,8 @@ namespace SSData.objdb
                 p.sex + "','" + p.ssdata_id + "','" + p.visit_date + "','" +
                 p.visit_time + "','" + p.vn + "','" + p.vn_no + "','" +
                 p.vn_seq + "','" + p.vn_sum + "','" + p.year_id + "','" + 
-                p.month_id + "','" + p.paid + "','" + p.payplan + "','" +
+                p.month_id + "','" + p.invno + "','" + p.billno + "','" +
+                p.amount + "','" + p.paid + "','" + p.payplan + "','" +
                 p.claimamt + "','" + p.otherpayplan + "','" + p.otherpay +
                 "') ";
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);

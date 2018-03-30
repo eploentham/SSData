@@ -30,5 +30,6 @@ namespace SSData.object1
         public String datechange { get; set; }
         public String dateupdate { get; set; }
         public String dateeffect { get; set; }
+        public String status_his_ok { get; set; }
     }
 }

@@ -32,6 +32,7 @@ namespace SSData.gui
             pB1.Hide();
             setGrdViewH();
             setGrdViewH1();
+            setGrdView();
         }
         private void FrmDrugCatalogue_Load(object sender, EventArgs e)
         {
@@ -40,6 +41,7 @@ namespace SSData.gui
         private void btnOk_Click(object sender, EventArgs e)
         {
             sC.mHisDB.insertDrugCat(grdView, pB1);
+            setGrdView();
         }
         private void btnBrowe_Click(object sender, EventArgs e)
         {
@@ -282,6 +284,43 @@ namespace SSData.gui
             grdView.Sheets[1].Columns[colDatU].CellType = objTextCell;
             grdView.Sheets[1].Columns[colDatE].CellType = objTextCell;
 
+        }
+        private void setGrdView()
+        {
+            DataTable dt = new DataTable();
+            int i = 0;
+            dt = sC.mHisDB.dCDB.selectAll();
+            grdView.Sheets[0].Rows.Clear();
+            setGrdViewH();
+            grdView.Sheets[0].RowCount = dt.Rows.Count;
+            foreach(DataRow row in dt.Rows)
+            {
+                
+                grdView.Sheets[0].Cells[i, colCode].Value = row[sC.mHisDB.dCDB.dCL.hospdrugcode].ToString();
+                grdView.Sheets[0].Cells[i, colProd].Value = row[sC.mHisDB.dCDB.dCL.productcat].ToString();
+                grdView.Sheets[0].Cells[i, colTmt].Value = row[sC.mHisDB.dCDB.dCL.tmtid].ToString();
+                grdView.Sheets[0].Cells[i, colSpec].Value = row[sC.mHisDB.dCDB.dCL.specprep].ToString();
+                grdView.Sheets[0].Cells[i, colGene].Value = row[sC.mHisDB.dCDB.dCL.genericname].ToString();
+                grdView.Sheets[0].Cells[i, colTrad].Value = row[sC.mHisDB.dCDB.dCL.tradename].ToString();
+                grdView.Sheets[0].Cells[i, colDfs].Value = row[sC.mHisDB.dCDB.dCL.dfscode].ToString();
+                grdView.Sheets[0].Cells[i, colDos].Value = row[sC.mHisDB.dCDB.dCL.dosageform].ToString();
+                grdView.Sheets[0].Cells[i, colStr].Value = row[sC.mHisDB.dCDB.dCL.strength].ToString();
+                grdView.Sheets[0].Cells[i, colCont].Value = row[sC.mHisDB.dCDB.dCL.content1].ToString();
+
+                grdView.Sheets[0].Cells[i, colDist].Value = row[sC.mHisDB.dCDB.dCL.distributor].ToString();
+                grdView.Sheets[0].Cells[i, colManu].Value = row[sC.mHisDB.dCDB.dCL.manufactrer].ToString();
+                grdView.Sheets[0].Cells[i, colIsed].Value = row[sC.mHisDB.dCDB.dCL.ised].ToString();
+                grdView.Sheets[0].Cells[i, colNdc].Value = row[sC.mHisDB.dCDB.dCL.ndc24].ToString();
+                grdView.Sheets[0].Cells[i, colUnitS].Value = row[sC.mHisDB.dCDB.dCL.unitsize].ToString();
+                grdView.Sheets[0].Cells[i, colUnitP].Value = row[sC.mHisDB.dCDB.dCL.unitprice].ToString();
+                grdView.Sheets[0].Cells[i, colUpF].Value = row[sC.mHisDB.dCDB.dCL.updateflag].ToString();
+                grdView.Sheets[0].Cells[i, colDatC].Value = row[sC.mHisDB.dCDB.dCL.datechange].ToString();
+                grdView.Sheets[0].Cells[i, colDatU].Value = row[sC.mHisDB.dCDB.dCL.dateupdate].ToString();
+                grdView.Sheets[0].Cells[i, colDatE].Value = row[sC.mHisDB.dCDB.dCL.dateeffect].ToString();
+
+                grdView.Sheets[0].Cells[i, colID].Value = row[sC.mHisDB.dCDB.dCL.drugcat_id].ToString();
+                i++;
+            }
         }
         private void LoadSheet(XLSheet sheet)
         {

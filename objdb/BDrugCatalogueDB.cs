@@ -10,7 +10,7 @@ namespace SSData.objdb
 {
     public class BDrugCatalogueDB
     {
-        BDrugCatalogue dCL;
+        public BDrugCatalogue dCL;
         ConnectDB conn;
         public BDrugCatalogueDB(ConnectDB c)
         {
@@ -44,10 +44,19 @@ namespace SSData.objdb
             dCL.unitprice = "unitprice";
             dCL.unitsize = "unitsize";
             dCL.updateflag = "updateflag";
+            dCL.status_his_ok = "status_his_ok";
 
             dCL.table = "b_drugcatalogue";
-            dCL.pkField = "drugcat_id";
-            
+            dCL.pkField = "drugcat_id";            
+        }
+        public DataTable selectAll()
+        {
+            String re = "", sql = "";
+            DataTable dt = new DataTable();
+            sql = "Select * From " + dCL.table +" Order By drugcat_id";
+            dt = conn.selectDataNoClose(conn.connSSDataNoClose, sql);
+
+            return dt;
         }
         public String selectByCode(String code)
         {
@@ -62,10 +71,47 @@ namespace SSData.objdb
 
             return re;
         }
+        public String selectByHospDrugCode(String hospdrugcode)
+        {
+            String re = "", sql = "";
+            DataTable dt = new DataTable();
+            sql = "Select " + dCL.drugcat_id + " From " + dCL.table + " Where " + dCL.hospdrugcode + " = '" + hospdrugcode + "'";
+            dt = conn.selectDataNoClose(conn.connSSDataNoClose, sql);
+            if (dt.Rows.Count > 0)
+            {
+                re = dt.Rows[0][dCL.drugcat_id].ToString();
+            }
+
+            return re;
+        }
+        public String updateHospDrugCode(String drug_id, String hospdrugcode)
+        {
+            String re = "", sql = "";
+            DataTable dt = new DataTable();
+            sql = "Select mnc_ph_cd From pharmacy_m01 Where mnc_ph_cd = '"+hospdrugcode+"'";
+            dt = conn.selectDataNoClose(conn.connMainHISNoClose, sql);
+            if (dt.Rows.Count > 0)
+            {
+                re = dt.Rows[0]["mnc_ph_cd"].ToString();
+            }
+            else
+            {
+                re = "";
+            }
+            if (!re.Equals(""))
+            {
+                sql = "Update " + dCL.table + " Set " +
+                dCL.status_his_ok + "='1' " +
+                "Where " + dCL.drugcat_id + "=" + drug_id;
+                re = conn.ExecuteNonQueryNoCloseMainHIS(conn.connSSDataNoClose, sql);
+            }
+            
+            return re;
+        }
         public String insertDrugCatalogue(BDrugCatalogue p)
         {
             String re = "";
-            re = selectByCode(p.drugcat_code);
+            re = selectByHospDrugCode(p.hospdrugcode);
             if (re.Equals(""))
             {
                 re = insert(p);
@@ -81,9 +127,9 @@ namespace SSData.objdb
         {
             String re = "";
             String sql = "";
-            sql = "Update "+dCL.table+" Set " +
-                dCL.content1 + "='"+p.content1.Replace("'", "''") + "'"+
-                ","+ dCL.datechange + "='" + p.datechange + "'" +
+            sql = "Update " + dCL.table + " Set " +
+                dCL.content1 + "='" + p.content1.Replace("'", "''") + "'" +
+                "," + dCL.datechange + "='" + p.datechange + "'" +
                 "," + dCL.dateeffect + "='" + p.dateeffect + "'" +
                 "," + dCL.dateupdate + "='" + p.dateupdate + "'" +
                 "," + dCL.dfscode + "='" + p.dfscode + "'" +
@@ -103,10 +149,11 @@ namespace SSData.objdb
                 "," + dCL.tradename + "='" + p.tradename.Replace("'", "''") + "'" +
                 "," + dCL.unitprice + "='" + p.unitprice + "'" +
                 "," + dCL.unitsize + "='" + p.unitsize + "'" +
-                "," + dCL.updateflag + "='" + p.updateflag + "'" 
-                ;
+                "," + dCL.updateflag + "='" + p.updateflag + "' " +
+                "Where " + dCL.drugcat_id + "=" + p.drugcat_id;
 
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
+            re = p.drugcat_id;
             return re;
         }
         public String insert(BDrugCatalogue p)

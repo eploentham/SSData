@@ -3,6 +3,7 @@ using SSData.object1;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace SSData.objdb
         ConnectDB conn;
         TSsdataDB ssdDB;
         TSsdataVisitDB ssdVDB;
-        BDrugCatalogueDB dCDB;
+        public BDrugCatalogueDB dCDB;
 
         TSsdata ssd;
         public MainHISDB(ConnectDB c)
@@ -95,7 +96,7 @@ namespace SSData.objdb
             sqlOPD = "SELECT patt01.MNC_HN_YR, patt01.MNC_HN_NO, patt01.MNC_DATE, patm01.MNC_FNAME_T, patm01.MNC_LNAME_T, " +
                         "patm01.MNC_ID_NO, patm01.MNC_BDAY, patm01.MNC_SEX, dbo.PRAKUN_M01_TEMP.PrakanCode, SUM(fint01.MNC_SUM_PRI) AS MNC_SUM_PRI, " +
                         "patt01.MNC_REF_CD, fint01.MNC_PRAKUN_CODE, patm02.MNC_PFIX_DSC, " +
-                        "patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no " +
+                        "patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no, fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD " +
                         "FROM  dbo.FINANCE_M02 INNER JOIN dbo.FINANCE_T01 fint01 ON dbo.FINANCE_M02.MNC_FN_TYP_CD = fint01.MNC_FN_TYP_CD " +
                         "RIGHT OUTER JOIN dbo.PATIENT_M02 patm02 RIGHT OUTER JOIN " +
                         "dbo.PATIENT_T01 patt01 LEFT OUTER JOIN " +
@@ -113,8 +114,8 @@ namespace SSData.objdb
                         //"and(patm01.mnc_hn_no like :HNNo) " +
                         "GROUP BY patt01.MNC_HN_YR, patt01.MNC_HN_NO, patt01.MNC_DATE, patm01.MNC_FNAME_T, patm01.MNC_LNAME_T, patm01.MNC_ID_NO,  " +
                         "patm01.MNC_BDAY, patm01.MNC_SEX, dbo.PRAKUN_M01_TEMP.PrakanCode, patt01.MNC_REF_CD, fint01.MNC_PRAKUN_CODE,  " +
-                        "patm02.MNC_PFIX_DSC, patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no " +
-                        "ORDER BY patt01.MNC_DATE, patt01.MNC_HN_NO";
+                        "patm02.MNC_PFIX_DSC, patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no, fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD " +
+                        "ORDER BY patt01.MNC_DATE, patt01.MNC_HN_NO, patt01.mnc_pre_no";
 
             dt = conn.selectData(conn.connMainHIS, sqlOPD);
 
@@ -122,11 +123,15 @@ namespace SSData.objdb
         }
         public void insertDrugCat(FpSpread grd, ProgressBar pb1)
         {
+            String re = "", drugId="";
             int colCode = 0, colProd = 1, colTmt = 2, colSpec = 3, colGene = 4, colTrad = 5, colDfs = 6, colDos = 7, colStr = 8, colCont = 9;
             int colDist = 10, colManu = 11, colIsed = 12, colNdc = 13, colUnitS = 14, colUnitP = 15, colUpF = 16, colDatC = 17, colDatU = 18, colDatE = 19, colID = 20;
 
             pb1.Show();
+
+            conn.OpenConnectionMainHIS();
             conn.OpenConnectionSSData();
+
             pb1.Minimum = 1;
             pb1.Maximum = grd.Sheets[1].Rows.Count;
             for(int i=0; i< grd.Sheets[1].Rows.Count; i++)
@@ -158,10 +163,19 @@ namespace SSData.objdb
                 drug.drugcat_id = grd.Sheets[1].Cells[i, colID].Value == null ? "" : grd.Sheets[1].Cells[i, colID].Value.ToString();
                 drug.genericname = grd.Sheets[1].Cells[i, colGene].Value == null ? "" : grd.Sheets[1].Cells[i, colGene].Value.ToString();
 
-                dCDB.insertDrugCatalogue(drug);
+                drugId = dCDB.insertDrugCatalogue(drug);
+                re = "";
+                re = dCDB.updateHospDrugCode(drugId, drug.hospdrugcode);
+                if (re.Equals(""))
+                {
+                    grd.Sheets[1].Rows[i].BackColor = Color.Red;
+                }
                 pb1.Value = i;
             }
+
+            conn.CloseConnectionMainHIS();
             conn.CloseConnectionSSData();
+
             pb1.Hide();
         }
         public void insertTSSData(String hcode, String branchId, String yearId, String monthId, ProgressBar pb1)
@@ -215,16 +229,35 @@ namespace SSData.objdb
                 ssV.vn_no = row["mnc_vn_no"].ToString();
                 ssV.vn_seq = row["mnc_vn_seq"].ToString();
                 ssV.vn_sum = row["mnc_vn_sum"].ToString();
-                ssV.paid = row["mnc_sum_pri"].ToString();
+                ssV.paid = "0.0";
                 ssV.month_id = monthId;
                 ssV.year_id = yearId;
+
+                ssV.invno = setInvNO(row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString(), row["mnc_doc_yr"].ToString());
+                ssV.billno = "";
+                ssV.amount = row["MNC_SUM_PRI"].ToString();
+                //ssV.paid = "paid";
+                ssV.payplan = "80";
+                ssV.claimamt = ssV.amount;
+                ssV.otherpayplan = "";
+                ssV.otherpay = "";
+
                 ssdVDB.insert(ssV);
-
-
 
             }
             conn.CloseConnectionSSData();
             pb1.Hide();
+        }
+        public String setInvNO(String mnc_doc_cd, String mnc_doc_no, String mnc_doc_yr)
+        {
+            String invNO = "", doc="000000";
+            if (mnc_doc_cd.Equals("ON3"))
+            {
+                doc = "000000" + mnc_doc_no;
+                doc = doc.Substring(doc.Length - 6);
+                invNO = "PO"+ mnc_doc_yr + doc;
+            }
+            return invNO;
         }
         public String datetoDB(object dt)
         {
