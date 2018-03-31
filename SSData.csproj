@@ -124,6 +124,7 @@
     <Compile Include="objdb\MainHISDB.cs" />
     <Compile Include="objdb\TSsdataDB.cs" />
     <Compile Include="objdb\TSsdataVisitDB.cs" />
+    <Compile Include="objdb\TSsdataVisitItemsDB.cs" />
     <Compile Include="object1\BDrugCatalogue.cs" />
     <Compile Include="object1\ComboBoxItem.cs" />
     <Compile Include="object1\IniFile.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="object1\Persistent.cs" />
     <Compile Include="object1\TSsdata.cs" />
     <Compile Include="object1\TSsdataVisit.cs" />
+    <Compile Include="object1\TSsdataVisitItems.cs" />
     <Compile Include="object1\Visit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

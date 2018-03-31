@@ -21,6 +21,7 @@ namespace SSData.objdb
         TSsdataDB ssdDB;
         TSsdataVisitDB ssdVDB;
         public BDrugCatalogueDB dCDB;
+        TSsdataVisitItemsDB ssdVIDB;
 
         TSsdata ssd;
         public MainHISDB(ConnectDB c)
@@ -96,7 +97,7 @@ namespace SSData.objdb
             sqlOPD = "SELECT patt01.MNC_HN_YR, patt01.MNC_HN_NO, patt01.MNC_DATE, patm01.MNC_FNAME_T, patm01.MNC_LNAME_T, " +
                         "patm01.MNC_ID_NO, patm01.MNC_BDAY, patm01.MNC_SEX, dbo.PRAKUN_M01_TEMP.PrakanCode, SUM(fint01.MNC_SUM_PRI) AS MNC_SUM_PRI, " +
                         "patt01.MNC_REF_CD, fint01.MNC_PRAKUN_CODE, patm02.MNC_PFIX_DSC, " +
-                        "patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no, fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD " +
+                        "patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no, fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD, fint01.mnc_doc_yr " +
                         "FROM  dbo.FINANCE_M02 INNER JOIN dbo.FINANCE_T01 fint01 ON dbo.FINANCE_M02.MNC_FN_TYP_CD = fint01.MNC_FN_TYP_CD " +
                         "RIGHT OUTER JOIN dbo.PATIENT_M02 patm02 RIGHT OUTER JOIN " +
                         "dbo.PATIENT_T01 patt01 LEFT OUTER JOIN " +
@@ -114,10 +115,45 @@ namespace SSData.objdb
                         //"and(patm01.mnc_hn_no like :HNNo) " +
                         "GROUP BY patt01.MNC_HN_YR, patt01.MNC_HN_NO, patt01.MNC_DATE, patm01.MNC_FNAME_T, patm01.MNC_LNAME_T, patm01.MNC_ID_NO,  " +
                         "patm01.MNC_BDAY, patm01.MNC_SEX, dbo.PRAKUN_M01_TEMP.PrakanCode, patt01.MNC_REF_CD, fint01.MNC_PRAKUN_CODE,  " +
-                        "patm02.MNC_PFIX_DSC, patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no, fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD " +
+                        "patm02.MNC_PFIX_DSC, patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no, fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD,fint01.mnc_doc_yr " +
                         "ORDER BY patt01.MNC_DATE, patt01.MNC_HN_NO, patt01.mnc_pre_no";
 
             dt = conn.selectData(conn.connMainHIS, sqlOPD);
+
+            return dt;
+        }
+        public DataTable selectSSDataItem(String hn, String vnno, String preno, String visitDate)
+        {
+            String sql = "", where="";
+            //DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId) + 1, 1);
+            //dateEnd = dateEnd.AddDays(-1);
+            //whereHCODE = whereHCODE.Equals("") ? "" : " AND (fint01.MNC_PRAKUN_CODE = '" + hcode + "' OR " + "fint01.MNC_PRAKUN_CODE IS NULL) " +
+            //    "AND(dbo.PRAKUN_M01_TEMP.PrakanCode = '" + hcode + "' OR " + "dbo.PRAKUN_M01_TEMP.PrakanCode IS NULL) ";
+            //startDate = yearId + "-" + monthId + "-01";
+            //endDate = yearId + "-" + dateEnd.Month.ToString("00") + "-" + dateEnd.Day.ToString("00");
+            where = " t01.mnc_hn_no = '"+ hn + "' and t01.mnc_vn_no = '"+ vnno + "' and t01.MNC_PRE_NO = '"+ preno + "' ";
+
+            DataTable dt = new DataTable();
+            sql = "Select phart06.MNC_PH_CD, pharmacy_m01.MNC_PH_TN ,PHARMACY_M05.MNC_PH_PRI01,PHARMACY_M05.MNC_PH_PRI02,sum(phart06.MNC_PH_QTY) as qty "+
+                "From PATIENT_T01 t01 " +
+                "left join PHARMACY_T05 phart05 on t01.MNC_PRE_NO = phart05.MNC_PRE_NO and t01.MNC_date = phart05.mnc_date " +
+                "left join PHARMACY_T06 phart06 on phart05.MNC_CFR_NO = phart06.MNC_CFR_NO and phart05.MNC_CFG_DAT = phart06.MNC_CFR_dat " +
+                "left join PHARMACY_M01 on phart06.MNC_PH_CD = pharmacy_m01.MNC_PH_CD " +
+                "left join PHARMACY_M05 on PHARMACY_M05.MNC_PH_CD = PHARMACY_M01.MNC_PH_CD " +
+                "where " +
+                //"--t01.MNC_DATE BETWEEN '' AND '' and " +
+                //"-- t01.MNC_FN_TYP_CD in ('44', '45', '46', '47', '48', '49') " + " and " +
+                where+
+                //"    t01.mnc_hn_no = '5085115' " +
+                //"--and t01.MNC_DATE = '2014-08-17' " +
+                //"--PHARMACY_M01.mnc_ph_typ_flg = 'P' " +
+                //"and t01.mnc_vn_no = '58' and t01.MNC_PRE_NO = '61' " +
+                "and phart05.MNC_CFR_STS = 'a' " +
+                "Group By phart06.MNC_PH_CD, pharmacy_m01.MNC_PH_TN ,PHARMACY_M05.MNC_PH_PRI01,PHARMACY_M05.MNC_PH_PRI02 " +
+                "Order By phart06.MNC_PH_CD " +
+                "; ";
+
+            dt = conn.selectData(conn.connMainHIS, sql);
 
             return dt;
         }
@@ -182,6 +218,7 @@ namespace SSData.objdb
         {
             pb1.Show();
             DataTable dt = new DataTable();
+            DataTable dtItem = new DataTable();
 
             conn.OpenConnectionSSData();
             dt =selectSSData(hcode, yearId, monthId);
@@ -203,7 +240,7 @@ namespace SSData.objdb
             {
                 pb1.Value++;
                 TSsdataVisit ssV = new TSsdataVisit();
-                String visitDate = "";
+                String visitDate = "", id="";
                 String birDate = "";
 
                 visitDate = datetoDB(row["MNC_DATE"].ToString());
@@ -242,8 +279,30 @@ namespace SSData.objdb
                 ssV.otherpayplan = "";
                 ssV.otherpay = "";
 
-                ssdVDB.insert(ssV);
-
+                id = ssdVDB.insert(ssV);
+                dtItem.Clear();
+                dtItem = selectSSDataItem(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date);
+                foreach (DataRow rowI in dtItem.Rows)
+                {
+                    TSsdataVisitItems ssvI = new TSsdataVisitItems();
+                    ssvI.ssdata_id = ssd.ssdata_id;
+                    ssvI.ssdata_visit_id = id;
+                    ssvI.invno = ssV.invno;
+                    ssvI.svdate = ssV.visit_date;
+                    ssvI.svrefid = "";
+                    ssvI.up = "";
+                    ssvI.active = "";
+                    ssvI.billmuad = "";
+                    ssvI.chargeamt = "";
+                    ssvI.claimamount = "";
+                    ssvI.claimcat = "";
+                    ssvI.claimup = "";
+                    ssvI.desc1 = "";
+                    ssvI.llcode = "";
+                    ssvI.qty = "";
+                    ssvI.stdcode = "";
+                    
+                }
             }
             conn.CloseConnectionSSData();
             pb1.Hide();
