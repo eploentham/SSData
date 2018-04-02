@@ -39,5 +39,10 @@ namespace SSData.object1
         public string claimamt { get; set; }
         public string otherpayplan { get; set; }
         public string otherpay { get; set; }
+        public string prescdt { get; set; }
+        public string dispdt { get; set; }
+        public string itemcnt { get; set; }
+        public string prescb { get; set; }
+        public string svid { get; set; }
     }
 }

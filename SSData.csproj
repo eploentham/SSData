@@ -47,7 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon-002.ico</ApplicationIcon>
+    <ApplicationIcon>icon-003.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="C1.C1Excel.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
@@ -123,8 +123,9 @@
     <Compile Include="objdb\ConnectDB.cs" />
     <Compile Include="objdb\MainHISDB.cs" />
     <Compile Include="objdb\TSsdataDB.cs" />
+    <Compile Include="objdb\TSsdataVisitBillDispDB.cs" />
     <Compile Include="objdb\TSsdataVisitDB.cs" />
-    <Compile Include="objdb\TSsdataVisitItemsDB.cs" />
+    <Compile Include="objdb\TSsdataVisitBillDispItemsDB.cs" />
     <Compile Include="object1\BDrugCatalogue.cs" />
     <Compile Include="object1\ComboBoxItem.cs" />
     <Compile Include="object1\IniFile.cs" />
@@ -132,7 +133,8 @@
     <Compile Include="object1\Persistent.cs" />
     <Compile Include="object1\TSsdata.cs" />
     <Compile Include="object1\TSsdataVisit.cs" />
-    <Compile Include="object1\TSsdataVisitItems.cs" />
+    <Compile Include="object1\TSsdataVisitBillDisp.cs" />
+    <Compile Include="object1\TSsdataVisitBillDispItems.cs" />
     <Compile Include="object1\Visit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -204,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon-002.ico" />
+    <Content Include="icon-003.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

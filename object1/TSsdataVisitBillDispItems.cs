@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SSData.object1
 {
-    public class TSsdataVisitItems:Persistent
+    public class TSsdataVisitBillDispItems:Persistent
     {
         public String ssdata_visit_items_id { get; set; }
         public String ssdata_visit_id { get; set; }
@@ -25,5 +25,7 @@ namespace SSData.object1
         public String svrefid { get; set; }
         public String claimcat { get; set; }
         public String active { get; set; }
+        public String row_no { get; set; }
+        public String ssdata_billdisp_id { get; set; }
     }
 }

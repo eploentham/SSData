@@ -21,7 +21,8 @@ namespace SSData.objdb
         TSsdataDB ssdDB;
         TSsdataVisitDB ssdVDB;
         public BDrugCatalogueDB dCDB;
-        TSsdataVisitItemsDB ssdVIDB;
+        TSsdataVisitBillDispItemsDB ssdVBIDB;
+        TSsdataVisitBillDispDB ssdVBDB;
 
         TSsdata ssd;
         public MainHISDB(ConnectDB c)
@@ -35,6 +36,8 @@ namespace SSData.objdb
             ssdDB = new TSsdataDB(conn);
             ssdVDB = new TSsdataVisitDB(conn);
             dCDB = new BDrugCatalogueDB(conn);
+            ssdVBIDB = new TSsdataVisitBillDispItemsDB(conn);
+            ssdVBDB = new TSsdataVisitBillDispDB(conn);
 
             sqlIPD = "SELECT DISTINCT " +
                         "patt08.MNC_HN_YR, patt08.MNC_HN_NO, patt08.MNC_DATE, patt08.MNC_PRE_NO, fint01.MNC_FN_TYP_CD,  " +
@@ -97,7 +100,10 @@ namespace SSData.objdb
             sqlOPD = "SELECT patt01.MNC_HN_YR, patt01.MNC_HN_NO, patt01.MNC_DATE, patm01.MNC_FNAME_T, patm01.MNC_LNAME_T, " +
                         "patm01.MNC_ID_NO, patm01.MNC_BDAY, patm01.MNC_SEX, dbo.PRAKUN_M01_TEMP.PrakanCode, SUM(fint01.MNC_SUM_PRI) AS MNC_SUM_PRI, " +
                         "patt01.MNC_REF_CD, fint01.MNC_PRAKUN_CODE, patm02.MNC_PFIX_DSC, " +
-                        "patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no, fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD, fint01.mnc_doc_yr " +
+                        "patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no, fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD, " +
+                        //"fint01.mnc_doc_yr, patt01.mnc_dot_cd, m26.MNC_DOT_FNAME,m26.MNC_DOT_LNAME,m021.MNC_PFIX_DSC as prefixdoc " +
+                        "fint01.mnc_doc_yr, patt01.mnc_dot_cd  " +
+                        //"fint01.mnc_doc_yr, patt01.mnc_dot_cd, phart01.mnc_req_dat " +
                         "FROM  dbo.FINANCE_M02 INNER JOIN dbo.FINANCE_T01 fint01 ON dbo.FINANCE_M02.MNC_FN_TYP_CD = fint01.MNC_FN_TYP_CD " +
                         "RIGHT OUTER JOIN dbo.PATIENT_M02 patm02 RIGHT OUTER JOIN " +
                         "dbo.PATIENT_T01 patt01 LEFT OUTER JOIN " +
@@ -106,6 +112,9 @@ namespace SSData.objdb
                         "patt01.MNC_HN_NO = patm01.MNC_HN_NO ON patm02.MNC_PFIX_CD = patm01.MNC_PFIX_CDT ON fint01.MNC_HN_YR = patt01.MNC_HN_YR AND " +
                         "fint01.MNC_HN_NO = patt01.MNC_HN_NO AND fint01.MNC_PRE_NO = patt01.MNC_PRE_NO AND fint01.MNC_DATE = patt01.MNC_DATE AND " +
                         "fint01.MNC_DOC_CD = 'ON3' " +
+                        //"Left Join PHARMACY_T01 phart01 on patt01.MNC_HN_NO = phart01.MNC_HN_NO and patt01.MNC_PRE_NO = phart01.MNC_PRE_NO and patt01.MNC_DATE = phart01.MNC_DATE " +
+                        //"Left join patient_m26 m26 ON patt01.MNC_DOT_CD = m26.MNC_DOT_CD " +
+                        //"Left join patient_m02 m021 on m26.MNC_DOT_PFIX = m021.MNC_PFIX_CD " +                        
                         "WHERE     (patt01.MNC_ADM_FLG<> 'A') AND(patt01.MNC_DIAG_STS = 'Y') AND " +
                         "(fint01.MNC_DOC_STS = 'F') AND(dbo.FINANCE_M02.MNC_FN_STS = 'S') " +
                         whereHCODE +
@@ -115,14 +124,16 @@ namespace SSData.objdb
                         //"and(patm01.mnc_hn_no like :HNNo) " +
                         "GROUP BY patt01.MNC_HN_YR, patt01.MNC_HN_NO, patt01.MNC_DATE, patm01.MNC_FNAME_T, patm01.MNC_LNAME_T, patm01.MNC_ID_NO,  " +
                         "patm01.MNC_BDAY, patm01.MNC_SEX, dbo.PRAKUN_M01_TEMP.PrakanCode, patt01.MNC_REF_CD, fint01.MNC_PRAKUN_CODE,  " +
-                        "patm02.MNC_PFIX_DSC, patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no, fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD,fint01.mnc_doc_yr " +
+                        "patm02.MNC_PFIX_DSC, patt01.mnc_vn_no, patt01.mnc_vn_seq, patt01.mnc_vn_sum, patt01.mnc_pre_no, fint01.mnc_doc_cd, fint01.mnc_doc_no, " +
+                        //"fint01.MNC_Doc_CD,fint01.mnc_doc_yr, patt01.mnc_dot_cd, m26.MNC_DOT_FNAME,m26.MNC_DOT_LNAME,m021.MNC_PFIX_DSC  " +
+                        "fint01.MNC_Doc_CD,fint01.mnc_doc_yr, patt01.mnc_dot_cd  " +
                         "ORDER BY patt01.MNC_DATE, patt01.MNC_HN_NO, patt01.mnc_pre_no";
 
             dt = conn.selectData(conn.connMainHIS, sqlOPD);
 
             return dt;
         }
-        public DataTable selectSSDataItem(String hn, String vnno, String preno, String visitDate)
+        public DataTable selectSSDataItem(String hn, String vnno, String preno, String visitDate, String dispid)
         {
             String sql = "", where="";
             //DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId) + 1, 1);
@@ -131,12 +142,13 @@ namespace SSData.objdb
             //    "AND(dbo.PRAKUN_M01_TEMP.PrakanCode = '" + hcode + "' OR " + "dbo.PRAKUN_M01_TEMP.PrakanCode IS NULL) ";
             //startDate = yearId + "-" + monthId + "-01";
             //endDate = yearId + "-" + dateEnd.Month.ToString("00") + "-" + dateEnd.Day.ToString("00");
-            where = " t01.mnc_hn_no = '"+ hn + "' and t01.mnc_vn_no = '"+ vnno + "' and t01.MNC_PRE_NO = '"+ preno + "' ";
+            where = " t01.mnc_hn_no = '"+ hn + "' and t01.mnc_vn_no = '"+ vnno + "' and t01.MNC_PRE_NO = '"+ preno + "' and  phart05.MNC_CFR_NO='"+dispid+"' ";
 
             DataTable dt = new DataTable();
-            sql = "Select phart06.MNC_PH_CD, pharmacy_m01.MNC_PH_TN ,PHARMACY_M05.MNC_PH_PRI01,PHARMACY_M05.MNC_PH_PRI02,sum(phart06.MNC_PH_QTY) as qty "+
+            sql = "Select phart06.MNC_PH_CD, pharmacy_m01.MNC_PH_TN ,PHARMACY_M05.MNC_PH_PRI01,PHARMACY_M05.MNC_PH_PRI02,sum(phart06.MNC_PH_QTY) as qty," +
+                "phart05.mnc_cfg_dat,phart06.mnc_ord_no " +
                 "From PATIENT_T01 t01 " +
-                "left join PHARMACY_T05 phart05 on t01.MNC_PRE_NO = phart05.MNC_PRE_NO and t01.MNC_date = phart05.mnc_date " +
+                "left join PHARMACY_T05 phart05 on t01.MNC_PRE_NO = phart05.MNC_PRE_NO and t01.MNC_date = phart05.mnc_date and t01.mnc_hn_no = phart05.mnc_hn_no " +
                 "left join PHARMACY_T06 phart06 on phart05.MNC_CFR_NO = phart06.MNC_CFR_NO and phart05.MNC_CFG_DAT = phart06.MNC_CFR_dat " +
                 "left join PHARMACY_M01 on phart06.MNC_PH_CD = pharmacy_m01.MNC_PH_CD " +
                 "left join PHARMACY_M05 on PHARMACY_M05.MNC_PH_CD = PHARMACY_M01.MNC_PH_CD " +
@@ -149,13 +161,63 @@ namespace SSData.objdb
                 //"--PHARMACY_M01.mnc_ph_typ_flg = 'P' " +
                 //"and t01.mnc_vn_no = '58' and t01.MNC_PRE_NO = '61' " +
                 "and phart05.MNC_CFR_STS = 'a' " +
-                "Group By phart06.MNC_PH_CD, pharmacy_m01.MNC_PH_TN ,PHARMACY_M05.MNC_PH_PRI01,PHARMACY_M05.MNC_PH_PRI02 " +
-                "Order By phart06.MNC_PH_CD " +
+                "Group By phart06.MNC_PH_CD, pharmacy_m01.MNC_PH_TN ,PHARMACY_M05.MNC_PH_PRI01,PHARMACY_M05.MNC_PH_PRI02,phart05.mnc_cfg_dat,phart06.mnc_ord_no " +
+                "Order By phart06.mnc_ord_no, phart06.MNC_PH_CD " +
                 "; ";
 
             dt = conn.selectData(conn.connMainHIS, sql);
 
             return dt;
+        }
+        public DataTable selectSSDataBillDisp(String hn, String vnno, String preno, String visitDate)
+        {
+            String sql = "", where = "";
+            
+            where = " t01.mnc_hn_no = '" + hn + "' and t01.mnc_vn_no = '" + vnno + "' and t01.MNC_PRE_NO = '" + preno + "' ";
+
+            DataTable dt = new DataTable();
+            sql = "Select phart05.mnc_cfg_dat , phart05.MNC_CFR_NO, sum(phart06.mnc_ph_pri * phart06.mnc_ph_qty) as amt, count(1) as cnt,sum(phart06.mnc_ph_pri) as pri, phart01.mnc_req_dat " +
+                "From PATIENT_T01 t01 " +
+                "left join pharmacy_t01 phart01 on t01.MNC_PRE_NO = phart01.MNC_PRE_NO and t01.MNC_date = phart01.mnc_date and t01.mnc_hn_no = phart01.mnc_hn_no " +
+                "left join PHARMACY_T05 phart05 on t01.MNC_PRE_NO = phart05.MNC_PRE_NO and t01.MNC_date = phart05.mnc_date and t01.mnc_hn_no = phart05.mnc_hn_no  " +
+                "left join PHARMACY_T06 phart06 on phart05.MNC_CFR_NO = phart06.MNC_CFR_NO and phart05.MNC_CFG_DAT = phart06.MNC_CFR_dat " +
+                "where " +
+                where +
+                "and phart05.MNC_CFR_STS = 'a' " +
+                "Group By phart05.mnc_cfg_dat , phart05.MNC_CFR_NO , phart01.mnc_req_dat" +  
+                "Order By phart05.mnc_cfg_dat , phart05.MNC_CFR_NO; " +
+                "; ";
+
+            dt = conn.selectData(conn.connMainHIS, sql);
+
+            return dt;
+        }
+        public String selectPrescdt(String hn, String preno, String visitDate)
+        {
+            String sql = "", where = "", prescdt="";
+            //DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId) + 1, 1);
+            //dateEnd = dateEnd.AddDays(-1);
+            //whereHCODE = whereHCODE.Equals("") ? "" : " AND (fint01.MNC_PRAKUN_CODE = '" + hcode + "' OR " + "fint01.MNC_PRAKUN_CODE IS NULL) " +
+            //    "AND(dbo.PRAKUN_M01_TEMP.PrakanCode = '" + hcode + "' OR " + "dbo.PRAKUN_M01_TEMP.PrakanCode IS NULL) ";
+            //startDate = yearId + "-" + monthId + "-01";
+            //endDate = yearId + "-" + dateEnd.Month.ToString("00") + "-" + dateEnd.Day.ToString("00");
+            where = " phart01.mnc_hn_no = '" + hn + "' and phart01.mnc_date = '" + visitDate + "' and phart01.MNC_PRE_NO = '" + preno + "' ";
+
+            DataTable dt = new DataTable();
+            sql = "Select phart01.* " +
+                "From  PHARMACY_T01 phart01  " +
+                "where " +
+                //"--t01.MNC_DATE BETWEEN '' AND '' and " +
+                //"-- t01.MNC_FN_TYP_CD in ('44', '45', '46', '47', '48', '49') " + " and " +
+                where +                
+                "; ";
+
+            dt = conn.selectData(conn.connMainHIS, sql);
+            if (dt.Rows.Count > 0)
+            {
+                prescdt = dt.Rows[0]["mnc_req_dat"].ToString();
+            }
+            return prescdt;
         }
         public void insertDrugCat(FpSpread grd, ProgressBar pb1)
         {
@@ -214,11 +276,14 @@ namespace SSData.objdb
 
             pb1.Hide();
         }
-        public void insertTSSData(String hcode, String branchId, String yearId, String monthId, ProgressBar pb1)
+        public void insertTSSData(String hcode, String branchId, String yearId, String monthId, ProgressBar pb1, Label label1, Label label2)
         {
+            label1.Text = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             pb1.Show();
             DataTable dt = new DataTable();
             DataTable dtItem = new DataTable();
+            DataTable dtBillDisp = new DataTable();
+            int rowNo = 0;
 
             conn.OpenConnectionSSData();
             dt =selectSSData(hcode, yearId, monthId);
@@ -239,8 +304,9 @@ namespace SSData.objdb
             foreach (DataRow row in dt.Rows)
             {
                 pb1.Value++;
+                
                 TSsdataVisit ssV = new TSsdataVisit();
-                String visitDate = "", id="";
+                String visitDate = "", id="", dispdt="", prescdt="";
                 String birDate = "";
 
                 visitDate = datetoDB(row["MNC_DATE"].ToString());
@@ -278,34 +344,82 @@ namespace SSData.objdb
                 ssV.claimamt = ssV.amount;
                 ssV.otherpayplan = "";
                 ssV.otherpay = "";
+                ssV.prescdt = "";
+                ssV.dispdt = "";
+                ssV.itemcnt = "";
+                ssV.prescb = row["MNC_dot_cd"].ToString();
+                ssV.svid = ssV.vn;
+                prescdt = selectPrescdt(row["MNC_HN_NO"].ToString(), row["mnc_pre_no"].ToString(), visitDate);
+                prescdt = datetoDB(prescdt);
 
                 id = ssdVDB.insert(ssV);
-                dtItem.Clear();
-                dtItem = selectSSDataItem(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date);
-                foreach (DataRow rowI in dtItem.Rows)
+                
+                dtBillDisp = selectSSDataBillDisp(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date);
+                foreach (DataRow rowB in dtBillDisp.Rows)
                 {
-                    TSsdataVisitItems ssvI = new TSsdataVisitItems();
-                    ssvI.ssdata_id = ssd.ssdata_id;
-                    ssvI.ssdata_visit_id = id;
-                    ssvI.invno = ssV.invno;
-                    ssvI.svdate = ssV.visit_date;
-                    ssvI.svrefid = "";
-                    ssvI.up = "";
-                    ssvI.active = "";
-                    ssvI.billmuad = "";
-                    ssvI.chargeamt = "";
-                    ssvI.claimamount = "";
-                    ssvI.claimcat = "";
-                    ssvI.claimup = "";
-                    ssvI.desc1 = "";
-                    ssvI.llcode = "";
-                    ssvI.qty = "";
-                    ssvI.stdcode = "";
-                    
-                }
+                    rowNo = 0;
+                    dtItem.Clear();
+                    dtItem = selectSSDataItem(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date);
+
+                    String ssdvBId = "";
+                    TSsdataVisitBillDisp ssdvB = new TSsdataVisitBillDisp();
+                    ssdvB.benefitplan = "";
+                    ssdvB.chargeamt = rowB["pri"].ToString();
+                    ssdvB.claimamt = rowB["amt"].ToString();
+                    ssdvB.daycover = "";
+                    ssdvB.dispdt = datetoDB(rowB["mnc_req_dat"].ToString());//วัน-เวลา สั่งยา
+                    ssdvB.dispestat = "";
+                    ssdvB.dispid = rowB["MNC_CFR_NO"].ToString();
+                    ssdvB.hn = ssV.hn_no;
+                    ssdvB.invno = ssV.invno;
+                    ssdvB.itemcnt = rowB["cnt"].ToString();
+                    ssdvB.otherpay = "";
+                    ssdvB.paid = rowB["amt"].ToString();
+                    ssdvB.pid = ssV.pid;
+                    ssdvB.prescb = row["MNC_dot_cd"].ToString();
+                    ssdvB.prescdt = datetoDB(rowB["mnc_cfg_dat"].ToString());//วัน-เวลา รับยา
+                    ssdvB.providerid = "";
+                    ssdvB.reimburser = "";
+                    ssdvB.ssdata_billdisp_id = "";
+                    ssdvB.ssdata_id = ssd.ssdata_id;
+                    ssdvB.ssdata_visit_id = id;
+                    ssdvB.svid = ssV.vn;
+                    ssdvB.active = "1";
+                    ssdvBId = ssdVBDB.insert(ssdvB);
+
+                    foreach (DataRow rowI in dtItem.Rows)
+                    {
+                        TSsdataVisitBillDispItems ssvI = new TSsdataVisitBillDispItems();
+                        double price = 0, qty = 0, amt = 0;
+                        Double.TryParse(dtItem.Rows[rowNo]["mnc_ph_pri01"].ToString(), out price);
+                        Double.TryParse(dtItem.Rows[rowNo]["qty"].ToString(), out qty);
+                        amt = price * qty;
+                        ssvI.ssdata_id = ssd.ssdata_id;
+                        ssvI.ssdata_visit_id = id;
+                        ssvI.invno = ssV.invno;
+                        ssvI.svdate = datetoDB(dtItem.Rows[rowNo]["mnc_ph_cd"].ToString());
+                        ssvI.row_no = dtItem.Rows[rowNo]["mnc_ord_no"].ToString();
+                        ssvI.svrefid = "";
+                        ssvI.up = price.ToString();
+                        ssvI.active = "";
+                        ssvI.billmuad = "";
+                        ssvI.chargeamt = amt.ToString();
+                        ssvI.claimamount = ssvI.chargeamt;
+                        ssvI.claimcat = "OP1";
+                        ssvI.claimup = "";
+                        ssvI.desc1 = dtItem.Rows[rowNo]["mnc_ph_tn"].ToString();
+                        ssvI.llcode = dtItem.Rows[rowNo]["mnc_ph_cd"].ToString();
+                        ssvI.qty = qty.ToString();
+                        ssvI.stdcode = dtItem.Rows[rowNo]["mnc_ph_cd"].ToString();
+                        ssvI.ssdata_billdisp_id = "";
+                        ssdVBIDB.insert(ssvI);
+                        rowNo++;
+                    }
+                }                
             }
             conn.CloseConnectionSSData();
             pb1.Hide();
+            label2.Text = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
         }
         public String setInvNO(String mnc_doc_cd, String mnc_doc_no, String mnc_doc_yr)
         {

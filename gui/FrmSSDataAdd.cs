@@ -47,7 +47,7 @@ namespace SSData
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            sC.mHisDB.insertTSSData(sC.iniC.HCODE, sC.iniC.branchId, cboYear.Text, cboMonth.SelectedValue.ToString(), pB1);
+            sC.mHisDB.insertTSSData(sC.iniC.HCODE, sC.iniC.branchId, cboYear.Text, cboMonth.SelectedValue.ToString(), pB1, label12, label13);
         }
 
         private void btnOpenBT_Click(object sender, EventArgs e)

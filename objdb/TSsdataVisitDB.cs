@@ -51,6 +51,11 @@ namespace SSData.objdb
             ssdV.claimamt = "claimamt";
             ssdV.otherpayplan = "otherpayplan";
             ssdV.otherpay = "otherpay";
+            ssdV.prescdt = "prescdt";
+            ssdV.dispdt = "dispdt";
+            ssdV.itemcnt = "itemcnt";
+            ssdV.prescb = "prescb";
+            ssdV.svid = "svid";
 
             ssdV.table = "t_ssdata_visit";
             ssdV.pkField = "ssdata_visit_id";
@@ -70,7 +75,9 @@ namespace SSData.objdb
                 ssdV.vn_seq+"," + ssdV.vn_sum + "," + ssdV.year_id + "," + 
                 ssdV.month_id + "," + ssdV.invno + "," + ssdV.billno + "," +
                 ssdV.amount + "," + ssdV.paid + "," + ssdV.payplan + "," +
-                ssdV.claimamt + "," + ssdV.otherpayplan + "," + ssdV.otherpay +
+                ssdV.claimamt + "," + ssdV.otherpayplan + "," + ssdV.otherpay + "," +
+                ssdV.prescdt + "," + ssdV.dispdt + "," + ssdV.itemcnt + "," +
+                ssdV.prescb + "," + ssdV.svid +
                 ") " +
                 "Values('" + p.active + "','" + p.birth_day + "','" + p.branch_id + "','" +
                 p.hcode + "','" + p.hcode_owner + "','" + p.hn_no + "','" +
@@ -81,10 +88,23 @@ namespace SSData.objdb
                 p.vn_seq + "','" + p.vn_sum + "','" + p.year_id + "','" + 
                 p.month_id + "','" + p.invno + "','" + p.billno + "','" +
                 p.amount + "','" + p.paid + "','" + p.payplan + "','" +
-                p.claimamt + "','" + p.otherpayplan + "','" + p.otherpay +
+                p.claimamt + "','" + p.otherpayplan + "','" + p.otherpay + "','" +
+                p.prescdt + "','" + p.dispdt + "','" + p.itemcnt + "','" +
+                p.prescb + "','" + p.svid +
                 "') ";
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
 
+            return re;
+        }
+        public String updateSsdata1(String id, String dispdt, String itemcnt, String prescdt)
+        {
+            String sql = "", re = "";
+            sql = "Update "+ssdV.table+" Set " +
+                ssdV.dispdt+"='"+dispdt+"' " +
+                ", " + ssdV.itemcnt + "='" + itemcnt + "' " +
+                ", " + ssdV.prescdt + "='" + prescdt + "' " +
+                "Where " +ssdV.ssdata_visit_id+"='"+id+"'";
+            re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
             return re;
         }
     }
