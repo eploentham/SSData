@@ -120,6 +120,7 @@
       <DependentUpon>FrmSSDataView.cs</DependentUpon>
     </Compile>
     <Compile Include="objdb\BDrugCatalogueDB.cs" />
+    <Compile Include="objdb\BillTranDB.cs" />
     <Compile Include="objdb\ConnectDB.cs" />
     <Compile Include="objdb\MainHISDB.cs" />
     <Compile Include="objdb\TSsdataDB.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="objdb\TSsdataVisitDB.cs" />
     <Compile Include="objdb\TSsdataVisitBillDispItemsDB.cs" />
     <Compile Include="object1\BDrugCatalogue.cs" />
+    <Compile Include="object1\BillTran.cs" />
     <Compile Include="object1\ComboBoxItem.cs" />
     <Compile Include="object1\IniFile.cs" />
     <Compile Include="object1\InitConfig.cs" />

@@ -23,6 +23,7 @@ namespace SSData.objdb
         public BDrugCatalogueDB dCDB;
         TSsdataVisitBillDispItemsDB ssdVBIDB;
         TSsdataVisitBillDispDB ssdVBDB;
+        BillTranDB btDB;
 
         TSsdata ssd;
         public MainHISDB(ConnectDB c)
@@ -38,6 +39,7 @@ namespace SSData.objdb
             dCDB = new BDrugCatalogueDB(conn);
             ssdVBIDB = new TSsdataVisitBillDispItemsDB(conn);
             ssdVBDB = new TSsdataVisitBillDispDB(conn);
+            btDB = new BillTranDB(conn);
 
             sqlIPD = "SELECT DISTINCT " +
                         "patt08.MNC_HN_YR, patt08.MNC_HN_NO, patt08.MNC_DATE, patt08.MNC_PRE_NO, fint01.MNC_FN_TYP_CD,  " +
@@ -169,6 +171,42 @@ namespace SSData.objdb
 
             return dt;
         }
+        public DataTable selectSSDataDispItem(String hn, String vnno, String preno, String visitDate, String dispid)
+        {
+            String sql = "", where = "";
+            //DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId) + 1, 1);
+            //dateEnd = dateEnd.AddDays(-1);
+            //whereHCODE = whereHCODE.Equals("") ? "" : " AND (fint01.MNC_PRAKUN_CODE = '" + hcode + "' OR " + "fint01.MNC_PRAKUN_CODE IS NULL) " +
+            //    "AND(dbo.PRAKUN_M01_TEMP.PrakanCode = '" + hcode + "' OR " + "dbo.PRAKUN_M01_TEMP.PrakanCode IS NULL) ";
+            //startDate = yearId + "-" + monthId + "-01";
+            //endDate = yearId + "-" + dateEnd.Month.ToString("00") + "-" + dateEnd.Day.ToString("00");
+            where = " t01.mnc_hn_no = '" + hn + "' and t01.mnc_vn_no = '" + vnno + "' and t01.MNC_PRE_NO = '" + preno + "' and  phart05.MNC_CFR_NO='" + dispid + "' ";
+
+            DataTable dt = new DataTable();
+            sql = "Select phart06.MNC_PH_CD, pharmacy_m01.MNC_PH_TN ,PHARMACY_M05.MNC_PH_PRI01,PHARMACY_M05.MNC_PH_PRI02,sum(phart06.MNC_PH_QTY) as qty," +
+                "phart05.mnc_cfg_dat,phart06.mnc_ord_no " +
+                "From PATIENT_T01 t01 " +
+                "left join PHARMACY_T05 phart05 on t01.MNC_PRE_NO = phart05.MNC_PRE_NO and t01.MNC_date = phart05.mnc_date and t01.mnc_hn_no = phart05.mnc_hn_no " +
+                "left join PHARMACY_T06 phart06 on phart05.MNC_CFR_NO = phart06.MNC_CFR_NO and phart05.MNC_CFG_DAT = phart06.MNC_CFR_dat " +
+                "left join PHARMACY_M01 on phart06.MNC_PH_CD = pharmacy_m01.MNC_PH_CD " +
+                "left join PHARMACY_M05 on PHARMACY_M05.MNC_PH_CD = PHARMACY_M01.MNC_PH_CD " +
+                "where " +
+                //"--t01.MNC_DATE BETWEEN '' AND '' and " +
+                //"-- t01.MNC_FN_TYP_CD in ('44', '45', '46', '47', '48', '49') " + " and " +
+                where +
+                //"    t01.mnc_hn_no = '5085115' " +
+                //"--and t01.MNC_DATE = '2014-08-17' " +
+                //"--PHARMACY_M01.mnc_ph_typ_flg = 'P' " +
+                //"and t01.mnc_vn_no = '58' and t01.MNC_PRE_NO = '61' " +
+                "and phart05.MNC_CFR_STS = 'a' " +
+                "Group By phart06.MNC_PH_CD, pharmacy_m01.MNC_PH_TN ,PHARMACY_M05.MNC_PH_PRI01,PHARMACY_M05.MNC_PH_PRI02,phart05.mnc_cfg_dat,phart06.mnc_ord_no " +
+                "Order By phart06.mnc_ord_no, phart06.MNC_PH_CD " +
+                "; ";
+
+            dt = conn.selectData(conn.connMainHIS, sql);
+
+            return dt;
+        }
         public DataTable selectSSDataBillDisp(String hn, String vnno, String preno, String visitDate)
         {
             String sql = "", where = "";
@@ -184,8 +222,8 @@ namespace SSData.objdb
                 "where " +
                 where +
                 "and phart05.MNC_CFR_STS = 'a' " +
-                "Group By phart05.mnc_cfg_dat , phart05.MNC_CFR_NO , phart01.mnc_req_dat" +  
-                "Order By phart05.mnc_cfg_dat , phart05.MNC_CFR_NO; " +
+                "Group By phart05.mnc_cfg_dat , phart05.MNC_CFR_NO , phart01.mnc_req_dat " +  
+                "Order By phart05.mnc_cfg_dat , phart05.MNC_CFR_NO " +
                 "; ";
 
             dt = conn.selectData(conn.connMainHIS, sql);
@@ -306,7 +344,7 @@ namespace SSData.objdb
                 pb1.Value++;
                 
                 TSsdataVisit ssV = new TSsdataVisit();
-                String visitDate = "", id="", dispdt="", prescdt="";
+                String visitDate = "", id="", dispdt="", prescdt="", btId="";
                 String birDate = "";
 
                 visitDate = datetoDB(row["MNC_DATE"].ToString());
@@ -353,13 +391,39 @@ namespace SSData.objdb
                 prescdt = datetoDB(prescdt);
 
                 id = ssdVDB.insert(ssV);
-                
+
+                BillTran bt = new BillTran();
+                bt.amount = ssV.amount;
+                bt.authcode = "";
+                bt.billno = "";
+                bt.billtran_id = "";
+                bt.claimamt = bt.amount;
+                bt.dttran = visitDate;
+                bt.hcode = "";
+                bt.hmain = "";
+                bt.hn = ssV.hn_no;
+                bt.invno = ssV.invno;
+                bt.memberno = "";
+                bt.name = ssV.pre_no+" " + ssV.patient_fname + " " + ssV.patient_lname;
+                bt.otherpayplan = "";
+                bt.paid = "";
+                bt.payplan = "";
+                bt.pid = ssV.pid;
+                bt.ptherpay = "";
+                bt.ssdata_id = ssV.ssdata_id;
+                bt.ssdata_visit_id = id;
+                bt.station = "";
+                bt.tflag = "";
+                bt.vercode = "";
+
+                btId = btDB.insert(bt);
+
                 dtBillDisp = selectSSDataBillDisp(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date);
                 foreach (DataRow rowB in dtBillDisp.Rows)
                 {
                     rowNo = 0;
                     dtItem.Clear();
-                    dtItem = selectSSDataItem(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date);
+                    dtItem = selectSSDataItem(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date, rowB["MNC_CFR_NO"].ToString());
 
                     String ssdvBId = "";
                     TSsdataVisitBillDisp ssdvB = new TSsdataVisitBillDisp();
@@ -396,8 +460,9 @@ namespace SSData.objdb
                         amt = price * qty;
                         ssvI.ssdata_id = ssd.ssdata_id;
                         ssvI.ssdata_visit_id = id;
+                        ssvI.ssdata_billdisp_id = ssdvBId;
                         ssvI.invno = ssV.invno;
-                        ssvI.svdate = datetoDB(dtItem.Rows[rowNo]["mnc_ph_cd"].ToString());
+                        ssvI.svdate = datetoDB(dtItem.Rows[rowNo]["mnc_cfg_dat"].ToString());
                         ssvI.row_no = dtItem.Rows[rowNo]["mnc_ord_no"].ToString();
                         ssvI.svrefid = "";
                         ssvI.up = price.ToString();
@@ -411,11 +476,11 @@ namespace SSData.objdb
                         ssvI.llcode = dtItem.Rows[rowNo]["mnc_ph_cd"].ToString();
                         ssvI.qty = qty.ToString();
                         ssvI.stdcode = dtItem.Rows[rowNo]["mnc_ph_cd"].ToString();
-                        ssvI.ssdata_billdisp_id = "";
+                        //ssvI.ssdata_billdisp_id = "";
                         ssdVBIDB.insert(ssvI);
                         rowNo++;
                     }
-                }                
+                }
             }
             conn.CloseConnectionSSData();
             pb1.Hide();

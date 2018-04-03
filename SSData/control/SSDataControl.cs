@@ -17,6 +17,7 @@ namespace SSData.control
         public ConnectDB conn;
         public MainHISDB mHisDB;
 
+        public enum TypeOut { Discharge=1, Admin=2, Refer=3, Dead=4, Escape=5, Other=9}
         public SSDataControl()
         {
             initConfig();
