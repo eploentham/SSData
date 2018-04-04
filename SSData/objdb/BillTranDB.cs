@@ -38,6 +38,9 @@ namespace SSData.objdb
             bt.station = "station";
             bt.tflag = "tflag";
             bt.vercode = "vercode";
+
+            bt.table = "t_billtran";
+            bt.pkField = "billtran_id";
         }
         public String insert(BillTran p)
         {
@@ -46,7 +49,7 @@ namespace SSData.objdb
             //p.active = "1";
 
             sql = "Insert Into " + bt.table + "(" + bt.amount + "," + bt.authcode + "," + bt.billno + "," +
-                bt.billtran_id + "," + bt.claimamt + "," + bt.dttran + "," +
+                 bt.claimamt + "," + 
                 bt.dttran + "," + bt.hcode + "," + bt.hmain + "," +
                 bt.hn + "," + bt.invno + "," + bt.memberno + "," +
                 bt.name + "," + bt.otherpayplan + "," + bt.paid + "," +
@@ -55,10 +58,10 @@ namespace SSData.objdb
                 bt.vercode +
                 ") " +
                 "Values('" + p.amount + "','" + p.authcode + "','" + p.billno + "','" +
-                p.billtran_id + "','" + p.claimamt + "','" + p.dttran + "','" +
+                p.claimamt + "','" + 
                 p.dttran + "','" + p.hcode + "','" + p.hmain + "','" +
                 p.hn + "','" + p.invno + "','" + p.memberno + "','" +
-                p.name + "','" + p.otherpayplan + "','" + p.paid + "','" +
+                p.name.Replace("'", "''") + "','" + p.otherpayplan + "','" + p.paid + "','" +
                 p.payplan + "','" + p.pid + "','" + p.ssdata_id + "','" +
                 p.ssdata_visit_id + "','" + p.station + "','" + p.tflag + "','" +
                 p.vercode +

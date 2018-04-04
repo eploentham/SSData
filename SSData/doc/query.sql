@@ -21,3 +21,12 @@ declare @TableName sysname = 'b_drugcatalogue'
     }'
 
     print @Result
+
+
+
+
+delete from t_ssdata_visit;
+delete from t_billtran;
+delete from t_billtran_items;
+delete from t_billdisp;
+delete from t_billdisp_items;
