@@ -1,6 +1,7 @@
 ﻿using SSData.object1;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,6 +71,17 @@ namespace SSData.objdb
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
 
             return re;
+        }
+        public DataTable selectByYearMonth(String yearId, String monthId)
+        {
+            DataTable dt = new DataTable();
+            String sql = "select bd.* " +
+                "From " + bd.table + " bd " +
+                "Left Join t_ssdata_visit ssv On ssv.ssdata_visit_id = bd." + bd.ssdata_visit_id + " " +
+                "Left Join t_ssdata ss On ss.ssdata_id = ssv.ssdata_id " +
+                "Where ss.year_id ='" + yearId + "' and ss.month_id ='" + monthId + "' and ssv.active = '1' ";
+            dt = conn.selectData(conn.connSSData, sql);
+            return dt;
         }
     }
 }

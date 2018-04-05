@@ -32,5 +32,6 @@ namespace SSData.object1
         public String completion { get; set; }
         public String svtxcode { get; set; }
         public String claimcat { get; set; }
+        public String ssdata_visit_id { get; set; }
     }
 }

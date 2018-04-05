@@ -3,7 +3,11 @@ using SSData.objdb;
 using SSData.object1;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +20,8 @@ namespace SSData.control
         private IniFile iniF;
         public ConnectDB conn;
         public MainHISDB mHisDB;
+
+        String encoding = "Windows-874";
 
         public enum TypeOut { Discharge=1, Admin=2, Refer=3, Dead=4, Escape=5, Other=9}
         public SSDataControl()
@@ -60,7 +66,13 @@ namespace SSData.control
 
             iniC.HCODE = iniF.Read("HCODE");
             iniC.branchId = iniF.Read("branch_id");
-
+            iniC.pathFile = iniF.Read("pathFile");
+            iniC.FileNameBillTran = iniF.Read("FileNameBillTran");
+            iniC.FileNameBillDisp  = iniF.Read("FileNameBillDisp");
+            iniC.FileNameOPServices = iniF.Read("FileNameOPServices");
+            iniC.SSOPBIL = iniF.Read("SSOPBIL");
+            iniC.EmailSSOPBIL = iniF.Read("EmailSSOPBIL");
+            iniC.HNAME = iniF.Read("HNAME");
         }
         public String getValueCboItem(ComboBox c)
         {
@@ -206,6 +218,245 @@ namespace SSData.control
             {
                 return dt;
             }
+        }
+        public void createFolder(String path)
+        {
+            bool folderExists = Directory.Exists(path);
+            if (!folderExists)
+                Directory.CreateDirectory(path);
+        }
+        private AlternateView getEmbeddedImage(String filePath, String cid)
+        {
+            LinkedResource res = new LinkedResource(filePath);
+            res.ContentId = cid;
+            string htmlBody = "<img src=cid:" + res.ContentId + ">";
+            AlternateView alternateView = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
+            alternateView.LinkedResources.Add(res);
+            return alternateView;
+        }
+        public String FixNull(Object o)
+        {
+            String chk = "";
+            if (o == null)
+            {
+                chk = "";
+            }
+            else
+            {
+                chk = o.ToString();
+            }
+            return chk;
+        }
+        public String genFileName(String hcode, String ssopbil, String period, String periodsub)
+        {
+            DateTime dt1 = DateTime.Now;
+            String dt = "";
+            dt = dt1.ToString("yyyyMMddTHH:mm:ss") + ".txt";
+            //txtFileName.Value = txtHCODE.Text + "_" + txtSSOPBIL.Text + "_" + txtPeriod.Text + "_" + txtPeriodSub.Text + "_" + dt1.ToString("yyyyMMdd-HHmmss") + ".txt";
+            return dt;
+        }
+        public String genTextBillTran(String hname, String path, String filename, String hcode, String ssopbil, String period, String periodsub, String yearId, String monthId, ProgressBar pb1)
+        {
+            String h1 = "", h2 = "", h3 = "", h4 = "", h5 = "", h6 = "", h7 = "", h8 = "", h9 = "", dt1 = "", SESSNO = "", Header = "", txtBT = "", txtRow = "", txtRowBTi = "", ssDId = "";
+            try
+            {
+                pb1.Show();
+                byte[] isoBytes = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(encoding), Encoding.UTF8.GetBytes(iniC.HNAME));
+                string msg = Encoding.GetEncoding(encoding).GetString(isoBytes);
+
+                DataTable dtBT = new DataTable();
+                DataTable dtBTi = new DataTable();
+                SESSNO = mHisDB.ssdDB.selectIDByYearMonth(yearId, monthId);
+                dtBT = mHisDB.btDB.selectByYearMonth(yearId, monthId);
+               
+                if (dtBT.Rows.Count > 0)
+                {
+                    ssDId = dtBT.Rows[0][mHisDB.btDB.bt.ssdata_id].ToString();
+                }
+                dtBTi = mHisDB.btIDB.selectBySSdId(ssDId);
+                pb1.Minimum = 0;
+                pb1.Maximum = dtBT.Rows.Count + dtBTi.Rows.Count;
+
+                dt1 = genFileName(hcode, ssopbil, period, periodsub);
+                h1 = @"<?xml version=""1.0"" encoding=""windows-874""?>" + Environment.NewLine;
+                h2 = @"<ClaimRec System=""OP"" PayPlan=""SS"" Version=""0.93"">" + Environment.NewLine;
+                h3 = "<Header>" + Environment.NewLine;
+                h4 = "<HCODE>" + iniC.HCODE + "</HCODE>" + Environment.NewLine;
+                //h5 = "<HNAME>" + txtHName.Text + "</HNAME>" + Environment.NewLine;
+                h5 = "<HNAME>" + hname + "</HNAME>" + Environment.NewLine;
+                h6 = "<DATETIME>" + dt1 + "</DATETIME>" + Environment.NewLine;
+                h7 = "<SESSNO>" + SESSNO + "</SESSNO>" + Environment.NewLine;
+                h8 = "<RECCOUNT>" + dtBT.Rows.Count + "</RECCOUNT>" + Environment.NewLine;
+                h9 = "</Header>" + Environment.NewLine;
+
+                var file = path + "\\" + filename;
+                using (StreamWriter sw = new StreamWriter(File.Open(file, FileMode.Create), Encoding.GetEncoding(encoding)))
+                {
+                    Header = h1 + h2 + h3 + h4 + h5 + h6 + h7 + h8 + h9;
+                    foreach (DataRow row in dtBT.Rows)
+                    {
+                        pb1.Value++;
+                        String col01 = "", col02 = "", col03 = "", col04 = "", col05 = "", col06 = "", col07 = "", col08 = "", col09 = "", col10 = "";
+                        String col11 = "", col12 = "", col13 = "", col14 = "", col15 = "", col16 = "", col17 = "", col18 = "", col19 = "";
+                        col01 = row[mHisDB.btDB.bt.station].ToString();
+                        col02 = row[mHisDB.btDB.bt.authcode].ToString();
+                        col03 = row[mHisDB.btDB.bt.dttran].ToString();
+                        col04 = row[mHisDB.btDB.bt.hcode].ToString();
+                        col05 = row[mHisDB.btDB.bt.invno].ToString();
+                        col06 = row[mHisDB.btDB.bt.billno].ToString();
+                        col07 = row[mHisDB.btDB.bt.hn].ToString();
+                        col08 = "";
+                        col09 = row[mHisDB.btDB.bt.amount].ToString();
+                        col10 = row[mHisDB.btDB.bt.paid].ToString();
+                        col11 = row[mHisDB.btDB.bt.vercode].ToString();
+                        col12 = row[mHisDB.btDB.bt.tflag].ToString();
+                        col13 = row[mHisDB.btDB.bt.pid].ToString();
+                        col14 = row[mHisDB.btDB.bt.name].ToString();
+                        col15 = row[mHisDB.btDB.bt.hmain].ToString();
+                        col16 = row[mHisDB.btDB.bt.payplan].ToString();
+                        col17 = row[mHisDB.btDB.bt.claimamt].ToString();
+                        col18 = row[mHisDB.btDB.bt.otherpayplan].ToString();
+                        col19 = row[mHisDB.btDB.bt.otherpay].ToString();
+                        txtRow += col01 + "|" + col02 + "|" + col03 + "|" + col04 + "|" + col05 + "|" + col06 + "|" + col07 + "|" + col08 + "|" + col09 + "|" + col10
+                                + "|" + col11 + "|" + col12 + "|" + col13 + "|" + col14 + "|" + col15 + "|" + col16 + "|" + col17 + "|" + col18 + "|" + col19 + Environment.NewLine;
+                    }
+                    foreach (DataRow rowI in dtBTi.Rows)
+                    {
+                        pb1.Value++;
+                        String col01 = "", col02 = "", col03 = "", col04 = "", col05 = "", col06 = "", col07 = "", col08 = "", col09 = "", col10 = "";
+                        String col11 = "", col12 = "", col13 = "";
+
+                        col01 = rowI[mHisDB.btIDB.btI.invno].ToString();
+                        col02 = rowI[mHisDB.btIDB.btI.svdate].ToString();
+                        col03 = rowI[mHisDB.btIDB.btI.billmuad].ToString();
+                        col04 = rowI[mHisDB.btIDB.btI.lccode].ToString();
+                        col05 = rowI[mHisDB.btIDB.btI.stdcode].ToString();
+                        col06 = rowI[mHisDB.btIDB.btI.desc1].ToString();
+                        col07 = rowI[mHisDB.btIDB.btI.qty].ToString();
+                        col08 = rowI[mHisDB.btIDB.btI.up].ToString();
+                        col09 = rowI[mHisDB.btIDB.btI.chargeamt].ToString();
+                        col10 = rowI[mHisDB.btIDB.btI.claimup].ToString();
+                        col11 = rowI[mHisDB.btIDB.btI.claimamount].ToString();
+                        col12 = rowI[mHisDB.btIDB.btI.svrefid].ToString();
+                        col13 = rowI[mHisDB.btIDB.btI.claimcat].ToString();
+
+                        txtRowBTi += col01 + "|" + col02 + "|" + col03 + "|" + col04 + "|" + col05 + "|" + col06 + "|" + col07 + "|" + col08 + "|" + col09 + "|" + col10
+                               + "|" + col11 + "|" + col12 + "|" + col13 + Environment.NewLine;
+                    }
+                    txtBT = "<BILLTRAN>" + Environment.NewLine + txtRow + "</BILLTRAN>" + Environment.NewLine +
+                        "<BillItems>" + Environment.NewLine + txtRowBTi + "</BillItems>" + Environment.NewLine + "</ClaimRec>" + Environment.NewLine;
+
+                    sw.WriteLine(Header + txtBT);
+                }
+            }
+            catch (IOException ioex)
+            {
+
+            }
+            pb1.Hide();
+            return "";
+        }
+        public String genTextBillDisp(String hname, String path, String filename, String hcode, String ssopbil, String period, String periodsub, String yearId, String monthId, ProgressBar pb1)
+        {
+            String h1 = "", h2 = "", h3 = "", h4 = "", h5 = "", h6 = "", h7 = "", h8 = "", h9 = "", dt1 = "", SESSNO = "", Header = "", txtBD = "", txtRow = "", txtBDi = "", txtRowBDi = "", ssDId = "";
+            try
+            {
+                pb1.Show();
+                DataTable dtBD = new DataTable();
+                DataTable dtBDi = new DataTable();
+                SESSNO = mHisDB.ssdDB.selectIDByYearMonth(yearId, monthId);
+                dtBD = mHisDB.bdDB.selectByYearMonth(yearId, monthId);
+
+                if (dtBD.Rows.Count > 0)
+                {
+                    ssDId = dtBD.Rows[0][mHisDB.bdDB.bd.ssdata_id].ToString();
+                }
+                dtBDi = mHisDB.bdIDB.selectBySSdId(ssDId);
+                pb1.Minimum = 0;
+                pb1.Maximum = dtBD.Rows.Count + dtBDi.Rows.Count;
+                dt1 = genFileName(hcode, ssopbil, period, periodsub);
+                h1 = @"<?xml version=""1.0"" encoding=""windows-874""?>" + Environment.NewLine;
+                h2 = @"<ClaimRec System=""OP"" PayPlan=""SS"" Version=""0.93"">" + Environment.NewLine;
+                h3 = "<Header>" + Environment.NewLine;
+                h4 = "<HCODE>" + iniC.HCODE + "</HCODE>" + Environment.NewLine;
+                //h5 = "<HNAME>" + txtHName.Text + "</HNAME>" + Environment.NewLine;
+                h5 = "<HNAME>" + hname + "</HNAME>" + Environment.NewLine;
+                h6 = "<DATETIME>" + dt1 + "</DATETIME>" + Environment.NewLine;
+                h7 = "<SESSNO>" + SESSNO + "</SESSNO>" + Environment.NewLine;
+                h8 = "<RECCOUNT>" + dtBD.Rows.Count + "</RECCOUNT>" + Environment.NewLine;
+                h9 = "</Header>" + Environment.NewLine;
+
+                var file = path + "\\" + filename;
+                using (StreamWriter sw = new StreamWriter(File.Open(file, FileMode.Create), Encoding.GetEncoding(encoding)))
+                {
+                    Header = h1 + h2 + h3 + h4 + h5 + h6 + h7 + h8 + h9;
+                    foreach (DataRow row in dtBD.Rows)
+                    {
+                        pb1.Value++;
+                        String col01 = "", col02 = "", col03 = "", col04 = "", col05 = "", col06 = "", col07 = "", col08 = "", col09 = "", col10 = "";
+                        String col11 = "", col12 = "", col13 = "", col14 = "", col15 = "", col16 = "", col17 = "", col18 = "";
+                        col01 = row[mHisDB.bdDB.bd.providerid].ToString();
+                        col02 = row[mHisDB.bdDB.bd.dispid].ToString();
+                        col03 = row[mHisDB.bdDB.bd.invno].ToString();
+                        col04 = row[mHisDB.bdDB.bd.hn].ToString();
+                        col05 = row[mHisDB.bdDB.bd.pid].ToString();
+                        col06 = row[mHisDB.bdDB.bd.prescdt].ToString();
+                        col07 = row[mHisDB.bdDB.bd.dispdt].ToString();
+                        col08 = row[mHisDB.bdDB.bd.prescb].ToString();
+                        col09 = row[mHisDB.bdDB.bd.itemcnt].ToString();
+                        col10 = row[mHisDB.bdDB.bd.chargeamt].ToString();
+                        col11 = row[mHisDB.bdDB.bd.claimamt].ToString();
+                        col12 = row[mHisDB.bdDB.bd.paid].ToString();
+                        col13 = row[mHisDB.bdDB.bd.otherpay].ToString();
+                        col14 = row[mHisDB.bdDB.bd.reimburser].ToString();
+                        col15 = row[mHisDB.bdDB.bd.benefitplan].ToString();
+                        col16 = row[mHisDB.bdDB.bd.dispestat].ToString();
+                        col17 = row[mHisDB.bdDB.bd.svid].ToString();
+                        col18 = row[mHisDB.bdDB.bd.daycover].ToString();
+                        txtRow += col01 + "|" + col02 + "|" + col03 + "|" + col04 + "|" + col05 + "|" + col06 + "|" + col07 + "|" + col08 + "|" + col09 + "|" + col10
+                                + "|" + col11 + "|" + col12 + "|" + col13 + "|" + col14 + "|" + col15 + "|" + col16 + "|" + col17 + "|" + col18 + Environment.NewLine;
+                    }
+                    foreach (DataRow rowI in dtBDi.Rows)
+                    {
+                        pb1.Value++;
+                        String col01 = "", col02 = "", col03 = "", col04 = "", col05 = "", col06 = "", col07 = "", col08 = "", col09 = "", col10 = "";
+                        String col11 = "", col12 = "", col13 = "", col14 = "", col15 = "", col16 = "", col17 = "", col18 = "", col19 = "";
+
+                        col01 = rowI[mHisDB.bdIDB.bdI.dispid].ToString();
+                        col02 = rowI[mHisDB.bdIDB.bdI.prdcat].ToString();
+                        col03 = rowI[mHisDB.bdIDB.bdI.hospdrgid].ToString();
+                        col04 = rowI[mHisDB.bdIDB.bdI.drgid].ToString();
+                        col05 = rowI[mHisDB.bdIDB.bdI.dfscode].ToString();
+                        col06 = rowI[mHisDB.bdIDB.bdI.dfstext].ToString();
+                        col07 = rowI[mHisDB.bdIDB.bdI.packsize].ToString();
+                        col08 = rowI[mHisDB.bdIDB.bdI.sigcode].ToString();
+                        col09 = rowI[mHisDB.bdIDB.bdI.sigtext].ToString();
+                        col10 = rowI[mHisDB.bdIDB.bdI.quantity].ToString();
+                        col11 = rowI[mHisDB.bdIDB.bdI.unitprice].ToString();
+                        col12 = rowI[mHisDB.bdIDB.bdI.chargeamt].ToString();
+                        col13 = rowI[mHisDB.bdIDB.bdI.reimbprice].ToString();
+                        col14 = rowI[mHisDB.bdIDB.bdI.reimbamt].ToString();
+                        col15 = rowI[mHisDB.bdIDB.bdI.prdsecode].ToString();
+                        col16 = rowI[mHisDB.bdIDB.bdI.claimcont].ToString();
+                        col17 = rowI[mHisDB.bdIDB.bdI.claimcat].ToString();
+                        col18 = rowI[mHisDB.bdIDB.bdI.multidisp].ToString();
+                        col19 = rowI[mHisDB.bdIDB.bdI.supplyfor].ToString();
+                        txtRowBDi += col01 + "|" + col02 + "|" + col03 + "|" + col04 + "|" + col05 + "|" + col06 + "|" + col07 + "|" + col08 + "|" + col09 + "|" + col10
+                                + "|" + col11 + "|" + col12 + "|" + col13 + "|" + col14 + "|" + col15 + "|" + col16 + "|" + col17 + "|" + col18 + "|" + col19 + Environment.NewLine;
+                    }
+
+                    txtBD = "<Dispensing>" + Environment.NewLine + txtRow + "</Dispensing>" + Environment.NewLine +
+                        "<DispensedItems>" + Environment.NewLine + txtRowBDi + "</DispensedItems>" + Environment.NewLine + "</ClaimRec>" + Environment.NewLine;
+                    sw.WriteLine(Header + txtBD);
+                }
+
+            }
+            catch (IOException ioex)
+            {
+
+            }
+            pb1.Hide();
+            return "";
         }
     }
 }

@@ -29,6 +29,6 @@ namespace SSData.object1
         public String payplan { get; set; }
         public String claimamt { get; set; }
         public String otherpayplan { get; set; }
-        public String ptherpay { get; set; }
+        public String otherpay { get; set; }
     }
 }

@@ -44,8 +44,9 @@ namespace SSData.objdb
             opS.typein = "typein";
             opS.typeout = "typeout";
             opS.typeserv = "typeserv";
+            opS.ssdata_visit_id = "ssdata_visit_id";
 
-            opS.table = "t_opservice";
+            opS.table = "t_opservices";
             opS.pkField = "opservices_id";
         }
         public String insert(OpServices p)
@@ -61,7 +62,7 @@ namespace SSData.objdb
                 opS.lccode + "," + opS.pid + "," + opS.ssdata_id + "," +
                 opS.stdcode + "," + opS.svcharge + "," + opS.svid + "," +
                 opS.svpid + "," + opS.svtxcode + "," + opS.typein + "," +
-                opS.typeout + "," + opS.typeserv + "," +                
+                opS.typeout + "," + opS.typeserv + ", " + opS.ssdata_visit_id + " " +
                 ") " +
                 "Values('" + p.careaccount + "','" + p.claimcat + "','" + p.class1 + "','" +
                 p.clinic + "','" + p.codeset + "','" + p.completion + "','" +
@@ -70,8 +71,8 @@ namespace SSData.objdb
                 p.lccode + "','" + p.pid + "','" + p.ssdata_id + "','" +
                 p.stdcode + "','" + p.svcharge + "','" + p.svid + "','" +
                 p.svpid + "','" + p.svtxcode + "','" + p.typein + "','" +
-                p.typeout + "','" + p.typeserv + "','" +                
-                "') ";
+                p.typeout + "','" + p.typeserv + "','" + p.ssdata_visit_id + "' " +
+                ") ";
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
 
             return re;

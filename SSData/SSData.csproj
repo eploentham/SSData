@@ -127,6 +127,7 @@
     <Compile Include="objdb\ConnectDB.cs" />
     <Compile Include="objdb\MainHISDB.cs" />
     <Compile Include="objdb\OpServicesDB.cs" />
+    <Compile Include="objdb\OpServicesOpdXDB.cs" />
     <Compile Include="objdb\TSsdataDB.cs" />
     <Compile Include="objdb\TSsdataVisitBillDispDB.cs" />
     <Compile Include="objdb\TSsdataVisitDB.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="object1\IniFile.cs" />
     <Compile Include="object1\InitConfig.cs" />
     <Compile Include="object1\OpServices.cs" />
+    <Compile Include="object1\OpServicesOpdX.cs" />
     <Compile Include="object1\Persistent.cs" />
     <Compile Include="object1\TSsdata.cs" />
     <Compile Include="object1\TSsdataVisit.cs" />

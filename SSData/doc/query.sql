@@ -30,3 +30,6 @@ delete from t_billtran;
 delete from t_billtran_items;
 delete from t_billdisp;
 delete from t_billdisp_items;
+delete from t_opservices;
+
+select count(1) from t_billtran_items;

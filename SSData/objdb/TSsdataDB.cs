@@ -1,6 +1,7 @@
 ﻿using SSData.object1;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,20 @@ namespace SSData.objdb
                 p.month_id + "','" + p.year_id + "','" + p.status_precess + "') ";
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
 
+            return re;
+        }
+        public String selectIDByYearMonth(String yearId, String monthId)
+        {
+            DataTable dt = new DataTable();
+            String re = "";
+            String sql = "select * " +
+                "From " + ssd.table + "  " +                
+                "Where year_id ='" + yearId + "' and month_id ='" + monthId + "' and active = '1' ";
+            dt = conn.selectData(conn.connSSData, sql);
+            if (dt.Rows.Count > 0)
+            {
+                re = dt.Rows[0]["ssdata_id"].ToString();
+            }
             return re;
         }
     }

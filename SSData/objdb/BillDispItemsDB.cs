@@ -1,6 +1,7 @@
 ﻿using SSData.object1;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace SSData.objdb
 {
     public class BillDispItemsDB
     {
-        BillDispItems bdI;
+        public BillDispItems bdI;
         ConnectDB conn;
 
         public BillDispItemsDB(ConnectDB c)
@@ -70,6 +71,16 @@ namespace SSData.objdb
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
 
             return re;
+        }
+        public DataTable selectBySSdId(String ssDId)
+        {
+            DataTable dt = new DataTable();
+            String sql = "select bdi.* " +
+                "From " + bdI.table + " bdi " +
+                "Left Join t_billdisp bd On bdi.billdisp_id = bd.billdisp_id " +
+                "Where bd.ssdata_id ='" + ssDId + "' ";
+            dt = conn.selectData(conn.connSSData, sql);
+            return dt;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace SSData.gui
 {
     public partial class FrmSSDataTextEdit : C1RibbonForm
     {
-        public FrmSSDataTextEdit()
+        public FrmSSDataTextEdit(String filename)
         {
             InitializeComponent();
             this.InitializeClipboardGroup();
@@ -33,7 +33,7 @@ namespace SSData.gui
             this.InitializeRecentDocumentList();
 
             // Load a sample text file into the editor.
-            this.LoadDocument(@"Readme.rtf");
+            this.LoadDocument(@filename);
 
             // Save application settings on exit.
             this.FormClosed += delegate { Properties.Settings.Default.Save(); };
