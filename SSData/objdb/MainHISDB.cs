@@ -27,6 +27,7 @@ namespace SSData.objdb
         BillTranItemsDB btIDB;
         BillDispDB bdDB;
         BillDispItemsDB bdIDB;
+        OpServicesDB opSDB;
 
         TSsdata ssd;
         public MainHISDB(ConnectDB c)
@@ -46,6 +47,7 @@ namespace SSData.objdb
             btIDB = new BillTranItemsDB(conn);
             bdDB = new BillDispDB(conn);
             bdIDB = new BillDispItemsDB(conn);
+            opSDB = new OpServicesDB(conn);
 
             sqlIPD = "SELECT DISTINCT " +
                         "patt08.MNC_HN_YR, patt08.MNC_HN_NO, patt08.MNC_DATE, patt08.MNC_PRE_NO, fint01.MNC_FN_TYP_CD,  " +
@@ -374,7 +376,7 @@ namespace SSData.objdb
                 pb1.Value++;
                 
                 TSsdataVisit ssV = new TSsdataVisit();
-                String visitDate = "", id="", dispdt="", prescdt="", btId="", docDate="", bdId="";
+                String visitDate = "", id="", dispdt="", prescdt="", btId="", docDate="", bdId="", opId="";
                 String birDate = "";
 
                 visitDate = datetoDB(row["MNC_DATE"].ToString());
@@ -417,8 +419,8 @@ namespace SSData.objdb
                 ssV.itemcnt = "";
                 ssV.prescb = row["MNC_dot_cd"].ToString();
                 ssV.svid = ssV.vn;
-                prescdt = selectPrescdt(row["MNC_HN_NO"].ToString(), row["mnc_pre_no"].ToString(), visitDate);
-                prescdt = datetoDB(prescdt);
+                //prescdt = selectPrescdt(row["MNC_HN_NO"].ToString(), row["mnc_pre_no"].ToString(), visitDate);
+                //prescdt = datetoDB(prescdt);
 
                 id = ssdVDB.insert(ssV);        //fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD
                 
@@ -447,6 +449,34 @@ namespace SSData.objdb
                 bt.vercode = "";            //รหัสตรวจยืนยัน รับจากการแจ้งธุรกรรมผ่านบัตร หรือผ่านการตรวจสอบลายนิ้วมือ
 
                 btId = btDB.insert(bt);
+
+                OpServices opS = new OpServices();
+                opS.careaccount = "careaccount";
+                opS.claimcat = "claimcat";
+                opS.class1 = "class1";
+                opS.clinic = "clinic";
+                opS.codeset = "codeset";
+                opS.completion = "completion";
+                opS.degdt = "degdt";
+                opS.dtappoint = "dtappoint";
+                opS.enddt = "enddt";
+                opS.hcode = hcode;
+                opS.hn = ssV.hn_no;
+                opS.invno = ssV.invno;
+                opS.lccode = "lccode";
+                opS.opservices_id = "opservices_id";
+                opS.pid = "pid";
+                opS.ssdata_id = "ssdata_id";
+                opS.stdcode = "stdcode";
+                opS.svcharge = "svcharge";
+                opS.svid = "svid";
+                opS.svpid = "svpid";
+                opS.svtxcode = "svtxcode";
+                opS.typein = "typein";
+                opS.typeout = "typeout";
+                opS.typeserv = "typeserv";
+                opId = opSDB.insert(opS);
+
                 docDate = datetoDB(row["MNC_DOC_DAT"].ToString());
                 dtItem.Clear();
                 dtItem = selectSSDataItem(ssV.hn_no, ssV.vn, ssV.pre_no, docDate, row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString());
