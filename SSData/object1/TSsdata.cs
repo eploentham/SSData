@@ -17,5 +17,7 @@ namespace SSData.object1
         public string cnt_hn { get; set; }
         public string cnt_visit { get; set; }
         public string status_precess { get; set; }
+        public string date_start { get; set; }
+        public string date_end { get; set; }
     }
 }

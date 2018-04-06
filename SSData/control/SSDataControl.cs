@@ -22,6 +22,7 @@ namespace SSData.control
         public MainHISDB mHisDB;
 
         String encoding = "Windows-874";
+        public String monthId = "", yearId = "", ssVid="";
 
         public enum TypeOut { Discharge=1, Admin=2, Refer=3, Dead=4, Escape=5, Other=9}
         public SSDataControl()
@@ -275,7 +276,7 @@ namespace SSData.control
                 }
                 dtBTi = mHisDB.btIDB.selectBySSdId(ssDId);
                 pb1.Minimum = 0;
-                pb1.Maximum = dtBT.Rows.Count + dtBTi.Rows.Count;
+                pb1.Maximum = dtBT.Rows.Count + dtBTi.Rows.Count+2;
 
                 dt1 = genFileName(hcode, ssopbil, period, periodsub);
                 h1 = @"<?xml version=""1.0"" encoding=""windows-874""?>" + Environment.NewLine;
@@ -354,7 +355,7 @@ namespace SSData.control
 
             }
             pb1.Hide();
-            return "";
+            return "1";
         }
         public String genTextBillDisp(String hname, String path, String filename, String hcode, String ssopbil, String period, String periodsub, String yearId, String monthId, ProgressBar pb1)
         {
@@ -373,7 +374,7 @@ namespace SSData.control
                 }
                 dtBDi = mHisDB.bdIDB.selectBySSdId(ssDId);
                 pb1.Minimum = 0;
-                pb1.Maximum = dtBD.Rows.Count + dtBDi.Rows.Count;
+                pb1.Maximum = dtBD.Rows.Count + dtBDi.Rows.Count+2;
                 dt1 = genFileName(hcode, ssopbil, period, periodsub);
                 h1 = @"<?xml version=""1.0"" encoding=""windows-874""?>" + Environment.NewLine;
                 h2 = @"<ClaimRec System=""OP"" PayPlan=""SS"" Version=""0.93"">" + Environment.NewLine;
@@ -456,7 +457,7 @@ namespace SSData.control
 
             }
             pb1.Hide();
-            return "";
+            return "1";
         }
     }
 }

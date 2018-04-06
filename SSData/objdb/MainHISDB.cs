@@ -19,7 +19,7 @@ namespace SSData.objdb
 
         ConnectDB conn;
         public TSsdataDB ssdDB;
-        TSsdataVisitDB ssdVDB;
+        public TSsdataVisitDB ssdVDB;
         public BDrugCatalogueDB dCDB;
         TSsdataVisitBillDispItemsDB ssdVBIDB;
         //TSsdataVisitBillDispDB ssdVBDB;
@@ -96,6 +96,42 @@ namespace SSData.objdb
                         "FINANCE_T01.MNC_PRAKUN_CODE IS NULL) AND(dbo.PRAKUN_M01_TEMP.PrakanCode = :HOSID1 OR " +
                         "dbo.PRAKUN_M01_TEMP.PrakanCode IS NULL) " +
                         "ORDER BY patm18.MNC_CRO_CD, patt09.MNC_HN_NO";
+        }
+        public String selectCountHN(String hcode, String yearId, String monthId)
+        {
+            String whereHCODE = "", startDate = "", endDate = "", whereDate = "", re="";
+            DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId) + 1, 1);
+            dateEnd = dateEnd.AddDays(-1);
+            whereHCODE = whereHCODE.Equals("") ? "" : " AND (fint01.MNC_PRAKUN_CODE = '" + hcode + "' OR " + "fint01.MNC_PRAKUN_CODE IS NULL) " +
+                "AND(dbo.PRAKUN_M01_TEMP.PrakanCode = '" + hcode + "' OR " + "dbo.PRAKUN_M01_TEMP.PrakanCode IS NULL) ";
+            startDate = yearId + "-" + monthId + "-01";
+            endDate = yearId + "-" + dateEnd.Month.ToString("00") + "-" + dateEnd.Day.ToString("00");
+            whereDate = "AND (patt01.MNC_DATE BETWEEN '" + startDate + "' AND '" + endDate + "') ";
+
+            DataTable dt = new DataTable();
+            sqlOPD = "select count(*) as cnt from (  SELECT patt01.MNC_HN_NO  " +                        
+                        "FROM  dbo.FINANCE_M02 INNER JOIN dbo.FINANCE_T01 fint01 ON dbo.FINANCE_M02.MNC_FN_TYP_CD = fint01.MNC_FN_TYP_CD " +
+                        "RIGHT OUTER JOIN dbo.PATIENT_M02 patm02 RIGHT OUTER JOIN " +
+                        "dbo.PATIENT_T01 patt01 LEFT OUTER JOIN " +
+                        "dbo.PRAKUN_M01_TEMP RIGHT OUTER JOIN " +
+                        "dbo.PATIENT_M01 patm01 ON dbo.PRAKUN_M01_TEMP.SocialID = patm01.MNC_ID_NO ON patt01.MNC_HN_YR = patm01.MNC_HN_YR AND " +
+                        "patt01.MNC_HN_NO = patm01.MNC_HN_NO ON patm02.MNC_PFIX_CD = patm01.MNC_PFIX_CDT ON fint01.MNC_HN_YR = patt01.MNC_HN_YR AND " +
+                        "fint01.MNC_HN_NO = patt01.MNC_HN_NO AND fint01.MNC_PRE_NO = patt01.MNC_PRE_NO AND fint01.MNC_DATE = patt01.MNC_DATE AND " +
+                        "fint01.MNC_DOC_CD = 'ON3' " +                        
+                        "WHERE     (patt01.MNC_ADM_FLG<> 'A') AND(patt01.MNC_DIAG_STS = 'Y') AND " +
+                        "(fint01.MNC_DOC_STS = 'F') AND(dbo.FINANCE_M02.MNC_FN_STS = 'S') " +
+                        whereHCODE +
+                        "AND((patm01.MNC_ID_NO <> '' or patm01.MNC_ID_NO is not null)) AND " +
+                        "(patt01.MNC_AMP_FLG <> 'Y')  " +
+                        whereDate +                        
+                        "GROUP BY patt01.MNC_HN_YR, patt01.MNC_HN_NO ) x ";
+
+            dt = conn.selectData(conn.connMainHIS, sqlOPD);
+            if (dt.Rows.Count > 0)
+            {
+                re = dt.Rows[0]["cnt"].ToString();
+            }
+            return re;
         }
         public DataTable selectSSData(String hcode,String yearId, String monthId)
         {
@@ -350,6 +386,7 @@ namespace SSData.objdb
         }
         public void insertTSSData(String hcode, String branchId, String yearId, String monthId, ProgressBar pb1, Label label1, Label label2)
         {
+            String cntHN = "";
             label1.Text = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             pb1.Show();
             DataTable dt = new DataTable();
@@ -360,15 +397,16 @@ namespace SSData.objdb
 
             conn.OpenConnectionSSData();
             dt =selectSSData(hcode, yearId, monthId);
+            cntHN = selectCountHN(hcode, yearId, monthId);
             pb1.Minimum = 1;
             pb1.Maximum = dt.Rows.Count + 1;
             pb1.Value = 1;
             //txtCnt.Value = dt.Rows.Count;
             TSsdata ssd = new TSsdata();
-            ssd.branch_id = "";
+            ssd.branch_id = branchId;
             ssd.branch_visit_id = "";
-            ssd.cnt_hn = "";
-            ssd.cnt_visit = "";
+            ssd.cnt_hn = cntHN;
+            ssd.cnt_visit = dt.Rows.Count.ToString();
             ssd.month_id = monthId;
             ssd.year_id = yearId;
             ssd.status_precess = "0";
@@ -379,7 +417,7 @@ namespace SSData.objdb
                 pb1.Value++;
                 
                 TSsdataVisit ssV = new TSsdataVisit();
-                String visitDate = "", id="", dispdt="", prescdt="", btId="", docDate="", bdId="", opId="", visitTime="";
+                String visitDate = "", ssVid="", dispdt="", prescdt="", btId="", docDate="", bdId="", opId="", visitTime="";
                 String birDate = "";
 
                 visitDate = datetoDB(row["MNC_DATE"].ToString());
@@ -432,7 +470,7 @@ namespace SSData.objdb
                 //prescdt = selectPrescdt(row["MNC_HN_NO"].ToString(), row["mnc_pre_no"].ToString(), visitDate);
                 //prescdt = datetoDB(prescdt);
 
-                id = ssdVDB.insert(ssV);        //fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD
+                ssVid = ssdVDB.insert(ssV);        //fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD
                 
                 BillTran bt = new BillTran();
                 bt.amount = ssV.amount;     //ยอดเงินรวมการเรียกเก็บเก็บค่ารักษา
@@ -453,7 +491,7 @@ namespace SSData.objdb
                 bt.pid = ssV.pid;           //เลขที่ประจำตัวผู้มีสิทธิ
                 bt.otherpay = "0.00";           // ไม่มี ทำเผื่อไว้
                 bt.ssdata_id = ssV.ssdata_id;
-                bt.ssdata_visit_id = id;
+                bt.ssdata_visit_id = ssVid;
                 bt.station = "0001";            //จุดเก็บค่ารักษา (สถานที่) ที่บันทึกธรรกรรมนี้
                 bt.tflag = "";              //สัญญาณการทำธุรกรรม
                 bt.vercode = "";            //รหัสตรวจยืนยัน รับจากการแจ้งธุรกรรมผ่านบัตร หรือผ่านการตรวจสอบลายนิ้วมือ
@@ -477,7 +515,7 @@ namespace SSData.objdb
                 opS.opservices_id = "opservices_id";
                 opS.pid = "pid";
                 opS.ssdata_id = ssV.ssdata_id;
-                opS.ssdata_visit_id = id;
+                opS.ssdata_visit_id = ssVid;
                 opS.stdcode = "";
                 opS.svcharge = "";
                 opS.svid = "";
@@ -540,7 +578,7 @@ namespace SSData.objdb
                     bd.reimburser = "";
                     //bd.ssdata_billdisp_id = "";
                     bd.ssdata_id = ssd.ssdata_id;
-                    bd.ssdata_visit_id = id;
+                    bd.ssdata_visit_id = ssVid;
                     bd.svid = ssV.vn;
                     //bd.active = "1";
                     bdId = bdDB.insert(bd);
@@ -580,6 +618,7 @@ namespace SSData.objdb
                     }
                 }
             }
+            ssdDB.updateDateEnd(ssd.ssdata_id);
             conn.CloseConnectionSSData();
             pb1.Hide();
             label2.Text = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");

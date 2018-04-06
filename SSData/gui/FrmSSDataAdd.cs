@@ -75,7 +75,15 @@ namespace SSData
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            sC.mHisDB.insertTSSData(sC.iniC.HCODE, sC.iniC.branchId, cboYear.Text, cboMonth.SelectedValue.ToString(), pB1, label12, label13);
+            String chk = sC.mHisDB.ssdDB.selectIDByYearMonth(cboYear.Text, cboMonth.SelectedValue.ToString());
+            if (!chk.Equals(""))
+            {
+                MessageBox.Show("พบข้อมูล ได้มีการนำเข้า เรียบร้อยแล้ว\n ถ้าต้องการนำเข้าใหม่ ต้องยกเลิก รายการเดิมก่อน ", "พบข้อมูล ได้มีการนำเข้า เรียบร้อยแล้ว");
+            }
+            else
+            {
+                sC.mHisDB.insertTSSData(sC.iniC.HCODE, sC.iniC.branchId, cboYear.Text, cboMonth.SelectedValue.ToString(), pB1, label12, label13);
+            }
         }
 
         private void btnOpenBT_Click(object sender, EventArgs e)
@@ -121,6 +129,14 @@ namespace SSData
         private void btnOpenBD_Click(object sender, EventArgs e)
         {
             FrmSSDataTextEdit frm = new FrmSSDataTextEdit(txtPath.Value.ToString() + "\\" + txtFileNameBD.Text);
+            frm.ShowDialog(this);
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            sC.yearId = cboYear.Text;
+            sC.monthId = cboMonth.SelectedValue.ToString();
+            FrmSSDataView frm = new FrmSSDataView(sC, this);
             frm.ShowDialog(this);
         }
     }

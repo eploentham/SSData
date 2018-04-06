@@ -49,6 +49,8 @@
             this.grdView_Sheet1});
             this.grdView.Size = new System.Drawing.Size(776, 557);
             this.grdView.TabIndex = 0;
+            this.grdView.CellDoubleClick += new FarPoint.Win.Spread.CellClickEventHandler(this.grdView_CellDoubleClick);
+            this.grdView.ButtonClicked += new FarPoint.Win.Spread.EditorNotifyEventHandler(this.grdView_ButtonClicked);
             // 
             // grdView_Sheet1
             // 

@@ -1,6 +1,7 @@
 ﻿using SSData.object1;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace SSData.objdb
 {
     public class TSsdataVisitDB
     {
-        TSsdataVisit ssdV;
+        public TSsdataVisit ssdV;
         ConnectDB conn;
 
         public TSsdataVisitDB(ConnectDB c)
@@ -106,6 +107,16 @@ namespace SSData.objdb
                 "Where " +ssdV.ssdata_visit_id+"='"+id+"'";
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
             return re;
+        }
+        public DataTable selectByssDId(String ssId)
+        {
+            DataTable dt = new DataTable();
+            String sql = "select ssv.* " +
+                "From " + ssdV.table + " ssv " +               
+                "Left Join t_ssdata ss On ss.ssdata_id = ssv.ssdata_id " +
+                "Where ssv."+ssdV.ssdata_id+"='"+ssId+"'";
+            dt = conn.selectData(conn.connSSData, sql);
+            return dt;
         }
     }
 }
