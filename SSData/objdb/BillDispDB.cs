@@ -72,6 +72,35 @@ namespace SSData.objdb
 
             return re;
         }
+        public String update(BillDisp p)
+        {
+            String re = "";
+            String sql = "";
+
+            sql = "Update " + bd.table + " Set " +
+                bd.benefitplan + "='" + p.benefitplan + "'" +                
+                bd.chargeamt + "='" + p.chargeamt + "'" +
+                bd.claimamt + "='" + p.claimamt + "'" +
+                bd.daycover + "='" + p.daycover + "'" +
+                bd.dispdt + "='" + p.dispdt + "'" +
+                bd.dispestat + "='" + p.dispestat + "'" +
+                bd.dispid + "='" + p.dispid + "'" +
+                bd.hn + "='" + p.hn + "'" +
+                bd.invno + "='" + p.invno + "'" +
+                bd.itemcnt + "='" + p.itemcnt + "'" +
+                bd.otherpay + "='" + p.otherpay + "'" +
+                bd.paid + "='" + p.paid + "'" +
+                bd.pid + "='" + p.pid + "'" +
+                bd.prescb + "='" + p.prescb + "'" +
+                bd.prescdt + "='" + p.prescdt + "'" +
+                bd.providerid + "='" + p.providerid + "'" +
+                bd.reimburser + "='" + p.reimburser + "'" +
+                bd.svid + "='" + p.svid + "' " +
+                "Where " + bd.billdisp_id + "='" + p.billdisp_id + "'";
+            re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
+
+            return re;
+        }
         public DataTable selectByYearMonth(String yearId, String monthId)
         {
             DataTable dt = new DataTable();
@@ -120,29 +149,30 @@ namespace SSData.objdb
         private BillDisp setBD(DataTable dt)
         {
             BillDisp bd1 = new BillDisp();
-
-            bd1.benefitplan = dt.Rows[0][bd.benefitplan].ToString();
-            bd1.billdisp_id = dt.Rows[0][bd.billdisp_id].ToString();
-            bd1.chargeamt = dt.Rows[0][bd.chargeamt].ToString();
-            bd1.claimamt = dt.Rows[0][bd.claimamt].ToString();
-            bd1.daycover = dt.Rows[0][bd.daycover].ToString();
-            bd1.dispdt = dt.Rows[0][bd.dispdt].ToString();
-            bd1.dispestat = dt.Rows[0][bd.dispestat].ToString();
-            bd1.dispid = dt.Rows[0][bd.dispid].ToString();
-            bd1.hn = dt.Rows[0][bd.hn].ToString();
-            bd1.invno = dt.Rows[0][bd.invno].ToString();
-            bd1.itemcnt = dt.Rows[0][bd.itemcnt].ToString();
-            bd1.otherpay = dt.Rows[0][bd.otherpay].ToString();
-            bd1.paid = dt.Rows[0][bd.paid].ToString();
-            bd1.pid = dt.Rows[0][bd.pid].ToString();
-            bd1.prescb = dt.Rows[0][bd.prescb].ToString();
-            bd1.prescdt = dt.Rows[0][bd.prescdt].ToString();
-            bd1.providerid = dt.Rows[0][bd.providerid].ToString();
-            bd1.reimburser = dt.Rows[0][bd.reimburser].ToString();
-            bd1.ssdata_id = dt.Rows[0][bd.ssdata_id].ToString();
-            bd1.ssdata_visit_id = dt.Rows[0][bd.ssdata_visit_id].ToString();
-            bd1.svid = dt.Rows[0][bd.svid].ToString();
-            
+            if (dt.Rows.Count > 0)
+            {
+                bd1.benefitplan = dt.Rows[0][bd.benefitplan].ToString();
+                bd1.billdisp_id = dt.Rows[0][bd.billdisp_id].ToString();
+                bd1.chargeamt = dt.Rows[0][bd.chargeamt].ToString();
+                bd1.claimamt = dt.Rows[0][bd.claimamt].ToString();
+                bd1.daycover = dt.Rows[0][bd.daycover].ToString();
+                bd1.dispdt = dt.Rows[0][bd.dispdt].ToString();
+                bd1.dispestat = dt.Rows[0][bd.dispestat].ToString();
+                bd1.dispid = dt.Rows[0][bd.dispid].ToString();
+                bd1.hn = dt.Rows[0][bd.hn].ToString();
+                bd1.invno = dt.Rows[0][bd.invno].ToString();
+                bd1.itemcnt = dt.Rows[0][bd.itemcnt].ToString();
+                bd1.otherpay = dt.Rows[0][bd.otherpay].ToString();
+                bd1.paid = dt.Rows[0][bd.paid].ToString();
+                bd1.pid = dt.Rows[0][bd.pid].ToString();
+                bd1.prescb = dt.Rows[0][bd.prescb].ToString();
+                bd1.prescdt = dt.Rows[0][bd.prescdt].ToString();
+                bd1.providerid = dt.Rows[0][bd.providerid].ToString();
+                bd1.reimburser = dt.Rows[0][bd.reimburser].ToString();
+                bd1.ssdata_id = dt.Rows[0][bd.ssdata_id].ToString();
+                bd1.ssdata_visit_id = dt.Rows[0][bd.ssdata_visit_id].ToString();
+                bd1.svid = dt.Rows[0][bd.svid].ToString();
+            }
 
             return bd1;
         }

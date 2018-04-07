@@ -71,6 +71,38 @@ namespace SSData.objdb
 
             return re;
         }
+        public String update(BillTran p)
+        {
+            String re = "";
+            String sql = "";
+            sql = "Update " + bt.table + " Set " +
+                bt.amount + "='" + p.amount + "'" +
+                "," + bt.authcode + "='" + p.authcode + "'" +
+                "," + bt.billno + "='" + p.billno + "'" +                
+                "," + bt.claimamt + "='" + p.claimamt + "'" +
+                "," + bt.dttran + "='" + p.dttran + "'" +
+                "," + bt.hcode + "='" + p.hcode + "'" +
+                "," + bt.hmain + "='" + p.hmain + "'" +
+                "," + bt.hn + "='" + p.hn + "'" +
+                "," + bt.invno + "='" + p.invno + "'" +
+                "," + bt.memberno + "='" + p.memberno + "'" +
+                "," + bt.name + "='" + p.name + "'" +
+                "," + bt.otherpayplan + "='" + p.otherpayplan + "'" +
+                "," + bt.paid + "='" + p.paid + "'" +
+                "," + bt.payplan + "='" + p.payplan + "'" +
+                "," + bt.pid +"='" + p.pid + "'" +
+                "," + bt.otherpay + "='" + p.otherpay + "'" +
+                //"," + bt.ssdata_id + "='" + p.ssdata_id + "'" +
+                //"," + bt.ssdata_visit_id + "='" + p.ssdata_visit_id + "'" +
+                "," + bt.station + "='" + p.station + "'" +
+                "," + bt.tflag + "='" + p.tflag + "'" +
+                "," + bt.vercode + "='" + p.vercode + "' " +
+                "Where " + bt.billtran_id + "='" + p.billtran_id + "'";
+
+            re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
+
+            return re;
+        }
         public DataTable selectByYearMonth(String yearId, String monthId)
         {
             DataTable dt = new DataTable();
@@ -120,28 +152,31 @@ namespace SSData.objdb
         private BillTran setBT(DataTable dt)
         {
             BillTran bt1 = new BillTran();
-            bt1.amount = dt.Rows[0][bt.amount].ToString();
-            bt1.authcode = dt.Rows[0][bt.authcode].ToString();
-            bt1.billno = dt.Rows[0][bt.billno].ToString();
-            bt1.billtran_id = dt.Rows[0][bt.billtran_id].ToString();
-            bt1.claimamt = dt.Rows[0][bt.claimamt].ToString();
-            bt1.dttran = dt.Rows[0][bt.dttran].ToString();
-            bt1.hcode = dt.Rows[0][bt.hcode].ToString();
-            bt1.hmain = dt.Rows[0][bt.hmain].ToString();
-            bt1.hn = dt.Rows[0][bt.hn].ToString();
-            bt1.invno = dt.Rows[0][bt.invno].ToString();
-            bt1.memberno = dt.Rows[0][bt.memberno].ToString();
-            bt1.name = dt.Rows[0][bt.name].ToString();
-            bt1.otherpayplan = dt.Rows[0][bt.otherpayplan].ToString();
-            bt1.paid = dt.Rows[0][bt.paid].ToString();
-            bt1.payplan = dt.Rows[0][bt.payplan].ToString();
-            bt1.pid = dt.Rows[0][bt.pid].ToString();
-            bt1.otherpay = dt.Rows[0][bt.otherpay].ToString();
-            bt1.ssdata_id = dt.Rows[0][bt.ssdata_id].ToString();
-            bt1.ssdata_visit_id = dt.Rows[0][bt.ssdata_visit_id].ToString();
-            bt1.station = dt.Rows[0][bt.station].ToString();
-            bt1.tflag = dt.Rows[0][bt.tflag].ToString();
-            bt1.vercode = dt.Rows[0][bt.vercode].ToString();
+            if (dt.Rows.Count > 0)
+            {
+                bt1.amount = dt.Rows[0][bt.amount].ToString();
+                bt1.authcode = dt.Rows[0][bt.authcode].ToString();
+                bt1.billno = dt.Rows[0][bt.billno].ToString();
+                bt1.billtran_id = dt.Rows[0][bt.billtran_id].ToString();
+                bt1.claimamt = dt.Rows[0][bt.claimamt].ToString();
+                bt1.dttran = dt.Rows[0][bt.dttran].ToString();
+                bt1.hcode = dt.Rows[0][bt.hcode].ToString();
+                bt1.hmain = dt.Rows[0][bt.hmain].ToString();
+                bt1.hn = dt.Rows[0][bt.hn].ToString();
+                bt1.invno = dt.Rows[0][bt.invno].ToString();
+                bt1.memberno = dt.Rows[0][bt.memberno].ToString();
+                bt1.name = dt.Rows[0][bt.name].ToString();
+                bt1.otherpayplan = dt.Rows[0][bt.otherpayplan].ToString();
+                bt1.paid = dt.Rows[0][bt.paid].ToString();
+                bt1.payplan = dt.Rows[0][bt.payplan].ToString();
+                bt1.pid = dt.Rows[0][bt.pid].ToString();
+                bt1.otherpay = dt.Rows[0][bt.otherpay].ToString();
+                bt1.ssdata_id = dt.Rows[0][bt.ssdata_id].ToString();
+                bt1.ssdata_visit_id = dt.Rows[0][bt.ssdata_visit_id].ToString();
+                bt1.station = dt.Rows[0][bt.station].ToString();
+                bt1.tflag = dt.Rows[0][bt.tflag].ToString();
+                bt1.vercode = dt.Rows[0][bt.vercode].ToString();
+            }            
 
             return bt1;
         }

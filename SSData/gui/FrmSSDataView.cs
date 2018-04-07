@@ -176,7 +176,9 @@ namespace SSData.gui
                 }
                 else if (sh.Equals("OPs"))
                 {
-                    FrmSSDataOPs frm = new FrmSSDataOPs();
+                    sC.opsID = "";
+                    sC.opsID = grdView.ActiveSheet.Cells[e.Row, colOPsId].Value.ToString();
+                    FrmSSDataOPs frm = new FrmSSDataOPs(sC);
                     frm.ShowDialog(this);
                 }
             }

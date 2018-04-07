@@ -88,7 +88,55 @@ namespace SSData.objdb
                 "Where ops." + opS.ssdata_id + " ='" + ssvId + "' " +
                 "Order By ssv.visit_date, ssv.visit_time";
             dt = conn.selectData(conn.connSSData, sql);
+            
             return dt;
+        }
+        public OpServices selectByssvID1(String opsId)
+        {
+            OpServices opS1 = new OpServices();
+            DataTable dt = new DataTable();
+            String sql = "select ops.* " +
+                "From " + opS.table + " ops " +
+                "Left Join t_ssdata ssd On ssd.ssdata_id = ops.ssdata_id " +
+                "Left Join t_ssdata_visit ssv On ssv.ssdata_visit_id = ops." + opS.ssdata_visit_id + " " +
+                "Where ops." + opS.opservices_id + " ='" + opsId + "' ";
+            dt = conn.selectData(conn.connSSData, sql);
+            opS1 = setOPs(dt);
+            return opS1;
+        }
+        private OpServices setOPs(DataTable dt)
+        {
+            OpServices opS1 = new OpServices();
+            if (dt.Rows.Count > 0)
+            {
+                opS1.careaccount = dt.Rows[0][opS.careaccount].ToString();
+                opS1.claimcat = dt.Rows[0][opS.claimcat].ToString();
+                opS1.class1 = dt.Rows[0][opS.class1].ToString();
+                opS1.clinic = dt.Rows[0][opS.clinic].ToString();
+                opS1.codeset = dt.Rows[0][opS.codeset].ToString();
+                opS1.completion = dt.Rows[0][opS.completion].ToString();
+                opS1.degdt = dt.Rows[0][opS.degdt].ToString();
+                opS1.dtappoint = dt.Rows[0][opS.dtappoint].ToString();
+                opS1.enddt = dt.Rows[0][opS.enddt].ToString();
+                opS1.hcode = dt.Rows[0][opS.hcode].ToString();
+                opS1.hn = dt.Rows[0][opS.hn].ToString();
+                opS1.invno = dt.Rows[0][opS.invno].ToString();
+                opS1.lccode = dt.Rows[0][opS.lccode].ToString();
+                opS1.opservices_id = dt.Rows[0][opS.opservices_id].ToString();
+                opS1.pid = dt.Rows[0][opS.pid].ToString();
+                opS1.ssdata_id = dt.Rows[0][opS.ssdata_id].ToString();
+                opS1.ssdata_visit_id = dt.Rows[0][opS.ssdata_visit_id].ToString();
+                opS1.stdcode = dt.Rows[0][opS.stdcode].ToString();
+                opS1.svcharge = dt.Rows[0][opS.svcharge].ToString();
+                opS1.svid = dt.Rows[0][opS.svid].ToString();
+                opS1.svpid = dt.Rows[0][opS.svpid].ToString();
+                opS1.svtxcode = dt.Rows[0][opS.svtxcode].ToString();
+                opS1.typein = dt.Rows[0][opS.typein].ToString();
+                opS1.typeout = dt.Rows[0][opS.typeout].ToString();
+                opS1.typeserv = dt.Rows[0][opS.typeserv].ToString();
+            }           
+
+            return opS1;
         }
     }
 }
