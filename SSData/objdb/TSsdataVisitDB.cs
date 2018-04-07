@@ -114,7 +114,8 @@ namespace SSData.objdb
             String sql = "select ssv.* " +
                 "From " + ssdV.table + " ssv " +               
                 "Left Join t_ssdata ss On ss.ssdata_id = ssv.ssdata_id " +
-                "Where ssv."+ssdV.ssdata_id+"='"+ssId+"'";
+                "Where ssv."+ssdV.ssdata_id+"='"+ssId+"' " +
+                "Order By ssv."+ssdV.visit_date+",ssv."+ssdV.visit_time;
             dt = conn.selectData(conn.connSSData, sql);
             return dt;
         }

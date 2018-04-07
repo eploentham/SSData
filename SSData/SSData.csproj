@@ -107,6 +107,24 @@
     <Compile Include="gui\FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="gui\FrmSSDataBD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gui\FrmSSDataBD.Designer.cs">
+      <DependentUpon>FrmSSDataBD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gui\FrmSSDataBT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gui\FrmSSDataBT.Designer.cs">
+      <DependentUpon>FrmSSDataBT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gui\FrmSSDataOPs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gui\FrmSSDataOPs.Designer.cs">
+      <DependentUpon>FrmSSDataOPs.cs</DependentUpon>
+    </Compile>
     <Compile Include="gui\FrmSSDataTextEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +176,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="gui\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gui\FrmSSDataBD.resx">
+      <DependentUpon>FrmSSDataBD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gui\FrmSSDataBT.resx">
+      <DependentUpon>FrmSSDataBT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gui\FrmSSDataOPs.resx">
+      <DependentUpon>FrmSSDataOPs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gui\FrmSSDataTextEdit.resx">
       <DependentUpon>FrmSSDataTextEdit.cs</DependentUpon>

@@ -1,6 +1,7 @@
 ﻿using SSData.object1;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -76,6 +77,18 @@ namespace SSData.objdb
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
 
             return re;
+        }
+        public DataTable selectByssvID(String ssvId)
+        {
+            DataTable dt = new DataTable();
+            String sql = "select ops.* " +
+                "From " + opS.table + " ops " +
+                "Left Join t_ssdata ssd On ssd.ssdata_id = ops.ssdata_id " +
+                "Left Join t_ssdata_visit ssv On ssv.ssdata_visit_id = ops." + opS.ssdata_visit_id + " " +
+                "Where ops." + opS.ssdata_id + " ='" + ssvId + "' " +
+                "Order By ssv.visit_date, ssv.visit_time";
+            dt = conn.selectData(conn.connSSData, sql);
+            return dt;
         }
     }
 }
