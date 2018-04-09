@@ -115,6 +115,35 @@ namespace SSData.objdb
             
             return toReturn;
         }
+        public String ExecuteNonQuery1(SqlConnection con, String sql)
+        {
+            String toReturn = "";
+
+            SqlCommand comMainhis = new SqlCommand();
+            comMainhis.CommandText = sql;
+            comMainhis.CommandType = CommandType.Text;
+            comMainhis.Connection = con;
+            try
+            {
+                con.Open();
+                //_rowsAffected = comMainhis.ExecuteNonQuery();
+                _rowsAffected = (int)comMainhis.ExecuteNonQuery();
+                toReturn = _rowsAffected.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ExecuteNonQuery::Error occured.", ex);
+                toReturn = ex.Message;
+            }
+            finally
+            {
+                //_mainConnection.Close();
+                con.Close();
+                comMainhis.Dispose();
+            }
+
+            return toReturn;
+        }
         public String ExecuteNonQueryNoClose(SqlConnection con, String sql)
         {
             String toReturn = "";

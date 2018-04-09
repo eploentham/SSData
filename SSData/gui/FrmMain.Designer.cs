@@ -114,6 +114,7 @@ namespace SSData
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmSSDataView";
             this.c1ThemeController1.SetTheme(this, "Office2010Black");
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FrmSSDataView_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FrmSSDataView_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FrmSSDataView_MouseUp);

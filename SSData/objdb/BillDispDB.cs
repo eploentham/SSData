@@ -78,26 +78,26 @@ namespace SSData.objdb
             String sql = "";
 
             sql = "Update " + bd.table + " Set " +
-                bd.benefitplan + "='" + p.benefitplan + "'" +                
-                bd.chargeamt + "='" + p.chargeamt + "'" +
-                bd.claimamt + "='" + p.claimamt + "'" +
-                bd.daycover + "='" + p.daycover + "'" +
-                bd.dispdt + "='" + p.dispdt + "'" +
-                bd.dispestat + "='" + p.dispestat + "'" +
-                bd.dispid + "='" + p.dispid + "'" +
-                bd.hn + "='" + p.hn + "'" +
-                bd.invno + "='" + p.invno + "'" +
-                bd.itemcnt + "='" + p.itemcnt + "'" +
-                bd.otherpay + "='" + p.otherpay + "'" +
-                bd.paid + "='" + p.paid + "'" +
-                bd.pid + "='" + p.pid + "'" +
-                bd.prescb + "='" + p.prescb + "'" +
-                bd.prescdt + "='" + p.prescdt + "'" +
-                bd.providerid + "='" + p.providerid + "'" +
-                bd.reimburser + "='" + p.reimburser + "'" +
-                bd.svid + "='" + p.svid + "' " +
+                " " + bd.benefitplan + "='" + p.benefitplan + "'" +
+                "," + bd.chargeamt + "='" + p.chargeamt + "'" +
+                "," + bd.claimamt + "='" + p.claimamt + "'" +
+                "," + bd.daycover + "='" + p.daycover + "'" +
+                "," + bd.dispdt + "='" + p.dispdt + "'" +
+                "," + bd.dispestat + "='" + p.dispestat + "'" +
+                "," + bd.dispid + "='" + p.dispid + "'" +
+                "," + bd.hn + "='" + p.hn + "'" +
+                "," + bd.invno + "='" + p.invno + "'" +
+                "," + bd.itemcnt + "='" + p.itemcnt + "'" +
+                "," + bd.otherpay + "='" + p.otherpay + "'" +
+                "," + bd.paid + "='" + p.paid + "'" +
+                "," + bd.pid + "='" + p.pid + "'" +
+                "," + bd.prescb + "='" + p.prescb + "'" +
+                "," + bd.prescdt + "='" + p.prescdt + "'" +
+                "," + bd.providerid + "='" + p.providerid + "'" +
+                "," + bd.reimburser + "='" + p.reimburser + "'" +
+                "," + bd.svid + "='" + p.svid + "' " +
                 "Where " + bd.billdisp_id + "='" + p.billdisp_id + "'";
-            re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
+            re = conn.ExecuteNonQuery1(conn.connSSData, sql);
 
             return re;
         }

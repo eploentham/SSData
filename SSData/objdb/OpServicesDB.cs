@@ -78,6 +78,39 @@ namespace SSData.objdb
 
             return re;
         }
+        public String update(OpServices p)
+        {
+            String re = "";
+            String sql = "";
+            sql = "Update " + opS.table + " Set " +
+                " " + opS.careaccount + "='"+p.careaccount+"'" +
+                "," + opS.claimcat + "='" + p.claimcat + "'" +
+                "," + opS.class1 + "='" + p.class1 + "'" +
+                "," + opS.clinic + "='" + p.clinic + "'" +
+                "," + opS.codeset + "='" + p.codeset + "'" +
+                "," + opS.completion + "='" + p.completion + "'" +
+                "," + opS.degdt + "='" + p.degdt + "'" +
+                "," + opS.dtappoint + "='" + p.dtappoint + "'" +
+                "," + opS.enddt + "='" + p.enddt + "'" +
+                "," + opS.hcode + "='" + p.hcode + "'" +
+                "," + opS.hn + "='" + p.hn + "'" +
+                "," + opS.invno + "='" + p.invno + "'" +
+                "," + opS.lccode + "='" + p.lccode + "'" +
+                "," + opS.pid + "='" + p.pid + "'" +
+                "," + opS.stdcode + "='" + p.stdcode + "'" +
+                "," + opS.svcharge + "='" + p.svcharge + "'" +
+                "," + opS.svid + "='" + p.svid + "'" +
+                "," + opS.svpid + "='" + p.svpid + "'" +
+                "," + opS.svtxcode + "='" + p.svtxcode + "'" +
+                "," + opS.typein + "='" + p.typein + "'" +
+                "," + opS.typeout + "='" + p.typeout + "'" +
+                "," + opS.typeserv + "='" + p.typeserv + "'" +
+                "Where "+opS.pkField+"='"+p.opservices_id+"'";
+
+            re = conn.ExecuteNonQuery1(conn.connSSData, sql);
+
+            return re;
+        }
         public DataTable selectByssvID(String ssvId)
         {
             DataTable dt = new DataTable();

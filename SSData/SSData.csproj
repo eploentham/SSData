@@ -119,6 +119,12 @@
     <Compile Include="gui\FrmSSDataBT.Designer.cs">
       <DependentUpon>FrmSSDataBT.cs</DependentUpon>
     </Compile>
+    <Compile Include="gui\FrmSSDataBTi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gui\FrmSSDataBTi.Designer.cs">
+      <DependentUpon>FrmSSDataBTi.cs</DependentUpon>
+    </Compile>
     <Compile Include="gui\FrmSSDataOPs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +142,12 @@
     </Compile>
     <Compile Include="gui\FrmSSDataView.Designer.cs">
       <DependentUpon>FrmSSDataView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gui\FrmSSDataBDi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gui\FrmSSDataBDi.Designer.cs">
+      <DependentUpon>FrmSSDataBDi.cs</DependentUpon>
     </Compile>
     <Compile Include="objdb\BDrugCatalogueDB.cs" />
     <Compile Include="objdb\BillDispDB.cs" />
@@ -183,6 +195,9 @@
     <EmbeddedResource Include="gui\FrmSSDataBT.resx">
       <DependentUpon>FrmSSDataBT.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="gui\FrmSSDataBTi.resx">
+      <DependentUpon>FrmSSDataBTi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="gui\FrmSSDataOPs.resx">
       <DependentUpon>FrmSSDataOPs.cs</DependentUpon>
     </EmbeddedResource>
@@ -191,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="gui\FrmSSDataView.resx">
       <DependentUpon>FrmSSDataView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gui\FrmSSDataBDi.resx">
+      <DependentUpon>FrmSSDataBDi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

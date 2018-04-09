@@ -22,7 +22,7 @@ namespace SSData.control
         public MainHISDB mHisDB;
 
         String encoding = "Windows-874";
-        public String monthId = "", yearId = "", ssVid="", btID="", bdID="", opsID="";
+        public String monthId = "", yearId = "", ssVid="", btID="", bdID="", opsID="", btIId="", bdIId="", opdXId="";
 
         public enum TypeOut { Discharge=1, Admin=2, Refer=3, Dead=4, Escape=5, Other=9}
         public SSDataControl()

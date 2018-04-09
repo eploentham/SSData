@@ -85,5 +85,10 @@ namespace SSData
             frm.Show(this);
             this.Hide();
         }
+
+        private void FrmMain_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.c1Button1 = new C1.Win.C1Input.C1Button();
+            this.txtId = new C1.Win.C1Input.C1TextBox();
+            this.btnEdit = new C1.Win.C1Input.C1Button();
             this.btnOk = new C1.Win.C1Input.C1Button();
             this.txtOtherPay = new C1.Win.C1Input.C1TextBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -70,9 +71,9 @@
             this.txtStation = new C1.Win.C1Input.C1TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.c1ThemeController1 = new C1.Win.C1Themes.C1ThemeController();
-            this.txtId = new C1.Win.C1Input.C1TextBox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.c1Button1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtId)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnEdit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOtherPay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOtherPayPlan)).BeginInit();
@@ -94,14 +95,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtAuthenCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtId)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(87)))), ((int)(((byte)(87)))));
             this.groupBox1.Controls.Add(this.txtId);
-            this.groupBox1.Controls.Add(this.c1Button1);
+            this.groupBox1.Controls.Add(this.btnEdit);
             this.groupBox1.Controls.Add(this.btnOk);
             this.groupBox1.Controls.Add(this.txtOtherPay);
             this.groupBox1.Controls.Add(this.label19);
@@ -150,16 +150,32 @@
             this.groupBox1.Text = "groupBox1";
             this.c1ThemeController1.SetTheme(this.groupBox1, "ExpressionDark");
             // 
-            // c1Button1
+            // txtId
             // 
-            this.c1Button1.Location = new System.Drawing.Point(527, 25);
-            this.c1Button1.Name = "c1Button1";
-            this.c1Button1.Size = new System.Drawing.Size(118, 37);
-            this.c1Button1.TabIndex = 51;
-            this.c1Button1.Text = "แก้ไขช้อมูล";
-            this.c1ThemeController1.SetTheme(this.c1Button1, "ExpressionDark");
-            this.c1Button1.UseVisualStyleBackColor = true;
-            this.c1Button1.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.txtId.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(71)))), ((int)(((byte)(71)))));
+            this.txtId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtId.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(172)))), ((int)(((byte)(172)))));
+            this.txtId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtId.Location = new System.Drawing.Point(319, 33);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(61, 20);
+            this.txtId.TabIndex = 52;
+            this.txtId.Tag = null;
+            this.c1ThemeController1.SetTheme(this.txtId, "ExpressionDark");
+            this.txtId.Visible = false;
+            this.txtId.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new System.Drawing.Point(527, 25);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(118, 37);
+            this.btnEdit.TabIndex = 51;
+            this.btnEdit.Text = "แก้ไขช้อมูล";
+            this.c1ThemeController1.SetTheme(this.btnEdit, "ExpressionDark");
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnOk
             // 
@@ -171,6 +187,7 @@
             this.c1ThemeController1.SetTheme(this.btnOk, "ExpressionDark");
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // txtOtherPay
             // 
@@ -685,21 +702,6 @@
             this.label1.Text = "station";
             this.c1ThemeController1.SetTheme(this.label1, "ExpressionDark");
             // 
-            // txtId
-            // 
-            this.txtId.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(71)))), ((int)(((byte)(71)))));
-            this.txtId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtId.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(172)))), ((int)(((byte)(172)))));
-            this.txtId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtId.Location = new System.Drawing.Point(319, 33);
-            this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(61, 20);
-            this.txtId.TabIndex = 52;
-            this.txtId.Tag = null;
-            this.c1ThemeController1.SetTheme(this.txtId, "ExpressionDark");
-            this.txtId.Visible = false;
-            this.txtId.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
-            // 
             // FrmSSDataBT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -714,7 +716,8 @@
             this.Load += new System.EventHandler(this.FrmSSDataBT_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.c1Button1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtId)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnEdit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOtherPay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOtherPayPlan)).EndInit();
@@ -736,7 +739,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtAuthenCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtId)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -782,7 +784,7 @@
         private System.Windows.Forms.Label label5;
         private C1.Win.C1Input.C1TextBox txtOtherPay;
         private System.Windows.Forms.Label label19;
-        private C1.Win.C1Input.C1Button c1Button1;
+        private C1.Win.C1Input.C1Button btnEdit;
         private C1.Win.C1Input.C1Button btnOk;
         private C1.Win.C1Themes.C1ThemeController c1ThemeController1;
         private C1.Win.C1Input.C1TextBox txtId;

@@ -21,7 +21,7 @@ namespace SSData.gui
 
         int colVId = 0, colVssdId = 1, colVBT = 2, colVBTi = 3, colVBD = 4, colVBDi = 5, colVOPs = 6, colVOPDx=7;
         int colVHn = 8, colVVn = 9, colVVisitDate = 10, colVName = 11;
-        int colVCnt = 13;
+        int colVCnt = 12;
 
         int colBTId = 0, colBTSheetName=1, colBTssdId = 2, colBTssvId = 3, colBTBi=4, colBTE=5, colBTS=6, colBTstation = 7, colBTauthcode = 8, colBTdttran = 9, colBThcode = 10;
         int colBTinvno = 11, colBTbillno = 12, colBThn = 13, colBTmemberno = 14, colBTamount = 15, colBTpaid = 16, colBTvercode = 17;
@@ -185,39 +185,54 @@ namespace SSData.gui
         }
         private void grdView_ButtonClicked(object sender, FarPoint.Win.Spread.EditorNotifyEventArgs e)
         {
-            
+
             //Boolean chk = false;
             //String monthId = "", yearId = "", ssId = "";
-            //FarPoint.Win.Spread.SheetView sheet1 = grdView.ActiveSheet;
-            //if (!sheet1.SheetName.Equals("SSData"))
-            //{
-            //    if (e.Column == colVBT)
-            //    {
-            //        Boolean chkBT = false;
-            //        FarPoint.Win.Spread.SheetView sheetBT = new FarPoint.Win.Spread.SheetView();
-            //        foreach (FarPoint.Win.Spread.SheetView sheet in grdView.Sheets)
-            //        {
-            //            if (sheet.SheetName.Equals("BT" + yearId + monthId))
-            //            {
-            //                chkBT = true;
-            //                sheetBT = sheet;
-            //            }
-            //        }
-            //        if (!chkBT)
-            //        {
-            //            ssId = sheet1.Cells[e.Row, colVssdId].Value.ToString();
-            //            FarPoint.Win.Spread.SheetView newsheetbt = new FarPoint.Win.Spread.SheetView();
-            //            newsheetbt.SheetName = "BT" + yearId + monthId;
-            //            newsheetbt.ColumnCount = 10;
-            //            newsheetbt.RowCount = 100;
-            //            // Add the new sheet to the component.
-            //            int index = grdView.Sheets.Add(newsheetbt);
-            //            setGrdViewHBT(index);
-            //            setGrdViewBT(index, ssId);
-            //            grdView.ActiveSheet = newsheetbt;
-            //        }
-            //    }
-            //}
+            FarPoint.Win.Spread.SheetView sheet1 = grdView.ActiveSheet;
+            if (sheet1.SheetName.Equals("SSData"))
+            {
+                //    if (e.Column == colVBT)
+                //    {
+                //        Boolean chkBT = false;
+                //        FarPoint.Win.Spread.SheetView sheetBT = new FarPoint.Win.Spread.SheetView();
+                //        foreach (FarPoint.Win.Spread.SheetView sheet in grdView.Sheets)
+                //        {
+                //            if (sheet.SheetName.Equals("BT" + yearId + monthId))
+                //            {
+                //                chkBT = true;
+                //                sheetBT = sheet;
+                //            }
+                //        }
+                //        if (!chkBT)
+                //        {
+                //            ssId = sheet1.Cells[e.Row, colVssdId].Value.ToString();
+                //            FarPoint.Win.Spread.SheetView newsheetbt = new FarPoint.Win.Spread.SheetView();
+                //            newsheetbt.SheetName = "BT" + yearId + monthId;
+                //            newsheetbt.ColumnCount = 10;
+                //            newsheetbt.RowCount = 100;
+                //            // Add the new sheet to the component.
+                //            int index = grdView.Sheets.Add(newsheetbt);
+                //            setGrdViewHBT(index);
+                //            setGrdViewBT(index, ssId);
+                //            grdView.ActiveSheet = newsheetbt;
+                //        }
+                //    }
+            }
+            else
+            {
+                String sh = "";
+                sh = grdView.ActiveSheet.Cells[e.Row, 1].Value.ToString();
+                if (sh.Equals("BT"))
+                {
+                    int col = e.Column;
+                    if (col == colBTBi)
+                    {
+                        sC.btID = grdView.ActiveSheet.Cells[e.Row, colBTId].Value.ToString();
+                        FrmSSDataBTi frm = new FrmSSDataBTi(sC);
+                        frm.ShowDialog(this);
+                    }
+                }
+            }
         }
         private void initConfig(SSDataControl sc, Form par1)
         {
@@ -235,6 +250,7 @@ namespace SSData.gui
             grdView.Sheets[index].AutoFilterMode = FarPoint.Win.Spread.AutoFilterMode.EnhancedContextMenu;
             grdView.Sheets[index].ColumnCount = colVCnt;
             grdView.Sheets[index].RowCount = 1;
+            grdView.Sheets[index].OperationMode = FarPoint.Win.Spread.OperationMode.RowMode;
 
             grdView.Sheets[index].Columns[colVId].Width = 50;
             grdView.Sheets[index].Columns[colVssdId].Width = 50;
@@ -294,6 +310,7 @@ namespace SSData.gui
             grdView.Sheets[index].AutoFilterMode = FarPoint.Win.Spread.AutoFilterMode.EnhancedContextMenu;
             grdView.Sheets[index].ColumnCount = colOPsCnt;
             grdView.Sheets[index].RowCount = 1;
+            grdView.Sheets[index].OperationMode = FarPoint.Win.Spread.OperationMode.RowMode;
 
             grdView.Sheets[index].Columns[colOPsId].Width = 50;
             grdView.Sheets[index].Columns[colOPsssdId].Width = 50;
@@ -405,6 +422,7 @@ namespace SSData.gui
             grdView.Sheets[index].AutoFilterMode = FarPoint.Win.Spread.AutoFilterMode.EnhancedContextMenu;
             grdView.Sheets[index].ColumnCount = colBDCnt;
             grdView.Sheets[index].RowCount = 1;
+            grdView.Sheets[index].OperationMode = FarPoint.Win.Spread.OperationMode.RowMode;
 
             grdView.Sheets[index].Columns[colBDId].Width = 50;
             grdView.Sheets[index].Columns[colBDssdId].Width = 50;
@@ -494,6 +512,7 @@ namespace SSData.gui
             grdView.Sheets[index].AutoFilterMode = FarPoint.Win.Spread.AutoFilterMode.EnhancedContextMenu;
             grdView.Sheets[index].ColumnCount = colBTCnt;
             grdView.Sheets[index].RowCount = 1;
+            grdView.Sheets[index].OperationMode = FarPoint.Win.Spread.OperationMode.RowMode;
 
             grdView.Sheets[index].Columns[colBTId].Width = 50;
             grdView.Sheets[index].Columns[colBTssdId].Width = 50;
@@ -594,6 +613,7 @@ namespace SSData.gui
             outlinelook.RangeGroupButtonBorderColor = Color.Red;
             outlinelook.RangeGroupLineColor = Color.Blue;
             grdView.InterfaceRenderer = outlinelook;
+            grdView.Sheets[0].OperationMode = FarPoint.Win.Spread.OperationMode.RowMode;
 
             grdView.BorderStyle = BorderStyle.None;
             grdView.Sheets[0].Columns[0, 2].AllowAutoFilter = true;
@@ -660,7 +680,6 @@ namespace SSData.gui
 
             grdView.Sheets[0].RestrictRows = true;
 
-
         }
         private void setGrdView()
         {
@@ -682,6 +701,10 @@ namespace SSData.gui
                 grdView.Sheets[0].Cells[i, colDateStart].Value = row[sC.mHisDB.ssdDB.ssd.date_start].ToString();
                 grdView.Sheets[0].Cells[i, colDateEnd].Value = row[sC.mHisDB.ssdDB.ssd.date_end].ToString();
                 grdView.Sheets[0].Cells[i, colId].Value = row[sC.mHisDB.ssdDB.ssd.ssdata_id].ToString();
+                if (i % 2 == 0)
+                {
+                    grdView.Sheets[0].Cells[i, 0, i, colCnt - 1].BackColor = System.Drawing.Color.FromArgb(235, 241, 222);
+                }
                 i++;
             }
         }
@@ -702,7 +725,12 @@ namespace SSData.gui
                 grdView.Sheets[index].Cells[i, colVVn].Value = row[sC.mHisDB.ssdVDB.ssdV.vn].ToString();
                 grdView.Sheets[index].Cells[i, colVVisitDate].Value = row[sC.mHisDB.ssdVDB.ssdV.visit_date].ToString()+" "+ row[sC.mHisDB.ssdVDB.ssdV.visit_time].ToString();
                 grdView.Sheets[index].Cells[i, colVName].Value = row[sC.mHisDB.ssdVDB.ssdV.prefix].ToString()+" "+row[sC.mHisDB.ssdVDB.ssdV.patient_fname].ToString()+" "+ row[sC.mHisDB.ssdVDB.ssdV.patient_lname].ToString();
-                
+
+                //grdView.Sheets[index].bac
+                if (i % 2 == 0)
+                {
+                    grdView.Sheets[index].Cells[i, 0, i, colVCnt - 1].BackColor = System.Drawing.Color.FromArgb(235, 241, 222);
+                }
                 i++;
             }
         }
@@ -744,7 +772,10 @@ namespace SSData.gui
 
                 //grdView.Sheets[index].Cells[i, colVVisitDate].Value = row[sC.mHisDB.btDB.bt.visit_date].ToString() + " " + row[sC.mHisDB.ssdVDB.ssdV.visit_time].ToString();
                 //grdView.Sheets[index].Cells[i, colVName].Value = row[sC.mHisDB.btDB.bt.prefix].ToString() + " " + row[sC.mHisDB.ssdVDB.ssdV.patient_fname].ToString() + " " + row[sC.mHisDB.ssdVDB.ssdV.patient_lname].ToString();
-
+                if (i % 2 == 0)
+                {
+                    grdView.Sheets[index].Cells[i, 0, i, colBTCnt - 1].BackColor = System.Drawing.Color.FromArgb(235, 241, 222);
+                }
                 i++;
             }
         }
@@ -786,7 +817,10 @@ namespace SSData.gui
 
                 //grdView.Sheets[index].Cells[i, colVVisitDate].Value = row[sC.mHisDB.btDB.bt.visit_date].ToString() + " " + row[sC.mHisDB.ssdVDB.ssdV.visit_time].ToString();
                 //grdView.Sheets[index].Cells[i, colVName].Value = row[sC.mHisDB.btDB.bt.prefix].ToString() + " " + row[sC.mHisDB.ssdVDB.ssdV.patient_fname].ToString() + " " + row[sC.mHisDB.ssdVDB.ssdV.patient_lname].ToString();
-
+                if (i % 2 == 0)
+                {
+                    grdView.Sheets[index].Cells[i, 0, i, colBDCnt - 1].BackColor = System.Drawing.Color.FromArgb(235, 241, 222);
+                }
                 i++;
             }
         }
@@ -833,7 +867,10 @@ namespace SSData.gui
 
                 //grdView.Sheets[index].Cells[i, colVVisitDate].Value = row[sC.mHisDB.btDB.bt.visit_date].ToString() + " " + row[sC.mHisDB.ssdVDB.ssdV.visit_time].ToString();
                 //grdView.Sheets[index].Cells[i, colVName].Value = row[sC.mHisDB.btDB.bt.prefix].ToString() + " " + row[sC.mHisDB.ssdVDB.ssdV.patient_fname].ToString() + " " + row[sC.mHisDB.ssdVDB.ssdV.patient_lname].ToString();
-
+                if (i % 2 == 0)
+                {
+                    grdView.Sheets[index].Cells[i, 0, i, colOPsCnt - 1].BackColor = System.Drawing.Color.FromArgb(235, 241, 222);
+                }
                 i++;
             }
         }

@@ -30,6 +30,11 @@
         {
             this.c1ThemeController1 = new C1.Win.C1Themes.C1ThemeController();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtSvCharge = new C1.Win.C1Input.C1TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.btnEdit = new C1.Win.C1Input.C1Button();
+            this.btnOk = new C1.Win.C1Input.C1Button();
+            this.txtId = new C1.Win.C1Input.C1TextBox();
             this.txtClaimCat = new C1.Win.C1Input.C1TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.txtSvtxCode = new C1.Win.C1Input.C1TextBox();
@@ -72,13 +77,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtInvNo = new C1.Win.C1Input.C1TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtId = new C1.Win.C1Input.C1TextBox();
-            this.c1Button1 = new C1.Win.C1Input.C1Button();
-            this.btnOk = new C1.Win.C1Input.C1Button();
-            this.txtSvCharge = new C1.Win.C1Input.C1TextBox();
-            this.label22 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSvCharge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnEdit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOk)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtId)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtClaimCat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSvtxCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCompletion)).BeginInit();
@@ -100,10 +104,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtClass1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSvId)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtInvNo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtId)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.c1Button1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOk)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSvCharge)).BeginInit();
             this.SuspendLayout();
             // 
             // c1ThemeController1
@@ -115,7 +115,7 @@
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
             this.groupBox1.Controls.Add(this.txtSvCharge);
             this.groupBox1.Controls.Add(this.label22);
-            this.groupBox1.Controls.Add(this.c1Button1);
+            this.groupBox1.Controls.Add(this.btnEdit);
             this.groupBox1.Controls.Add(this.btnOk);
             this.groupBox1.Controls.Add(this.txtId);
             this.groupBox1.Controls.Add(this.txtClaimCat);
@@ -168,6 +168,73 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             this.c1ThemeController1.SetTheme(this.groupBox1, "ExpressionLight");
+            // 
+            // txtSvCharge
+            // 
+            this.txtSvCharge.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
+            this.txtSvCharge.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSvCharge.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
+            this.txtSvCharge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtSvCharge.Location = new System.Drawing.Point(114, 497);
+            this.txtSvCharge.Name = "txtSvCharge";
+            this.txtSvCharge.Size = new System.Drawing.Size(207, 20);
+            this.txtSvCharge.TabIndex = 60;
+            this.txtSvCharge.Tag = null;
+            this.c1ThemeController1.SetTheme(this.txtSvCharge, "ExpressionLight");
+            this.txtSvCharge.Value = "";
+            this.txtSvCharge.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label22.ForeColor = System.Drawing.Color.Black;
+            this.label22.Location = new System.Drawing.Point(15, 497);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(64, 16);
+            this.label22.TabIndex = 59;
+            this.label22.Text = "svcharge";
+            this.c1ThemeController1.SetTheme(this.label22, "ExpressionLight");
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new System.Drawing.Point(520, 38);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(118, 37);
+            this.btnEdit.TabIndex = 58;
+            this.btnEdit.Text = "แก้ไขช้อมูล";
+            this.c1ThemeController1.SetTheme(this.btnEdit, "ExpressionLight");
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnOk
+            // 
+            this.btnOk.Location = new System.Drawing.Point(520, 480);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(118, 37);
+            this.btnOk.TabIndex = 57;
+            this.btnOk.Text = "บันทึกช้อมูล";
+            this.c1ThemeController1.SetTheme(this.btnOk, "ExpressionLight");
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            // 
+            // txtId
+            // 
+            this.txtId.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
+            this.txtId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtId.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
+            this.txtId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtId.Location = new System.Drawing.Point(338, 29);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(76, 20);
+            this.txtId.TabIndex = 56;
+            this.txtId.Tag = null;
+            this.c1ThemeController1.SetTheme(this.txtId, "ExpressionLight");
+            this.txtId.Visible = false;
+            this.txtId.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
             // 
             // txtClaimCat
             // 
@@ -736,71 +803,6 @@
             this.label1.Text = "invno";
             this.c1ThemeController1.SetTheme(this.label1, "ExpressionLight");
             // 
-            // txtId
-            // 
-            this.txtId.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
-            this.txtId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtId.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
-            this.txtId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtId.Location = new System.Drawing.Point(338, 29);
-            this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(76, 20);
-            this.txtId.TabIndex = 56;
-            this.txtId.Tag = null;
-            this.c1ThemeController1.SetTheme(this.txtId, "ExpressionLight");
-            this.txtId.Visible = false;
-            this.txtId.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
-            // 
-            // c1Button1
-            // 
-            this.c1Button1.Location = new System.Drawing.Point(520, 38);
-            this.c1Button1.Name = "c1Button1";
-            this.c1Button1.Size = new System.Drawing.Size(118, 37);
-            this.c1Button1.TabIndex = 58;
-            this.c1Button1.Text = "แก้ไขช้อมูล";
-            this.c1ThemeController1.SetTheme(this.c1Button1, "ExpressionLight");
-            this.c1Button1.UseVisualStyleBackColor = true;
-            this.c1Button1.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
-            // 
-            // btnOk
-            // 
-            this.btnOk.Location = new System.Drawing.Point(520, 480);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(118, 37);
-            this.btnOk.TabIndex = 57;
-            this.btnOk.Text = "บันทึกช้อมูล";
-            this.c1ThemeController1.SetTheme(this.btnOk, "ExpressionLight");
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
-            // 
-            // txtSvCharge
-            // 
-            this.txtSvCharge.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(125)))), ((int)(((byte)(125)))));
-            this.txtSvCharge.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSvCharge.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
-            this.txtSvCharge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtSvCharge.Location = new System.Drawing.Point(114, 497);
-            this.txtSvCharge.Name = "txtSvCharge";
-            this.txtSvCharge.Size = new System.Drawing.Size(207, 20);
-            this.txtSvCharge.TabIndex = 60;
-            this.txtSvCharge.Tag = null;
-            this.c1ThemeController1.SetTheme(this.txtSvCharge, "ExpressionLight");
-            this.txtSvCharge.Value = "";
-            this.txtSvCharge.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label22.ForeColor = System.Drawing.Color.Black;
-            this.label22.Location = new System.Drawing.Point(15, 497);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(64, 16);
-            this.label22.TabIndex = 59;
-            this.label22.Text = "svcharge";
-            this.c1ThemeController1.SetTheme(this.label22, "ExpressionLight");
-            // 
             // FrmSSDataOPs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -816,6 +818,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSvCharge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnEdit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOk)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtId)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtClaimCat)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSvtxCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCompletion)).EndInit();
@@ -837,10 +843,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtClass1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSvId)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtInvNo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtId)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.c1Button1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOk)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSvCharge)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -892,7 +894,7 @@
         private C1.Win.C1Input.C1TextBox txtClaimCat;
         private System.Windows.Forms.Label label21;
         private C1.Win.C1Input.C1TextBox txtId;
-        private C1.Win.C1Input.C1Button c1Button1;
+        private C1.Win.C1Input.C1Button btnEdit;
         private C1.Win.C1Input.C1Button btnOk;
         private C1.Win.C1Input.C1TextBox txtSvCharge;
         private System.Windows.Forms.Label label22;

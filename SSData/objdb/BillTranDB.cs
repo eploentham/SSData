@@ -99,7 +99,7 @@ namespace SSData.objdb
                 "," + bt.vercode + "='" + p.vercode + "' " +
                 "Where " + bt.billtran_id + "='" + p.billtran_id + "'";
 
-            re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
+            re = conn.ExecuteNonQuery1(conn.connSSData, sql);
 
             return re;
         }
