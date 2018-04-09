@@ -29,36 +29,20 @@
         private void InitializeComponent()
         {
             this.c1ThemeController1 = new C1.Win.C1Themes.C1ThemeController();
-            this.grdView = new FarPoint.Win.Spread.FpSpread();
-            this.grdView_Sheet1 = new FarPoint.Win.Spread.SheetView();
             this.btnOk = new C1.Win.C1Input.C1Button();
             this.btnEdit = new C1.Win.C1Input.C1Button();
+            this.grdView = new FarPoint.Win.Spread.FpSpread();
+            this.grdView_Sheet1 = new FarPoint.Win.Spread.SheetView();
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnEdit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).BeginInit();
             this.SuspendLayout();
             // 
             // c1ThemeController1
             // 
             this.c1ThemeController1.Theme = "BeigeOne";
-            // 
-            // grdView
-            // 
-            this.grdView.AccessibleDescription = "";
-            this.grdView.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.grdView.Location = new System.Drawing.Point(0, 69);
-            this.grdView.Name = "grdView";
-            this.grdView.Sheets.AddRange(new FarPoint.Win.Spread.SheetView[] {
-            this.grdView_Sheet1});
-            this.grdView.Size = new System.Drawing.Size(1013, 459);
-            this.grdView.TabIndex = 0;
-            // 
-            // grdView_Sheet1
-            // 
-            this.grdView_Sheet1.Reset();
-            this.grdView_Sheet1.SheetName = "Sheet1";
             // 
             // btnOk
             // 
@@ -70,6 +54,7 @@
             this.c1ThemeController1.SetTheme(this.btnOk, "BeigeOne");
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnEdit
             // 
@@ -81,25 +66,44 @@
             this.c1ThemeController1.SetTheme(this.btnEdit, "BeigeOne");
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // grdView
+            // 
+            this.grdView.AccessibleDescription = "";
+            this.grdView.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.grdView.Location = new System.Drawing.Point(0, 69);
+            this.grdView.Name = "grdView";
+            this.grdView.Sheets.AddRange(new FarPoint.Win.Spread.SheetView[] {
+            this.grdView_Sheet1});
+            this.grdView.Size = new System.Drawing.Size(1139, 459);
+            this.grdView.TabIndex = 0;
+            this.grdView.EditChange += new FarPoint.Win.Spread.EditorNotifyEventHandler(this.grdView_EditChange);
+            // 
+            // grdView_Sheet1
+            // 
+            this.grdView_Sheet1.Reset();
+            this.grdView_Sheet1.SheetName = "Sheet1";
             // 
             // FrmSSDataBDi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1013, 528);
+            this.ClientSize = new System.Drawing.Size(1139, 528);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.grdView);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.Name = "FrmSSDataBDi";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmSSDateBDi";
             this.c1ThemeController1.SetTheme(this, "BeigeOne");
             this.Load += new System.EventHandler(this.FrmSSDataBDi_Load);
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnEdit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -30,6 +30,9 @@ namespace SSData
             monthId = System.DateTime.Now.Month.ToString("00");
             sC = sc;
             par = par1;
+            txtTimeCurrent.Text = sC.setTimeCurrent();
+            timer1.Interval = 1000 * 60;
+            timer1.Start();
             pB1.Hide();
             //pB2.Hide();
             sC.setCboMonth(cboMonth);
@@ -53,13 +56,15 @@ namespace SSData
             string msg = iso.GetString(isoBytes);
             txtHName.Value = msg;
             genFileName();
+            setChkSplit();
+            setTxtSplit();
         }
         private String genFileName()
         {
             DateTime dt1 = DateTime.Now;
             String dt = "";
             dt = dt1.ToString("yyyyMMddTHH:mm:ss") + ".txt";
-            txtFileName.Value = txtHCODE.Text + "_" + txtSSOPBIL.Text + "_" + txtPeriod.Text + "_" + txtPeriodSub.Text + "_" + dt1.ToString("yyyyMMdd-HHmmss") + ".txt";
+            txtFileName.Value = txtHCODE.Text + "_" + txtSSOPBIL.Text + "_" + txtPeriod.Text + "_" + txtPeriodSub.Text + "_" + dt1.ToString("yyyyMMdd-HHmmss") + ".zip";
             return dt;
         }
 
@@ -82,7 +87,7 @@ namespace SSData
             }
             else
             {
-                sC.mHisDB.insertTSSData(sC.iniC.HCODE, sC.iniC.branchId, cboYear.Text, cboMonth.SelectedValue.ToString(), pB1, label12, label13);
+                sC.mHisDB.insertTSSData(sC.iniC.HCODE, sC.iniC.branchId, cboYear.Text, cboMonth.SelectedValue.ToString(), pB1, label12, label13, this);
             }
         }
 
@@ -138,6 +143,102 @@ namespace SSData
             sC.monthId = cboMonth.SelectedValue.ToString();
             FrmSSDataView frm = new FrmSSDataView(sC, this);
             frm.ShowDialog(this);
+        }
+
+        private void btnZip_Click(object sender, EventArgs e)
+        {
+            genFileName();
+            sC.genZipFile(txtPath.Text, sC.iniC.pathFileZip + "\\" + txtFileName.Text);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            txtTimeCurrent.Text = sC.setTimeCurrent();
+            if (txtTimeCurrent.Text.Equals(txtAutoStart.Text))
+            {
+                //txtTimeStart.Text = sC.setTimeCurrent();
+                //DateTime startDate = Convert.ToDateTime(System.DateTime.Now).AddDays(-1);
+                btnOk_Click(null,null);
+                //selectCar(startDate.Year.ToString() + "-" + startDate.ToString("MM-dd"), startDate.Year.ToString() + "-" + startDate.ToString("MM-dd"));
+                //txtTimeEnd.Text = tdsC.setTimeCurrent();
+            }
+        }
+        private void setChkSplit()
+        {
+            if (chkSplit.Checked)
+            {
+                txtSplit.Enabled = true;
+            }
+            else
+            {
+                txtSplit.Enabled = false;
+            }
+        }
+        private void setTxtSplit()
+        {
+            String re = "";
+            if (cboYear.Text.Equals("")) return;
+
+            String startDate = "", endDate = "", yearId = "", monthId = "", period = "";
+            yearId = cboYear.Text;
+            monthId = cboMonth.SelectedValue.ToString();
+            if (monthId.Equals("12"))
+            {
+                yearId = String.Concat(int.Parse(yearId) + 1);
+                monthId = "01";
+                DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId), 1);
+                dateEnd = dateEnd.AddDays(-1);
+                re = dateEnd.Day.ToString();
+            }
+            else
+            {
+                DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId) + 1, 1);
+                dateEnd = dateEnd.AddDays(-1);
+                re = dateEnd.Day.ToString();
+            }
+
+            txtSplit.Value = re;
+        }
+        private void setSplitNum()
+        {
+            String startDate = "", endDate = "", yearId = "", monthId = "", period = "";
+            yearId = cboYear.Text;
+            monthId = cboMonth.SelectedValue.ToString();
+            DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId) + 1, 1);
+            DateTime day = new DateTime();
+            
+            period = txtSplit.Value.ToString();
+
+            dateEnd = dateEnd.AddDays(-1);
+            //startDate = yearId + "-" + monthId + "-01";
+            //endDate = yearId + "-" + dateEnd.Month.ToString("00") + "-" + dateEnd.Day.ToString("00");
+
+            //DateTime econvertedDate = Convert.ToDateTime(dateEnd);
+            //DateTime sconvertedDate = Convert.ToDateTime(startDate);
+            int num = 0;
+            int aa = 0;
+            num = dateEnd.Day / int.Parse(txtSplit.Value.ToString());
+            aa = dateEnd.Day % int.Parse(txtSplit.Value.ToString());
+            if (aa >= 1)
+            {
+                num++;
+            }
+            //TimeSpan age = econvertedDate.Subtract(sconvertedDate);
+            txtSplitNum.Value = num;
+        }
+        private void chkSplit_CheckedChanged(object sender, EventArgs e)
+        {
+            setChkSplit();            
+        }
+
+        private void cboMonth_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setTxtSplit();
+        }
+
+        private void txtSplit_ValueChanged(object sender, EventArgs e)
+        {
+            setSplitNum();
         }
     }
 }

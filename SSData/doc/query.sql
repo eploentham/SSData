@@ -24,7 +24,7 @@ declare @TableName sysname = 'b_drugcatalogue'
 
 
 
-
+delete from t_ssdata;
 delete from t_ssdata_visit;
 delete from t_billtran;
 delete from t_billtran_items;

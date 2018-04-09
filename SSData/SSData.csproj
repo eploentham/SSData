@@ -55,6 +55,7 @@
     <Reference Include="C1.Win.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=944ae1ea0e47ca04" />
     <Reference Include="C1.Win.Bitmap.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=944ae1ea0e47ca04" />
     <Reference Include="C1.Win.C1Command.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=e808566f358766d8, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1Gauge.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
     <Reference Include="C1.Win.C1Input.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=7e7ff60f0c214f9a, processorArchitecture=MSIL" />
     <Reference Include="C1.Win.C1Ribbon.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
     <Reference Include="C1.Win.C1Themes.4, Version=4.0.20173.282, Culture=neutral, PublicKeyToken=594a0605db190bb9, processorArchitecture=MSIL" />
@@ -75,6 +76,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -94,6 +97,12 @@
     </Compile>
     <Compile Include="gui\FrmDrugCatalogue.Designer.cs">
       <DependentUpon>FrmDrugCatalogue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gui\FrmSSDataOPDx.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gui\FrmSSDataOPDx.Designer.cs">
+      <DependentUpon>FrmSSDataOPDx.cs</DependentUpon>
     </Compile>
     <Compile Include="gui\FrmSSDataAdd.cs">
       <SubType>Form</SubType>
@@ -168,6 +177,7 @@
     <Compile Include="object1\BillTran.cs" />
     <Compile Include="object1\BillTranItems.cs" />
     <Compile Include="object1\ComboBoxItem.cs" />
+    <Compile Include="object1\Doctor.cs" />
     <Compile Include="object1\IniFile.cs" />
     <Compile Include="object1\InitConfig.cs" />
     <Compile Include="object1\OpServices.cs" />
@@ -197,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="gui\FrmSSDataBTi.resx">
       <DependentUpon>FrmSSDataBTi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gui\FrmSSDataOPDx.resx">
+      <DependentUpon>FrmSSDataOPDx.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gui\FrmSSDataOPs.resx">
       <DependentUpon>FrmSSDataOPs.cs</DependentUpon>

@@ -28,7 +28,8 @@ namespace SSData.objdb
         public BillDispDB bdDB;
         public BillDispItemsDB bdIDB;
         public OpServicesDB opSDB;
-        public OpServicesOpdXDB opSXDB;
+        public OpServicesOpdXDB opdXDB;
+        private List<Doctor> lDoctor;
 
         TSsdata ssd;
         public MainHISDB(ConnectDB c)
@@ -49,8 +50,9 @@ namespace SSData.objdb
             bdDB = new BillDispDB(conn);
             bdIDB = new BillDispItemsDB(conn);
             opSDB = new OpServicesDB(conn);
-            opSXDB = new OpServicesOpdXDB(conn);
-
+            opdXDB = new OpServicesOpdXDB(conn);
+            lDoctor = new List<Doctor>();
+            getListDoctor();
             sqlIPD = "SELECT DISTINCT " +
                         "patt08.MNC_HN_YR, patt08.MNC_HN_NO, patt08.MNC_DATE, patt08.MNC_PRE_NO, fint01.MNC_FN_TYP_CD,  " +
                         "patm02.MNC_PFIX_DSC + ' ' + patm01.MNC_FNAME_T + ' ' + patm01.MNC_LNAME_T AS FName, patm01.MNC_ID_NO, patt08.MNC_AN_NO,  " +
@@ -96,6 +98,50 @@ namespace SSData.objdb
                         "FINANCE_T01.MNC_PRAKUN_CODE IS NULL) AND(dbo.PRAKUN_M01_TEMP.PrakanCode = :HOSID1 OR " +
                         "dbo.PRAKUN_M01_TEMP.PrakanCode IS NULL) " +
                         "ORDER BY patm18.MNC_CRO_CD, patt09.MNC_HN_NO";
+        }
+        public DataTable selectDoctor()
+        {
+            String sql = "", where = "";            
+
+            DataTable dt = new DataTable();
+            sql = "Select pm26.*, pm02.mnc_pfix_dsc " +
+                "From patient_m26 pm26 " +
+                "Left Join patient_m02 pm02 On pm26.mnc_dot_pfix = pm02.mnc_pfix_cd  " +
+                " " +
+                "Order By pm26.mnc_dot_cd ";
+
+            dt = conn.selectData(conn.connMainHIS, sql);
+
+            return dt;
+        }
+        private void getListDoctor()
+        {
+            lDoctor.Clear();
+            DataTable dt = selectDoctor();
+            foreach (DataRow row in dt.Rows)
+            {
+                Doctor item = new Doctor();
+                item.fName = row["mnc_dot_fname"].ToString();
+                item.lName = row["mnc_dot_lname"].ToString();
+                item.pFix = row["mnc_pfix_dsc"].ToString();
+                lDoctor.Add(item);
+            }
+        }
+        private Boolean getDoctorCD(String ordId, String item_code)
+        {
+            Boolean chk = false;
+            //foreach (XcustItemMstTbl item in listXcIMT)
+            //{
+            //    if (item.ORGAINZATION_ID.Equals(ordId.Trim()))
+            //    {
+            //        if (item.ITEM_REFERENCE1.Equals(item_code.Trim()))
+            //        {
+            //            chk = true;
+            //            break;
+            //        }
+            //    }
+            //}
+            return chk;
         }
         public String selectCountHN(String hcode, String yearId, String monthId)
         {
@@ -181,7 +227,7 @@ namespace SSData.objdb
 
             return dt;
         }
-        public DataTable selectSSDataItem(String hn, String vnno, String preno, String docDate, String docCD, String docNO)
+        public DataTable selectBillItem(String hn, String vnno, String preno, String docDate, String docCD, String docNO)
         {
             String sql = "", where = "";
             
@@ -201,7 +247,7 @@ namespace SSData.objdb
 
             return dt;
         }
-        public DataTable selectSSDataBillDispItem(String hn, String vnno, String preno, String visitDate, String dispid)
+        public DataTable selectBillDispItem(String hn, String vnno, String preno, String visitDate, String dispid)
         {
             String sql = "", where="";
             //DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId) + 1, 1);
@@ -235,6 +281,46 @@ namespace SSData.objdb
                 ", phart05.MNC_CFR_NO, phart05.MNC_DOC_CD, phart05.MNC_CFR_YR,MNC_DOSAGE_FORM,MNC_PH_STRENGTH " +
                 "Order By phart06.mnc_ord_no, phart06.MNC_PH_CD " +
                 "; ";
+
+            dt = conn.selectData(conn.connMainHIS, sql);
+
+            return dt;
+        }
+        public DataTable selectOPService(String hn, String vnno, String preno, String docDate, String docCD, String docNO)
+        {
+            String sql = "", where = "";
+
+            where = " Where fint01.mnc_hn_no = '" + hn + "' and fint01.mnc_pre_no = '" + preno + "' and fint01.mnc_doc_dat = '" + docDate + "' and len(MNC_DOT_CD_DF) >0 ";
+
+            DataTable dt = new DataTable();
+            sql = "Select fint02.*, finm01.MNC_FN_DSCT, finm01.MNC_GRP_SS, finm01.MNC_FN_GRP " +
+                "From Finance_t01 fint01 " +
+                "Left Join Finance_t02 fint02 On fint01.mnc_doc_cd = fint02.mnc_doc_cd and fint01.MNC_DOC_YR = fint02.MNC_DOC_YR and fint01.MNC_DOC_NO = fint02.MNC_DOC_NO " +
+                "   and fint01.MNC_DOC_DAT = fint02.MNC_DOC_DAT " +
+                "Left Join FINANCE_M01 finm01 On fint02.MNC_FN_CD = finm01.MNC_FN_CD " +
+                " " +
+                where + " " +
+                "Order By fint02.mnc_no ";
+
+            dt = conn.selectData(conn.connMainHIS, sql);
+
+            return dt;
+        }
+        public DataTable selectOPx(String hn, String vnno, String preno, String docDate, String docCD, String docNO)
+        {
+            String sql = "", where = "";
+
+            where = " Where fint01.mnc_hn_no = '" + hn + "' and fint01.mnc_pre_no = '" + preno + "' and fint01.mnc_doc_dat = '" + docDate + "' ";
+
+            DataTable dt = new DataTable();
+            sql = "Select fint02.*, finm01.MNC_FN_DSCT, finm01.MNC_GRP_SS, finm01.MNC_FN_GRP " +
+                "From Finance_t01 fint01 " +
+                "Left Join Finance_t02 fint02 On fint01.mnc_doc_cd = fint02.mnc_doc_cd and fint01.MNC_DOC_YR = fint02.MNC_DOC_YR and fint01.MNC_DOC_NO = fint02.MNC_DOC_NO " +
+                "   and fint01.MNC_DOC_DAT = fint02.MNC_DOC_DAT " +
+                "Left Join FINANCE_M01 finm01 On fint02.MNC_FN_CD = finm01.MNC_FN_CD " +
+                " " +
+                where + " " +
+                "Order By fint02.mnc_no ";
 
             dt = conn.selectData(conn.connMainHIS, sql);
 
@@ -384,7 +470,7 @@ namespace SSData.objdb
 
             pb1.Hide();
         }
-        public void insertTSSData(String hcode, String branchId, String yearId, String monthId, ProgressBar pb1, Label label1, Label label2)
+        public void insertTSSData(String hcode, String branchId, String yearId, String monthId, ProgressBar pb1, Label label1, Label label2, Form frm)
         {
             String cntHN = "";
             label1.Text = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
@@ -393,6 +479,8 @@ namespace SSData.objdb
             DataTable dtItem = new DataTable();
             DataTable dtBillDispItem = new DataTable();
             DataTable dtBillDisp = new DataTable();
+            DataTable dtOPs = new DataTable();
+            DataTable dtOPx = new DataTable();
             int rowNo = 0;
 
             conn.OpenConnectionSSData();
@@ -415,6 +503,9 @@ namespace SSData.objdb
             foreach (DataRow row in dt.Rows)
             {
                 pb1.Value++;
+                if ((pb1.Value % 100)== 0){
+                    frm.Refresh();
+                }
                 
                 TSsdataVisit ssV = new TSsdataVisit();
                 String visitDate = "", ssVid="", dispdt="", prescdt="", btId="", docDate="", bdId="", opId="", visitTime="";
@@ -498,37 +589,9 @@ namespace SSData.objdb
 
                 btId = btDB.insert(bt);
 
-                OpServices opS = new OpServices();
-                opS.careaccount = "";
-                opS.claimcat = "";
-                opS.class1 = "";
-                opS.clinic = "";
-                opS.codeset = "";
-                opS.completion = "";
-                opS.degdt = "";
-                opS.dtappoint = "";
-                opS.enddt = "";
-                opS.hcode = hcode;
-                opS.hn = ssV.hn_no;
-                opS.invno = ssV.invno;
-                opS.lccode = "";
-                opS.opservices_id = "opservices_id";
-                opS.pid = "pid";
-                opS.ssdata_id = ssV.ssdata_id;
-                opS.ssdata_visit_id = ssVid;
-                opS.stdcode = "";
-                opS.svcharge = "";
-                opS.svid = "";
-                opS.svpid = "";
-                opS.svtxcode = "";
-                opS.typein = "";
-                opS.typeout = "";
-                opS.typeserv = "";
-                opId = opSDB.insert(opS);
-
                 docDate = datetoDB(row["MNC_DOC_DAT"].ToString());
                 dtItem.Clear();
-                dtItem = selectSSDataItem(ssV.hn_no, ssV.vn, ssV.pre_no, docDate, row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString());
+                dtItem = selectBillItem(ssV.hn_no, ssV.vn, ssV.pre_no, docDate, row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString());
                 foreach(DataRow rowI in dtItem.Rows)
                 {
                     BillTranItems btI = new BillTranItems();
@@ -555,7 +618,7 @@ namespace SSData.objdb
                 {
                     rowNo = 0;
                     dtBillDispItem.Clear();
-                    dtBillDispItem = selectSSDataBillDispItem(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date, rowB["MNC_CFR_NO"].ToString());
+                    dtBillDispItem = selectBillDispItem(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date, rowB["MNC_CFR_NO"].ToString());
 
                     String ssdvBId = "";
                     BillDisp bd = new BillDisp();
@@ -601,9 +664,9 @@ namespace SSData.objdb
                         bdI.drgid = "";
                         bdI.hospdrgid = dtBillDispItem.Rows[rowNo]["mnc_ph_cd"].ToString();
                         bdI.multidisp = "1";                //การจ่ายยาหลายครั้ง
-                        bdI.packsize = "packsize";
+                        bdI.packsize = "";
                         bdI.prdcat = "1";
-                        bdI.prdsecode = "prdsecode";        //รหัสการจ่ายยา generic แทนตามที่ผู้สั่งยากำหนด หรือไม่
+                        bdI.prdsecode = "";        //รหัสการจ่ายยา generic แทนตามที่ผู้สั่งยากำหนด หรือไม่
                         bdI.quantity = dtBillDispItem.Rows[rowNo]["qty"].ToString();
                         bdI.reimbamt = "";
                         bdI.reimbprice = "";
@@ -611,11 +674,85 @@ namespace SSData.objdb
                             + dtBillDispItem.Rows[rowNo]["mnc_ph_fre_cd"] == null ? "" : dtBillDispItem.Rows[rowNo]["mnc_ph_fre_cd"].ToString()
                             + dtBillDispItem.Rows[rowNo]["mnc_ph_tim_cd"] == null ? "" : dtBillDispItem.Rows[rowNo]["mnc_ph_tim_cd"].ToString();
                         bdI.sigtext = dtBillDispItem.Rows[rowNo]["mnc_ph_dir_dsc"].ToString();            //ข้อความแสดงวิธีใช้
-                        bdI.supplyfor = "supplyfor";        //ระบุระยะเวลาที่ผู้ป่วยใช้ยา
+                        bdI.supplyfor = "";        //ระบุระยะเวลาที่ผู้ป่วยใช้ยา
                         bdI.unitprice = price.ToString();        //ราคาขายต่อหน่วย
                         bdIDB.insert(bdI);
                         rowNo++;
                     }
+                }
+
+                dtOPs.Clear();
+                dtOPs = selectOPService(ssV.hn_no, ssV.vn, ssV.pre_no, docDate, row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString());                
+                foreach (DataRow rowS in dtOPs.Rows)
+                {
+                    OpServices opS = new OpServices();
+                    String doccode = "", df="";
+                    
+                    doccode = rowS["mnc_dot_cd_df"].ToString();
+                    if (doccode.Length > 0)
+                    {
+                        if (doccode.IndexOf("=")>0)
+                        {
+                            //String[] aa = doccode.Split('=');
+                            //if (aa.Length > 0)
+                            //{
+                            //    doccode = aa[0];
+                            //    df = aa[1];
+                            //}
+                            doccode = doccode.Substring(0, doccode.IndexOf("="));
+                            doccode = doccode.Substring(0,(doccode.Length - 1));
+                        }
+                        else
+                        {
+                            doccode = "=0";
+                        }
+                    }
+                    else
+                    {
+                        doccode = "<0";
+                    }
+                    opS.careaccount = "1";
+                    opS.claimcat = "";
+                    opS.class1 = "";
+                    opS.clinic = "";
+                    opS.codeset = "";
+                    opS.completion = "";
+                    opS.degdt = "";
+                    opS.dtappoint = "";
+                    opS.enddt = "";
+                    opS.hcode = hcode;
+                    opS.hn = ssV.hn_no;
+                    opS.invno = ssV.invno;
+                    opS.lccode = rowS["mnc_fn_grp"].ToString() + rowS["mnc_fn_cd"].ToString();
+                    opS.opservices_id = "";
+                    opS.pid = ssV.pid;
+                    opS.ssdata_id = ssV.ssdata_id;
+                    opS.ssdata_visit_id = ssVid;
+                    opS.stdcode = "";
+                    opS.svcharge = df;
+                    opS.svid = ssV.vn;
+                    opS.svpid = doccode;
+                    opS.svtxcode = "";
+                    opS.typein = "1";
+                    opS.typeout = "1";
+                    opS.typeserv = "01";
+                    opId = opSDB.insert(opS);
+
+                    dtOPx.Clear();
+                    //dtOPx = selectOPx(ssV.hn_no, ssV.vn, ssV.pre_no, docDate, row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString());
+                    //foreach (DataRow rowX in dtOPs.Rows)
+                    //{
+                    //    OpServicesOpdX opdX = new OpServicesOpdX();
+                    //    opdX.class1 = opS.class1;
+                    //    opdX.code = "";
+                    //    opdX.codeset = "";
+                    //    opdX.desc1 = "";
+                    //    opdX.opservices_id = opId;
+                    //    opdX.opservices_opdx_id = "";
+                    //    opdX.sl = "";
+                    //    opdX.svid = opS.svid;
+                    //    opdXDB.insert(opdX);
+                    //}
                 }
             }
             ssdDB.updateDateEnd(ssd.ssdata_id);

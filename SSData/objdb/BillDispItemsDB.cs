@@ -72,6 +72,37 @@ namespace SSData.objdb
 
             return re;
         }
+        public String update(BillDispItems p)
+        {
+            String re = "";
+            String sql = "";
+
+            sql = "Update " + bdI.table + " Set " +
+                    " " + bdI.chargeamt + "='" + p.chargeamt + "' " +
+                    ", " + bdI.claimcat + "='" + p.claimcat + "' " +
+                    ", " + bdI.claimcont + "='" + p.claimcont + "' " +
+                    ", " + bdI.dfscode + "='" + p.dfscode + "' " +
+                    ", " + bdI.dfstext + "='" + p.dfstext + "' " +
+                    ", " + bdI.dispid + "='" + p.dispid + "' " +
+                    ", " + bdI.drgid + "='" + p.drgid + "' " +
+                    ", " + bdI.hospdrgid + "='" + p.hospdrgid + "' " +
+                    ", " + bdI.multidisp + "='" + p.multidisp + "' " +
+                    ", " + bdI.packsize + "='" + p.packsize + "' " +
+                    ", " + bdI.prdcat + "='" + p.prdcat + "' " +
+                    ", " + bdI.prdsecode + "='" + p.prdsecode + "' " +
+                    ", " + bdI.quantity + "='" + p.quantity + "' " +
+                    ", " + bdI.reimbamt + "='" + p.reimbamt + "' " +
+                    ", " + bdI.reimbprice + "='" + p.reimbprice + "' " +
+                    ", " + bdI.sigcode + "='" + p.sigcode + "' " +
+                    ", " + bdI.sigtext + "='" + p.sigtext + "' " +
+                    ", " + bdI.supplyfor + "='" + p.supplyfor + "' " +
+                    ", " + bdI.unitprice + "='" + p.unitprice + "' " +
+                    "Where " + bdI.pkField + "='"+p.billdisp_items_id+"'";
+
+            re = conn.ExecuteNonQuery1(conn.connSSData, sql);
+
+            return re;
+        }
         public DataTable selectBySSdId(String ssDId)
         {
             DataTable dt = new DataTable();
@@ -79,6 +110,15 @@ namespace SSData.objdb
                 "From " + bdI.table + " bdi " +
                 "Left Join t_billdisp bd On bdi.billdisp_id = bd.billdisp_id " +
                 "Where bd.ssdata_id ='" + ssDId + "' ";
+            dt = conn.selectData(conn.connSSData, sql);
+            return dt;
+        }
+        public DataTable selectByBdId(String bDId)
+        {
+            DataTable dt = new DataTable();
+            String sql = "select bdi.* " +
+                "From " + bdI.table + " bdi " +
+                "Where bdi."+bdI.billdisp_id+" ='" + bDId + "' ";
             dt = conn.selectData(conn.connSSData, sql);
             return dt;
         }

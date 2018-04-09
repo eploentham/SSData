@@ -11,6 +11,6 @@ namespace SSData.object1
         public String hostDBMainHIS = "", userDBMainHIS = "", passDBMainHIS = "", nameDBMainHIS = "", portDBMainHIS = "";
         public String hostDBSSData = "", userDBSSData = "", passDBSSData = "", nameDBSSData = "", portDBSSData = "";
 
-        public String HCODE = "", branchId="", pathFile="", FileNameBillTran = "", FileNameBillDisp = "", FileNameOPServices ="", SSOPBIL="", EmailSSOPBIL="", HNAME="";
+        public String HCODE = "", branchId="", pathFile="", pathFileZip = "", FileNameBillTran = "", FileNameBillDisp = "", FileNameOPServices ="", SSOPBIL="", EmailSSOPBIL="", HNAME="";
     }
 }

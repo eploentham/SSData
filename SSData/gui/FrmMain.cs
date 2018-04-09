@@ -26,6 +26,8 @@ namespace SSData
         private void initConfig()
         {
             sC = new SSDataControl();
+            sC.createFolder(sC.iniC.pathFile);
+            sC.createFolder(sC.iniC.pathFileZip);
         }
         private void FrmSSDataView_MouseDown(object sender, MouseEventArgs e)
         {

@@ -76,7 +76,7 @@ namespace SSData.gui
 
 
             //grdView.Sheets[0].ColumnHeader.Cells[0, 0].Text = "Check #";
-            grdView.Sheets[0].Columns[colId].Width = 250;
+            grdView.Sheets[0].Columns[colId].CellType = objTextCell;
             grdView.Sheets[0].Columns[colbtid].CellType = objTextCell;
             grdView.Sheets[0].Columns[colinvno].CellType = objTextCell;
             grdView.Sheets[0].Columns[colsvdate].CellType = objTextCell;
@@ -212,6 +212,19 @@ namespace SSData.gui
         private void FrmSSDataBTi_Load(object sender, EventArgs e)
         {
 
+        }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            // ...
+            if (keyData == (Keys.Escape))
+            {
+                //if (MessageBox.Show("ต้องการออกจากโปรแกรม", "ออกจากโปรแกรม", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                //{
+                Close();
+                return true;
+                //}
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

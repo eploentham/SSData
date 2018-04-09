@@ -178,7 +178,7 @@ namespace SSData.gui
                 {
                     sC.opsID = "";
                     sC.opsID = grdView.ActiveSheet.Cells[e.Row, colOPsId].Value.ToString();
-                    FrmSSDataOPs frm = new FrmSSDataOPs(sC);
+                    FrmSSDataOPDx frm = new FrmSSDataOPDx(sC);
                     frm.ShowDialog(this);
                 }
             }
@@ -229,6 +229,26 @@ namespace SSData.gui
                     {
                         sC.btID = grdView.ActiveSheet.Cells[e.Row, colBTId].Value.ToString();
                         FrmSSDataBTi frm = new FrmSSDataBTi(sC);
+                        frm.ShowDialog(this);
+                    }
+                }
+                else if (sh.Equals("BD"))
+                {
+                    int col = e.Column;
+                    if (col == colBDi)
+                    {
+                        sC.bdID = grdView.ActiveSheet.Cells[e.Row, colBDId].Value.ToString();
+                        FrmSSDataBDi frm = new FrmSSDataBDi(sC);
+                        frm.ShowDialog(this);
+                    }
+                }
+                else if (sh.Equals("OPs"))
+                {
+                    int col = e.Column;
+                    if (col == colOPsI)
+                    {
+                        sC.opsID = grdView.ActiveSheet.Cells[e.Row, colOPsId].Value.ToString();
+                        FrmSSDataOPs frm = new FrmSSDataOPs(sC);
                         frm.ShowDialog(this);
                     }
                 }

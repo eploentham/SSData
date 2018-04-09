@@ -30,6 +30,7 @@ namespace SSData
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.c1ThemeController1 = new C1.Win.C1Themes.C1ThemeController();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -82,6 +83,21 @@ namespace SSData
             this.btnPath = new C1.Win.C1Input.C1Button();
             this.label4 = new System.Windows.Forms.Label();
             this.btnGenBT = new C1.Win.C1Input.C1Button();
+            this.chkSplit = new C1.Win.C1Input.C1CheckBox();
+            this.txtSplit = new C1.Win.C1Input.C1NumericEdit();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.chkStartTime = new C1.Win.C1Input.C1CheckBox();
+            this.txtAutoStart = new System.Windows.Forms.MaskedTextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtTimeCurrent = new System.Windows.Forms.MaskedTextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtSplitNum = new C1.Win.C1Input.C1TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.grdView = new FarPoint.Win.Spread.FpSpread();
+            this.grdView_Sheet1 = new FarPoint.Win.Spread.SheetView();
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnOk)).BeginInit();
@@ -115,11 +131,29 @@ namespace SSData
             ((System.ComponentModel.ISupportInitialize)(this.txtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnGenBT)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkSplit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSplit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkStartTime)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSplitNum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.groupBox1.Controls.Add(this.label17);
+            this.groupBox1.Controls.Add(this.txtSplitNum);
+            this.groupBox1.Controls.Add(this.label16);
+            this.groupBox1.Controls.Add(this.label15);
+            this.groupBox1.Controls.Add(this.txtTimeCurrent);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.txtAutoStart);
+            this.groupBox1.Controls.Add(this.chkStartTime);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.txtSplit);
+            this.groupBox1.Controls.Add(this.chkSplit);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.cboMonth);
@@ -135,7 +169,7 @@ namespace SSData
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(856, 333);
+            this.groupBox1.Size = new System.Drawing.Size(1041, 333);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "เตรียมข้อมูล";
@@ -146,7 +180,7 @@ namespace SSData
             this.label13.AutoSize = true;
             this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.label13.ForeColor = System.Drawing.Color.Black;
-            this.label13.Location = new System.Drawing.Point(581, 132);
+            this.label13.Location = new System.Drawing.Point(876, 305);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(41, 13);
             this.label13.TabIndex = 28;
@@ -158,7 +192,7 @@ namespace SSData
             this.label12.AutoSize = true;
             this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.label12.ForeColor = System.Drawing.Color.Black;
-            this.label12.Location = new System.Drawing.Point(581, 106);
+            this.label12.Location = new System.Drawing.Point(876, 279);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(41, 13);
             this.label12.TabIndex = 27;
@@ -174,7 +208,8 @@ namespace SSData
             this.cboMonth.Name = "cboMonth";
             this.cboMonth.Size = new System.Drawing.Size(121, 21);
             this.cboMonth.TabIndex = 26;
-            this.c1ThemeController1.SetTheme(this.cboMonth, "(default)");
+            this.c1ThemeController1.SetTheme(this.cboMonth, "Office2007Blue");
+            this.cboMonth.SelectedIndexChanged += new System.EventHandler(this.cboMonth_SelectedIndexChanged);
             // 
             // cboYear
             // 
@@ -185,7 +220,7 @@ namespace SSData
             this.cboYear.Name = "cboYear";
             this.cboYear.Size = new System.Drawing.Size(121, 21);
             this.cboYear.TabIndex = 25;
-            this.c1ThemeController1.SetTheme(this.cboYear, "(default)");
+            this.c1ThemeController1.SetTheme(this.cboYear, "Office2007Blue");
             // 
             // btnOk
             // 
@@ -468,6 +503,7 @@ namespace SSData
             this.c1ThemeController1.SetTheme(this.btnZip, "Office2007Blue");
             this.btnZip.UseVisualStyleBackColor = true;
             this.btnZip.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnZip.Click += new System.EventHandler(this.btnZip_Click);
             // 
             // btnSendEmail
             // 
@@ -774,11 +810,208 @@ namespace SSData
             this.btnGenBT.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
             this.btnGenBT.Click += new System.EventHandler(this.btnGenBT_Click);
             // 
+            // chkSplit
+            // 
+            this.chkSplit.BackColor = System.Drawing.Color.Transparent;
+            this.chkSplit.BorderColor = System.Drawing.Color.Transparent;
+            this.chkSplit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chkSplit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkSplit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkSplit.ForeColor = System.Drawing.Color.Black;
+            this.chkSplit.Location = new System.Drawing.Point(869, 19);
+            this.chkSplit.Name = "chkSplit";
+            this.chkSplit.Padding = new System.Windows.Forms.Padding(4, 1, 1, 1);
+            this.chkSplit.Size = new System.Drawing.Size(148, 24);
+            this.chkSplit.TabIndex = 29;
+            this.chkSplit.Text = "แบ่งดึงข้อมูลเป็น ช่วงๆ";
+            this.c1ThemeController1.SetTheme(this.chkSplit, "Office2007Blue");
+            this.chkSplit.UseVisualStyleBackColor = true;
+            this.chkSplit.Value = null;
+            this.chkSplit.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.chkSplit.CheckedChanged += new System.EventHandler(this.chkSplit_CheckedChanged);
+            // 
+            // txtSplit
+            // 
+            this.txtSplit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            // 
+            // 
+            // 
+            this.txtSplit.Calculator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.txtSplit.Calculator.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.txtSplit.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.txtSplit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSplit.ImagePadding = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.txtSplit.Location = new System.Drawing.Point(907, 59);
+            this.txtSplit.Name = "txtSplit";
+            this.txtSplit.Size = new System.Drawing.Size(78, 20);
+            this.txtSplit.TabIndex = 31;
+            this.txtSplit.Tag = null;
+            this.c1ThemeController1.SetTheme(this.txtSplit, "Office2007Blue");
+            this.txtSplit.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.txtSplit.ValueChanged += new System.EventHandler(this.txtSplit_ValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Black;
+            this.label7.Location = new System.Drawing.Point(862, 62);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(39, 16);
+            this.label7.TabIndex = 32;
+            this.label7.Text = "ครั้งละ";
+            this.c1ThemeController1.SetTheme(this.label7, "Office2007Blue");
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.Black;
+            this.label11.Location = new System.Drawing.Point(991, 64);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(21, 16);
+            this.label11.TabIndex = 33;
+            this.label11.Text = "วัน";
+            this.c1ThemeController1.SetTheme(this.label11, "Office2007Blue");
+            // 
+            // chkStartTime
+            // 
+            this.chkStartTime.BackColor = System.Drawing.Color.Transparent;
+            this.chkStartTime.BorderColor = System.Drawing.Color.Transparent;
+            this.chkStartTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chkStartTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkStartTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkStartTime.ForeColor = System.Drawing.Color.Black;
+            this.chkStartTime.Location = new System.Drawing.Point(869, 159);
+            this.chkStartTime.Name = "chkStartTime";
+            this.chkStartTime.Padding = new System.Windows.Forms.Padding(4, 1, 1, 1);
+            this.chkStartTime.Size = new System.Drawing.Size(148, 24);
+            this.chkStartTime.TabIndex = 34;
+            this.chkStartTime.Text = "ให้โปรแกรมดึงข้อมูล เวลา";
+            this.c1ThemeController1.SetTheme(this.chkStartTime, "Office2007Blue");
+            this.chkStartTime.UseVisualStyleBackColor = true;
+            this.chkStartTime.Value = null;
+            this.chkStartTime.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // txtAutoStart
+            // 
+            this.txtAutoStart.BackColor = System.Drawing.Color.White;
+            this.txtAutoStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtAutoStart.ForeColor = System.Drawing.Color.Black;
+            this.txtAutoStart.Location = new System.Drawing.Point(945, 189);
+            this.txtAutoStart.Mask = "00:00";
+            this.txtAutoStart.Name = "txtAutoStart";
+            this.txtAutoStart.Size = new System.Drawing.Size(65, 29);
+            this.txtAutoStart.TabIndex = 35;
+            this.c1ThemeController1.SetTheme(this.txtAutoStart, "Office2007Blue");
+            this.txtAutoStart.ValidatingType = typeof(System.DateTime);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label14.ForeColor = System.Drawing.Color.Black;
+            this.label14.Location = new System.Drawing.Point(866, 198);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(67, 16);
+            this.label14.TabIndex = 36;
+            this.label14.Text = "เวลาดึงข้อมูล";
+            this.c1ThemeController1.SetTheme(this.label14, "Office2007Blue");
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label15.ForeColor = System.Drawing.Color.Black;
+            this.label15.Location = new System.Drawing.Point(866, 238);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(61, 16);
+            this.label15.TabIndex = 38;
+            this.label15.Text = "เวลาปัจจุบัน";
+            this.c1ThemeController1.SetTheme(this.label15, "Office2007Blue");
+            // 
+            // txtTimeCurrent
+            // 
+            this.txtTimeCurrent.BackColor = System.Drawing.Color.White;
+            this.txtTimeCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtTimeCurrent.ForeColor = System.Drawing.Color.Black;
+            this.txtTimeCurrent.Location = new System.Drawing.Point(945, 229);
+            this.txtTimeCurrent.Mask = "00:00";
+            this.txtTimeCurrent.Name = "txtTimeCurrent";
+            this.txtTimeCurrent.Size = new System.Drawing.Size(65, 29);
+            this.txtTimeCurrent.TabIndex = 37;
+            this.c1ThemeController1.SetTheme(this.txtTimeCurrent, "Office2007Blue");
+            this.txtTimeCurrent.ValidatingType = typeof(System.DateTime);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.Black;
+            this.label16.Location = new System.Drawing.Point(862, 92);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(57, 16);
+            this.label16.TabIndex = 39;
+            this.label16.Text = "ดึงทั้งหมด";
+            this.c1ThemeController1.SetTheme(this.label16, "Office2007Blue");
+            // 
+            // txtSplitNum
+            // 
+            this.txtSplitNum.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(147)))), ((int)(((byte)(207)))));
+            this.txtSplitNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSplitNum.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.txtSplitNum.Location = new System.Drawing.Point(925, 90);
+            this.txtSplitNum.Name = "txtSplitNum";
+            this.txtSplitNum.Size = new System.Drawing.Size(60, 18);
+            this.txtSplitNum.TabIndex = 40;
+            this.txtSplitNum.Tag = null;
+            this.c1ThemeController1.SetTheme(this.txtSplitNum, "Office2007Blue");
+            this.txtSplitNum.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.Black;
+            this.label17.Location = new System.Drawing.Point(991, 92);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(27, 16);
+            this.label17.TabIndex = 41;
+            this.label17.Text = "ครั้ง";
+            this.c1ThemeController1.SetTheme(this.label17, "Office2007Blue");
+            // 
+            // grdView
+            // 
+            this.grdView.AccessibleDescription = "";
+            this.grdView.Location = new System.Drawing.Point(1059, 20);
+            this.grdView.Name = "grdView";
+            this.grdView.Sheets.AddRange(new FarPoint.Win.Spread.SheetView[] {
+            this.grdView_Sheet1});
+            this.grdView.Size = new System.Drawing.Size(311, 660);
+            this.grdView.TabIndex = 6;
+            // 
+            // grdView_Sheet1
+            // 
+            this.grdView_Sheet1.Reset();
+            this.grdView_Sheet1.SheetName = "Sheet1";
+            // 
             // FrmSSDataAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1065, 692);
+            this.ClientSize = new System.Drawing.Size(1382, 692);
+            this.Controls.Add(this.grdView);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.ForeColor = System.Drawing.Color.Black;
@@ -823,6 +1056,12 @@ namespace SSData
             ((System.ComponentModel.ISupportInitialize)(this.txtPath)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnPath)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnGenBT)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkSplit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSplit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkStartTime)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSplitNum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -880,6 +1119,21 @@ namespace SSData
         private C1.Win.C1Input.C1Button btnSendEmail;
         private C1.Win.C1Input.C1Button btnZip;
         private C1.Win.C1Input.C1TextBox txtHName;
+        private C1.Win.C1Input.C1CheckBox chkSplit;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label7;
+        private C1.Win.C1Input.C1NumericEdit txtSplit;
+        private C1.Win.C1Input.C1CheckBox chkStartTime;
+        private System.Windows.Forms.MaskedTextBox txtAutoStart;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.MaskedTextBox txtTimeCurrent;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private C1.Win.C1Input.C1TextBox txtSplitNum;
+        private FarPoint.Win.Spread.FpSpread grdView;
+        private FarPoint.Win.Spread.SheetView grdView_Sheet1;
     }
 }
 

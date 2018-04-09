@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
@@ -74,6 +76,7 @@ namespace SSData.control
             iniC.SSOPBIL = iniF.Read("SSOPBIL");
             iniC.EmailSSOPBIL = iniF.Read("EmailSSOPBIL");
             iniC.HNAME = iniF.Read("HNAME");
+            iniC.pathFileZip = iniF.Read("pathFileZip");
         }
         public String getValueCboItem(ComboBox c)
         {
@@ -277,6 +280,7 @@ namespace SSData.control
                 dtBTi = mHisDB.btIDB.selectBySSdId(ssDId);
                 pb1.Minimum = 0;
                 pb1.Maximum = dtBT.Rows.Count + dtBTi.Rows.Count+2;
+                pb1.Value = 0;
 
                 dt1 = genFileName(hcode, ssopbil, period, periodsub);
                 h1 = @"<?xml version=""1.0"" encoding=""windows-874""?>" + Environment.NewLine;
@@ -375,6 +379,8 @@ namespace SSData.control
                 dtBDi = mHisDB.bdIDB.selectBySSdId(ssDId);
                 pb1.Minimum = 0;
                 pb1.Maximum = dtBD.Rows.Count + dtBDi.Rows.Count+2;
+                pb1.Value = 0;
+
                 dt1 = genFileName(hcode, ssopbil, period, periodsub);
                 h1 = @"<?xml version=""1.0"" encoding=""windows-874""?>" + Environment.NewLine;
                 h2 = @"<ClaimRec System=""OP"" PayPlan=""SS"" Version=""0.93"">" + Environment.NewLine;
@@ -458,6 +464,92 @@ namespace SSData.control
             }
             pb1.Hide();
             return "1";
+        }
+        
+        public String[] getFileinFolder(String path)
+        {
+            string[] filePaths = null;
+            if (Directory.Exists(path))
+            {
+                filePaths = Directory.GetFiles(@path);
+            }
+
+            return filePaths;
+        }
+        public void genZipFile(String sourcePathFile,String filenameZip)
+        {
+            string[] filePaths = null;
+            filePaths = getFileinFolder(@sourcePathFile);
+            using (ZipArchive zip = ZipFile.Open(filenameZip, ZipArchiveMode.Create))
+            {
+                foreach(String filename in filePaths)
+                {
+                    String file = filename.Replace(sourcePathFile+"\\", "");
+                    zip.CreateEntryFromFile(filename, file);
+                }
+            }
+        }
+        public void sendEmail(String filename)
+        {
+            //var fromAddress = new MailAddress(iniC.EmailUsername, "");
+            //var toAddress = new MailAddress(iniC.APPROVER_EMAIL, "To Name");
+            ////var toAddress2 = new MailAddress("amo@iceconsulting.co.th", "To Name");
+            //var toAddress3 = new MailAddress("ekk@ii.co.th", "To Name");
+            //var toAddress4 = new MailAddress("vrw@ii.co.th", "To Name");// for test
+            //String fromPassword = iniC.EmailPassword;
+            //const string subject = "test";
+            //DataTable dt006;
+            ////dt006 = xCPrTDB.selectPRPO006GroupByVendor();
+            ////if (dt006.Rows.Count <= 0) return;
+            //string Body = System.IO.File.ReadAllText(Environment.CurrentDirectory + "\\" + "email_regis.html");
+            //Body = Body.Replace("#vendorName#", vendorName);
+
+            //int port = 0;
+            //int.TryParse(Cm.initC.EmailPort, out port);
+
+            //var smtp1 = new SmtpClient
+            //{
+            //    //Host = "smtp.office365.com",
+            //    Host = Cm.initC.EmailHost,
+            //    //Port = 587,
+            //    Port = port,
+            //    EnableSsl = true,
+            //    DeliveryMethod = SmtpDeliveryMethod.Network,
+            //    Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
+            //    Timeout = 20000
+            //};
+
+            //var message = new MailMessage();
+            //message.From = fromAddress;
+            //message.Subject = "PO006 " + vendorName;
+            //message.To.Add(toAddress);
+            ////message.To.Add(toAddress2);
+            //message.To.Add(toAddress3);
+            //message.To.Add(toAddress4);// for test
+            //message.IsBodyHtml = true;
+            //message.BodyEncoding = System.Text.Encoding.UTF8;
+            ////MessageBox.Show(""+ @Environment.CurrentDirectory, "");
+            //LinkedResource LinkedImage = new LinkedResource(@Environment.CurrentDirectory + "\\" + "logo_ice_consulting.png");
+            //LinkedImage.ContentId = "logo_ice";
+            ////Added the patch for Thunderbird as suggested by Jorge
+            //LinkedImage.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
+            //AlternateView htmlView = AlternateView.CreateAlternateViewFromString(Body, null, "text/html");
+            //htmlView.LinkedResources.Add(LinkedImage);
+            //message.AlternateViews.Add(htmlView);
+            
+            //Attachment attachment;
+            //attachment = new System.Net.Mail.Attachment(iniC.PO006PathInitial + filename);
+            //message.Attachments.Add(attachment);
+            ////}
+            ////}
+            ////}
+            ////}
+            //message.Body = Body;
+            //smtp1.Send(message);
+        }
+        public String setTimeCurrent()
+        {
+            return String.Format("{0:HHmm}", System.DateTime.Now);
         }
     }
 }
