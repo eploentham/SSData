@@ -1,5 +1,6 @@
 ﻿using SSData.control;
 using SSData.gui;
+using SSData.object1;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,9 @@ namespace SSData
         SSDataControl sC;
         String encoding = "Windows-874";
 
+        int colId = 0, colssdid = 1, colsplitno = 2, colsplitstartdt = 3, coldatestart = 4, coldateend = 5, colstatusprocess = 6;
+        int colCnt=7;
+
         public FrmSSDataAdd(SSDataControl sc, Form par1)
         {
             InitializeComponent();
@@ -27,6 +31,9 @@ namespace SSData
         private void initConfig(SSDataControl sc, Form par1)
         {
             String monthId = "";
+            TabPrepare.Text = "เตรียมข้อมูล";
+            TabGen.Text = "gen Text";
+            //TabPrepare.
             monthId = System.DateTime.Now.Month.ToString("00");
             sC = sc;
             par = par1;
@@ -34,6 +41,7 @@ namespace SSData
             timer1.Interval = 1000 * 60;
             timer1.Start();
             pB1.Hide();
+            //txtSplit.min
             //pB2.Hide();
             sC.setCboMonth(cboMonth);
             sC.setCboYear(cboYear);
@@ -58,6 +66,8 @@ namespace SSData
             genFileName();
             setChkSplit();
             setTxtSplit();
+            setGrdViewH();
+            setSplitNum();
         }
         private String genFileName()
         {
@@ -87,7 +97,16 @@ namespace SSData
             }
             else
             {
-                sC.mHisDB.insertTSSData(sC.iniC.HCODE, sC.iniC.branchId, cboYear.Text, cboMonth.SelectedValue.ToString(), pB1, label12, label13, this);
+                sC.lSplit.Clear();
+                for (int i = 0; i < grdView.Sheets[0].Rows.Count; i++)
+                {
+                    TSsdataSplit sp = new TSsdataSplit();
+                    sp.split_no = grdView.Sheets[0].Cells[i, colsplitno].Value.ToString();
+                    sp.date_time_start =  grdView.Sheets[0].Cells[i, coldatestart].Value.ToString();
+                    sp.date_time_end = grdView.Sheets[0].Cells[i, coldateend].Value.ToString();
+                    sC.lSplit.Add(sp);
+                }
+                sC.mHisDB.insertTSSData(sC.iniC.HCODE, sC.iniC.branchId, cboYear.Text, cboMonth.SelectedValue.ToString(), pB1, label12, label13, this, sC.lSplit);
             }
         }
 
@@ -107,7 +126,103 @@ namespace SSData
                 txtPath.Value = browser.SelectedPath; // 
             }
         }
+        private void setGrdViewH()
+        {
+            FarPoint.Win.Spread.EnhancedInterfaceRenderer outlinelook = new FarPoint.Win.Spread.EnhancedInterfaceRenderer();
+            outlinelook.RangeGroupBackgroundColor = Color.LightGreen;
+            outlinelook.RangeGroupButtonBorderColor = Color.Red;
+            outlinelook.RangeGroupLineColor = Color.Blue;
+            grdView.InterfaceRenderer = outlinelook;
+            grdView.Sheets[0].OperationMode = FarPoint.Win.Spread.OperationMode.RowMode;
+            grdView.BorderStyle = BorderStyle.None;
+            FarPoint.Win.Spread.CellType.TextCellType objTextCell = new FarPoint.Win.Spread.CellType.TextCellType();
 
+            grdView.Sheets[0].ColumnCount = colCnt;
+            grdView.Sheets[0].RowCount = 1;
+
+            grdView.Sheets[0].Columns[colId].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colssdid].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colsplitno].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colsplitstartdt].CellType = objTextCell;
+            grdView.Sheets[0].Columns[coldatestart].CellType = objTextCell;
+            grdView.Sheets[0].Columns[coldateend].CellType = objTextCell;
+            grdView.Sheets[0].Columns[colstatusprocess].CellType = objTextCell;
+            //grdView.Sheets[0].Columns[colId].CellType = objTextCell;
+
+            grdView.Sheets[0].Columns[colId].Visible = false;
+            grdView.Sheets[0].Columns[colssdid].Visible = false;
+
+            grdView.Sheets[0].Columns[colsplitno].Width = 30;
+            grdView.Sheets[0].Columns[colsplitstartdt].Width = 40;
+            grdView.Sheets[0].Columns[coldatestart].Width = 80;
+            grdView.Sheets[0].Columns[coldateend].Width = 80;
+            grdView.Sheets[0].Columns[colstatusprocess].Width = 50;
+            //grdView.Sheets[0].Columns[colstatusprocess].Width = 100;
+
+            grdView.Sheets[0].ColumnHeader.Cells[0, colsplitno].Text = "no";
+            grdView.Sheets[0].ColumnHeader.Cells[0, colsplitstartdt].Text = "split";
+            grdView.Sheets[0].ColumnHeader.Cells[0, coldatestart].Text = "start";
+            grdView.Sheets[0].ColumnHeader.Cells[0, coldateend].Text = "end";
+            grdView.Sheets[0].ColumnHeader.Cells[0, colstatusprocess].Text = "status";
+            //grdView.Sheets[0].ColumnHeader.Cells[0, colinvno].Text = "invno";
+        }
+        private void setGrdView()
+        {
+            grdView.Sheets[0].Rows.Clear();
+            grdView.Sheets[0].RowCount = int.Parse(txtSplitNum.Value.ToString());
+
+            String startDate = "", endDate = "", yearId = "", monthId = "", period = "";
+
+            yearId = cboYear.Text;
+            monthId = cboMonth.SelectedValue.ToString();
+            DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId) + 1, 1);
+            int num = 0, aa=0;
+            dateEnd = dateEnd.AddDays(-1);
+            
+            if (int.Parse(txtSplit.Value.ToString()) > 0)
+            {
+                num = dateEnd.Day / int.Parse(txtSplit.Value.ToString());
+                aa = dateEnd.Day % int.Parse(txtSplit.Value.ToString());
+                num = aa >= 1 ? num++ : num;
+                for (int i = 0; i < int.Parse(txtSplitNum.Value.ToString()); i++)
+                {
+                    DateTime dateEnd1;
+                    if (i == 0)
+                    {
+                        startDate = yearId + "-" + monthId + "-01";
+                        if (int.Parse(txtSplitNum.Value.ToString()) == 1)
+                        {
+                            endDate = dateEnd.ToString("yyyy-MM-dd");
+                        }
+                        else
+                        {
+                            DateTime dateStart = new DateTime(int.Parse(startDate.Substring(0, 4)), int.Parse(startDate.Substring(5, 2)), int.Parse(startDate.Substring(startDate.Length - 2)));
+                            dateEnd1 = dateStart.AddDays(int.Parse(txtSplit.Value.ToString())-1);
+                            endDate = dateEnd1.ToString("yyyy-MM-dd");
+                        }
+                    }
+                    else
+                    {
+                        DateTime dateStart = new DateTime(int.Parse(startDate.Substring(0,4)), int.Parse(startDate.Substring(5, 2)), int.Parse(startDate.Substring(startDate.Length - 2)));
+                        dateStart = dateStart.AddDays(int.Parse(txtSplit.Value.ToString()));
+                        startDate = dateStart.ToString("yyyy-MM-dd");
+                        dateEnd1 = dateStart.AddDays(int.Parse(txtSplit.Value.ToString())-1);
+                        if (dateEnd.CompareTo(dateEnd1) < 0)
+                        {
+                            dateEnd1 = dateEnd;
+                        }
+                        endDate = dateEnd1.ToString("yyyy-MM-dd");
+                    }
+                    grdView.Sheets[0].Cells[i, colsplitno].Value = (i + 1);
+                    grdView.Sheets[0].Cells[i, coldatestart].Value = startDate;
+                    grdView.Sheets[0].Cells[i, coldateend].Value = endDate;
+                    if (i % 2 != 0)
+                    {
+                        grdView.Sheets[0].Cells[i, 0, i, colCnt - 1].BackColor = System.Drawing.Color.FromArgb(235, 241, 222);
+                    }
+                }
+            }
+        }
         private void btnGenFileName_Click(object sender, EventArgs e)
         {
             genFileName();
@@ -217,14 +332,19 @@ namespace SSData
             //DateTime sconvertedDate = Convert.ToDateTime(startDate);
             int num = 0;
             int aa = 0;
-            num = dateEnd.Day / int.Parse(txtSplit.Value.ToString());
-            aa = dateEnd.Day % int.Parse(txtSplit.Value.ToString());
-            if (aa >= 1)
+            if (int.Parse(txtSplit.Value.ToString()) > 0)
             {
-                num++;
+                num = dateEnd.Day / int.Parse(txtSplit.Value.ToString());
+                aa = dateEnd.Day % int.Parse(txtSplit.Value.ToString());
+                if (aa >= 1)
+                {
+                    num++;
+                }
             }
+            
             //TimeSpan age = econvertedDate.Subtract(sconvertedDate);
             txtSplitNum.Value = num;
+            setGrdView();
         }
         private void chkSplit_CheckedChanged(object sender, EventArgs e)
         {
@@ -239,6 +359,7 @@ namespace SSData
         private void txtSplit_ValueChanged(object sender, EventArgs e)
         {
             setSplitNum();
+            setGrdView();
         }
     }
 }

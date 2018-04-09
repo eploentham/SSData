@@ -29,6 +29,8 @@ namespace SSData.objdb
         public BillDispItemsDB bdIDB;
         public OpServicesDB opSDB;
         public OpServicesOpdXDB opdXDB;
+        public TSsdataSplitDB spDB;
+
         private List<Doctor> lDoctor;
 
         TSsdata ssd;
@@ -51,7 +53,10 @@ namespace SSData.objdb
             bdIDB = new BillDispItemsDB(conn);
             opSDB = new OpServicesDB(conn);
             opdXDB = new OpServicesOpdXDB(conn);
+            spDB = new TSsdataSplitDB(conn);
+
             lDoctor = new List<Doctor>();
+
             getListDoctor();
             sqlIPD = "SELECT DISTINCT " +
                         "patt08.MNC_HN_YR, patt08.MNC_HN_NO, patt08.MNC_DATE, patt08.MNC_PRE_NO, fint01.MNC_FN_TYP_CD,  " +
@@ -470,7 +475,8 @@ namespace SSData.objdb
 
             pb1.Hide();
         }
-        public void insertTSSData(String hcode, String branchId, String yearId, String monthId, ProgressBar pb1, Label label1, Label label2, Form frm)
+        public void insertTSSData(String hcode, String branchId, String yearId, String monthId, ProgressBar pb1
+            , Label label1, Label label2, Form frm, List<TSsdataSplit> lSplit)
         {
             String cntHN = "";
             label1.Text = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
@@ -499,6 +505,12 @@ namespace SSData.objdb
             ssd.year_id = yearId;
             ssd.status_precess = "0";
             ssd.ssdata_id =  ssdDB.insert(ssd);
+
+            foreach(TSsdataSplit sp in lSplit)
+            {
+                sp.ssdata_id = ssd.ssdata_id;
+                spDB.insert(sp);
+            }
 
             foreach (DataRow row in dt.Rows)
             {
