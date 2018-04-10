@@ -79,5 +79,15 @@ namespace SSData.objdb
             dt = conn.selectData(conn.connSSData, sql);
             return dt;
         }
+        public DataTable selectBySSdId(String ssDId)
+        {
+            DataTable dt = new DataTable();
+            String sql = "select opdx.* " +
+                "From " + opDX.table + " opdx " +
+                "Left Join t_opservices ops On opdx.opservices_id = ops.opservices_id " +
+                "Where ops.ssdata_id ='" + ssDId + "' ";
+            dt = conn.selectData(conn.connSSData, sql);
+            return dt;
+        }
     }
 }

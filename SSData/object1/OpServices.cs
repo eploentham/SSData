@@ -23,7 +23,7 @@ namespace SSData.object1
         public String dtappoint { get; set; }
         public String svpid { get; set; }
         public String clinic { get; set; }
-        public String degdt { get; set; }
+        public String begdt { get; set; }
         public String enddt { get; set; }
         public String lccode { get; set; }
         public String codeset { get; set; }
@@ -33,5 +33,6 @@ namespace SSData.object1
         public String svtxcode { get; set; }
         public String claimcat { get; set; }
         public String ssdata_visit_id { get; set; }
+        public String ssdata_split_id { get; set; }
     }
 }

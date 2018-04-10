@@ -45,7 +45,7 @@ namespace SSData.objdb
                 "Values ('" + p.active + "','" + p.branch_id + "','" +
                 p.branch_visit_id + "','" + p.cnt_hn + "','" + p.cnt_visit + "','" +
                 p.month_id + "','" + p.year_id + "','" + p.status_precess + "',convert(varchar, getdate(), 120)) ";
-            re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
+            re = conn.ExecuteNonQuery(conn.connSSData, sql);
 
             return re;
         }
@@ -54,8 +54,8 @@ namespace SSData.objdb
             String sql = "", re="";
             sql = "Update "+ssd.table+" Set " +                
                 ssd.date_end+ "= convert(varchar, getdate(), 120) " +
-                "Where "+ssd.pkField+"='"+ssd+"'";
-            re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
+                "Where "+ssd.pkField+"='"+ ssId + "'";
+            re = conn.ExecuteNonQuery1(conn.connSSData, sql);
             return re;
         }
         public String selectIDByYearMonth(String yearId, String monthId)

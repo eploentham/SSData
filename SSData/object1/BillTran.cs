@@ -30,5 +30,6 @@ namespace SSData.object1
         public String claimamt { get; set; }
         public String otherpayplan { get; set; }
         public String otherpay { get; set; }
+        public String ssdata_split_id { get; set; }
     }
 }

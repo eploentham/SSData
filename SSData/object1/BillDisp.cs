@@ -28,5 +28,7 @@ namespace SSData.object1
         public String benefitplan { get; set; }
         public String dispestat { get; set; }
         public String svid { get; set; }
-        public String daycover { get; set; }    }
+        public String daycover { get; set; }
+        public String ssdata_split_id { get; set; }
+    }
 }

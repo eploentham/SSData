@@ -39,6 +39,7 @@ namespace SSData.objdb
             bt.station = "station";
             bt.tflag = "tflag";
             bt.vercode = "vercode";
+            bt.ssdata_split_id = "ssdata_split_id";
 
             bt.table = "t_billtran";
             bt.pkField = "billtran_id";
@@ -56,7 +57,7 @@ namespace SSData.objdb
                 bt.name + "," + bt.otherpayplan + "," + bt.paid + "," +
                 bt.payplan + "," + bt.pid + "," + bt.ssdata_id + "," +
                 bt.ssdata_visit_id + "," + bt.station + "," + bt.tflag + "," +
-                bt.vercode +
+                bt.vercode + "," + bt.ssdata_split_id + " " +
                 ") " +
                 "Values('" + p.amount + "','" + p.authcode + "','" + p.billno + "','" +
                 p.claimamt + "','" + p.otherpay + "','" +
@@ -65,8 +66,8 @@ namespace SSData.objdb
                 p.name.Replace("'", "''") + "','" + p.otherpayplan + "','" + p.paid + "','" +
                 p.payplan + "','" + p.pid + "','" + p.ssdata_id + "','" +
                 p.ssdata_visit_id + "','" + p.station + "','" + p.tflag + "','" +
-                p.vercode +
-                "') ";
+                p.vercode + "','" + p.ssdata_split_id + "' " +
+                ") ";
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
 
             return re;
@@ -110,7 +111,8 @@ namespace SSData.objdb
                 "From " + bt.table + " bt " +
                 "Left Join t_ssdata_visit ssv On ssv.ssdata_visit_id = bt." + bt.ssdata_visit_id +" " +
                 "Left Join t_ssdata ss On ss.ssdata_id = ssv.ssdata_id "+
-                "Where ss.year_id ='"+yearId+ "' and ss.month_id ='"+monthId+"' and ssv.active = '1' ";
+                "Where ss.year_id ='"+yearId+ "' and ss.month_id ='"+monthId+"' and ssv.active = '1' " +
+                "Order By bt."+bt.billtran_id;
             dt = conn.selectData(conn.connSSData, sql);
             return dt;
         }

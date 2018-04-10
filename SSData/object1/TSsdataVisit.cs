@@ -44,5 +44,6 @@ namespace SSData.object1
         public string itemcnt { get; set; }
         public string prescb { get; set; }
         public string svid { get; set; }
+        public string ssdata_split_id { get; set; }
     }
 }

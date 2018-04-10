@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -353,8 +354,9 @@ namespace SSData.control
                     }
                     txtBT = "<BILLTRAN>" + Environment.NewLine + txtRow + "</BILLTRAN>" + Environment.NewLine +
                         "<BillItems>" + Environment.NewLine + txtRowBTi + "</BillItems>" + Environment.NewLine + "</ClaimRec>" + Environment.NewLine;
+                    String md5 = @"<?EndNote Checksum="""+genMD5(Header + txtBT) + @"""?>";
 
-                    sw.WriteLine(Header + txtBT);
+                    sw.WriteLine(Header + txtBT+md5);
                 }
             }
             catch (IOException ioex)
@@ -457,7 +459,8 @@ namespace SSData.control
 
                     txtBD = "<Dispensing>" + Environment.NewLine + txtRow + "</Dispensing>" + Environment.NewLine +
                         "<DispensedItems>" + Environment.NewLine + txtRowBDi + "</DispensedItems>" + Environment.NewLine + "</ClaimRec>" + Environment.NewLine;
-                    sw.WriteLine(Header + txtBD);
+                    String md5 = @"<?EndNote Checksum=""" + genMD5(Header + txtBD) + @"""?>";
+                    sw.WriteLine(Header + txtBD+md5);
                 }
 
             }
@@ -468,7 +471,99 @@ namespace SSData.control
             pb1.Hide();
             return "1";
         }
-        
+        public String genTextOPservice(String hname, String path, String filename, String hcode, String ssopbil, String period, String periodsub, String yearId, String monthId, ProgressBar pb1)
+        {
+            String h1 = "", h2 = "", h3 = "", h4 = "", h5 = "", h6 = "", h7 = "", h8 = "", h9 = "", dt1 = "", SESSNO = "", Header = "", txtopD = "", txtRow = "", txtBDi = "", txtRowBDi = "", ssDId = "";
+            try
+            {
+                pb1.Show();
+                DataTable dtopS = new DataTable();
+                DataTable dtopX = new DataTable();
+                SESSNO = mHisDB.ssdDB.selectIDByYearMonth(yearId, monthId);
+                dtopS = mHisDB.opSDB.selectByYearMonth(yearId, monthId);
+                if (dtopS.Rows.Count > 0)
+                {
+                    ssDId = dtopS.Rows[0][mHisDB.opSDB.opS.ssdata_id].ToString();
+                }
+                dtopX = mHisDB.opdXDB.selectBySSdId(ssDId);
+                pb1.Minimum = 0;
+                pb1.Maximum = dtopS.Rows.Count + dtopX.Rows.Count + 2;
+                pb1.Value = 0;
+
+                dt1 = genFileName(hcode, ssopbil, period, periodsub);
+                h1 = @"<?xml version=""1.0"" encoding=""windows-874""?>" + Environment.NewLine;
+                h2 = @"<ClaimRec System=""OP"" PayPlan=""SS"" Version=""0.93"">" + Environment.NewLine;
+                h3 = "<Header>" + Environment.NewLine;
+                h4 = "<HCODE>" + iniC.HCODE + "</HCODE>" + Environment.NewLine;
+                //h5 = "<HNAME>" + txtHName.Text + "</HNAME>" + Environment.NewLine;
+                h5 = "<HNAME>" + hname + "</HNAME>" + Environment.NewLine;
+                h6 = "<DATETIME>" + dt1 + "</DATETIME>" + Environment.NewLine;
+                h7 = "<SESSNO>" + SESSNO + "</SESSNO>" + Environment.NewLine;
+                h8 = "<RECCOUNT>" + dtopS.Rows.Count + "</RECCOUNT>" + Environment.NewLine;
+                h9 = "</Header>" + Environment.NewLine;
+
+                var file = path + "\\" + filename;
+                using (StreamWriter sw = new StreamWriter(File.Open(file, FileMode.Create), Encoding.GetEncoding(encoding)))
+                {
+                    Header = h1 + h2 + h3 + h4 + h5 + h6 + h7 + h8 + h9;
+                    foreach (DataRow row in dtopS.Rows)
+                    {
+                        pb1.Value++;
+                        String col01 = "", col02 = "", col03 = "", col04 = "", col05 = "", col06 = "", col07 = "", col08 = "", col09 = "", col10 = "";
+                        String col11 = "", col12 = "", col13 = "", col14 = "", col15 = "", col16 = "", col17 = "", col18 = "", col19 = "", col20 = "", col21 = "", col22 = "";
+                        col01 = row[mHisDB.opSDB.opS.invno].ToString();
+                        col02 = row[mHisDB.opSDB.opS.svid].ToString();
+                        col03 = row[mHisDB.opSDB.opS.class1].ToString();
+                        col04 = row[mHisDB.opSDB.opS.hcode].ToString();
+                        col05 = row[mHisDB.opSDB.opS.hn].ToString();
+                        col06 = row[mHisDB.opSDB.opS.pid].ToString();
+                        col07 = row[mHisDB.opSDB.opS.careaccount].ToString();
+                        col08 = row[mHisDB.opSDB.opS.typeserv].ToString();
+                        col09 = row[mHisDB.opSDB.opS.typein].ToString();
+                        col10 = row[mHisDB.opSDB.opS.typeout].ToString();
+                        col11 = row[mHisDB.opSDB.opS.dtappoint].ToString();
+                        col12 = row[mHisDB.opSDB.opS.svpid].ToString();
+                        col13 = row[mHisDB.opSDB.opS.clinic].ToString();
+                        col14 = row[mHisDB.opSDB.opS.begdt].ToString();
+                        col15 = row[mHisDB.opSDB.opS.enddt].ToString();
+                        col16 = row[mHisDB.opSDB.opS.lccode].ToString();
+                        col17 = row[mHisDB.opSDB.opS.codeset].ToString();
+                        col18 = row[mHisDB.opSDB.opS.stdcode].ToString();
+                        col19 = row[mHisDB.opSDB.opS.svcharge].ToString();
+                        col20 = row[mHisDB.opSDB.opS.completion].ToString();
+                        col21 = row[mHisDB.opSDB.opS.svtxcode].ToString();
+                        col22 = row[mHisDB.opSDB.opS.claimcat].ToString();
+                        txtRow += col01 + "|" + col02 + "|" + col03 + "|" + col04 + "|" + col05 + "|" + col06 + "|" + col07 + "|" + col08 + "|" + col09 + "|" + col10
+                                + "|" + col11 + "|" + col12 + "|" + col13 + "|" + col14 + "|" + col15 + "|" + col16 + "|" + col17 + "|" + col18 + "|" + col19 + "|" + col20 
+                                + "|" + col21 + "|" + col22 + Environment.NewLine;
+                    }
+                    foreach (DataRow rowI in dtopX.Rows)
+                    {
+                        pb1.Value++;
+                        String col01 = "", col02 = "", col03 = "", col04 = "", col05 = "", col06 = "";
+                        col01 = rowI[mHisDB.opdXDB.opDX.class1].ToString();
+                        col02 = rowI[mHisDB.opdXDB.opDX.svid].ToString();
+                        col03 = rowI[mHisDB.opdXDB.opDX.sl].ToString();
+                        col04 = rowI[mHisDB.opdXDB.opDX.codeset].ToString();
+                        col05 = rowI[mHisDB.opdXDB.opDX.code].ToString();
+                        col06 = rowI[mHisDB.opdXDB.opDX.desc1].ToString();
+                        txtRowBDi += col01 + "|" + col02 + "|" + col03 + "|" + col04 + "|" + col05 + "|" + col06 + Environment.NewLine;
+                    }
+                    txtopD = "<OPServices>" + Environment.NewLine + txtRow + "</OPServices>" + Environment.NewLine +
+                        "<OPDx>" + Environment.NewLine + txtRowBDi + "</OPDx>" + Environment.NewLine + "</ClaimRec>" + Environment.NewLine;
+                    String md5 = @"<?EndNote Checksum=""" + genMD5(Header + txtopD) + @"""?>";
+                    sw.WriteLine(Header + txtopD+ md5);
+                }
+            }
+            catch (IOException ioex)
+            {
+
+            }
+            pb1.Hide();
+            return "1";
+        }
+
+
         public String[] getFileinFolder(String path)
         {
             string[] filePaths = null;
@@ -553,6 +648,81 @@ namespace SSData.control
         public String setTimeCurrent()
         {
             return String.Format("{0:HHmm}", System.DateTime.Now);
+        }
+        public String genMD5(String contents)
+        {
+            //String source = "Hello World!";
+            //String contents = File.ReadAllText(@filename);
+            String hash = "";
+            using (MD5 md5Hash = MD5.Create())
+            {
+                hash = GetMd5Hash(md5Hash, contents);
+                //Console.WriteLine("The MD5 hash of " + contents + " is: " + hash + ".");
+                //Console.WriteLine("Verifying the hash...");
+                if (VerifyMd5Hash(md5Hash, contents, hash))
+                {
+                    //Console.WriteLine("The hashes are the same.");
+                }
+                else
+                {
+                    //Console.WriteLine("The hashes are not same.");
+                }
+            }
+            return hash;
+        }
+        private String GetMd5Hash(MD5 md5Hash, string input)
+        {
+
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data 
+            // and format each one as a hexadecimal string.
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            // Return the hexadecimal string.
+            return sBuilder.ToString();
+        }
+        private bool VerifyMd5Hash(MD5 md5Hash, string input, string hash)
+        {
+            // Hash the input.
+            string hashOfInput = GetMd5Hash(md5Hash, input);
+
+            // Create a StringComparer an compare the hashes.
+            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
+
+            if (0 == comparer.Compare(hashOfInput, hash))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public String getMapPayPlan(String payplan)
+        {
+            String re = "";
+            if (payplan.Equals("2211041"))
+            {
+                re = "24036";       //บางนา5
+            }
+            else if (payplan.Equals("2211006"))
+            {
+                re = "11772";       //บางนา2
+            }
+            else if (payplan.Equals("2210028"))
+            {
+                re = "11592";       //บางนา1
+            }
+            return re;
         }
     }
 }

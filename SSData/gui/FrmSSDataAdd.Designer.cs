@@ -50,8 +50,6 @@ namespace SSData
             this.cboMonth = new System.Windows.Forms.ComboBox();
             this.cboYear = new System.Windows.Forms.ComboBox();
             this.btnOk = new C1.Win.C1Input.C1Button();
-            this.btnView = new C1.Win.C1Input.C1Button();
-            this.pB1 = new System.Windows.Forms.ProgressBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.c1Button8 = new C1.Win.C1Input.C1Button();
             this.c1Button7 = new C1.Win.C1Input.C1Button();
@@ -68,8 +66,13 @@ namespace SSData
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.pB2 = new System.Windows.Forms.ProgressBar();
+            this.cboMonthGen = new System.Windows.Forms.ComboBox();
             this.txtHName = new C1.Win.C1Input.C1TextBox();
+            this.cboYearGen = new System.Windows.Forms.ComboBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.btnZip = new C1.Win.C1Input.C1Button();
+            this.label25 = new System.Windows.Forms.Label();
             this.btnSendEmail = new C1.Win.C1Input.C1Button();
             this.btnGenFileName = new C1.Win.C1Input.C1Button();
             this.txtFileName = new C1.Win.C1Input.C1TextBox();
@@ -95,13 +98,34 @@ namespace SSData
             this.btnPath = new C1.Win.C1Input.C1Button();
             this.label4 = new System.Windows.Forms.Label();
             this.btnGenBT = new C1.Win.C1Input.C1Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.grdView = new FarPoint.Win.Spread.FpSpread();
-            this.grdView_Sheet1 = new FarPoint.Win.Spread.SheetView();
-            this.c1DockingManager1 = new C1.Win.C1Command.C1DockingManager(this.components);
             this.TabMain = new C1.Win.C1Command.C1DockingTab();
             this.TabPrepare = new C1.Win.C1Command.C1DockingTabPage();
+            this.grdView = new FarPoint.Win.Spread.FpSpread();
+            this.grdView_Sheet1 = new FarPoint.Win.Spread.SheetView();
+            this.TabRetrive = new C1.Win.C1Command.C1DockingTabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.pB1 = new System.Windows.Forms.ProgressBar();
+            this.txtSsdId = new C1.Win.C1Input.C1TextBox();
+            this.txtSspId = new C1.Win.C1Input.C1TextBox();
+            this.txtDateEnd = new System.Windows.Forms.DateTimePicker();
+            this.txtDateStart = new System.Windows.Forms.DateTimePicker();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtTimeCurrentRet = new System.Windows.Forms.MaskedTextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.txtAutoStartRet = new System.Windows.Forms.MaskedTextBox();
+            this.btnView = new C1.Win.C1Input.C1Button();
+            this.cboMonthRet = new System.Windows.Forms.ComboBox();
+            this.cboYearRet = new System.Windows.Forms.ComboBox();
+            this.btnRet = new C1.Win.C1Input.C1Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.grdViewRet = new FarPoint.Win.Spread.FpSpread();
+            this.grdViewRet_Sheet1 = new FarPoint.Win.Spread.SheetView();
             this.TabGen = new C1.Win.C1Command.C1DockingTabPage();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.c1DockingManager1 = new C1.Win.C1Command.C1DockingManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtSplitNum)).BeginInit();
@@ -109,7 +133,6 @@ namespace SSData
             ((System.ComponentModel.ISupportInitialize)(this.txtSplit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkSplit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOk)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnView)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.c1Button8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.c1Button7)).BeginInit();
@@ -139,13 +162,21 @@ namespace SSData
             ((System.ComponentModel.ISupportInitialize)(this.txtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnGenBT)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.c1DockingManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TabMain)).BeginInit();
             this.TabMain.SuspendLayout();
             this.TabPrepare.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).BeginInit();
+            this.TabRetrive.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSsdId)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSspId)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnRet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdViewRet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdViewRet_Sheet1)).BeginInit();
             this.TabGen.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.c1DockingManager1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -168,8 +199,6 @@ namespace SSData
             this.groupBox1.Controls.Add(this.cboMonth);
             this.groupBox1.Controls.Add(this.cboYear);
             this.groupBox1.Controls.Add(this.btnOk);
-            this.groupBox1.Controls.Add(this.btnView);
-            this.groupBox1.Controls.Add(this.pB1);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.txtCnt);
             this.groupBox1.Controls.Add(this.label3);
@@ -352,20 +381,20 @@ namespace SSData
             // 
             this.chkSplit.BackColor = System.Drawing.Color.Transparent;
             this.chkSplit.BorderColor = System.Drawing.Color.Transparent;
-            this.chkSplit.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.chkSplit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.chkSplit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chkSplit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkSplit.ForeColor = System.Drawing.Color.Black;
             this.chkSplit.Location = new System.Drawing.Point(32, 149);
             this.chkSplit.Name = "chkSplit";
-            this.chkSplit.Padding = new System.Windows.Forms.Padding(1);
+            this.chkSplit.Padding = new System.Windows.Forms.Padding(4, 1, 1, 1);
             this.chkSplit.Size = new System.Drawing.Size(148, 24);
             this.chkSplit.TabIndex = 29;
             this.chkSplit.Text = "แบ่งดึงข้อมูลเป็น ช่วงๆ";
             this.c1ThemeController1.SetTheme(this.chkSplit, "Office2007Blue");
             this.chkSplit.UseVisualStyleBackColor = true;
             this.chkSplit.Value = false;
-            this.chkSplit.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Silver;
+            this.chkSplit.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
             this.chkSplit.CheckedChanged += new System.EventHandler(this.chkSplit_CheckedChanged);
             // 
             // label13
@@ -421,30 +450,11 @@ namespace SSData
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(118, 37);
             this.btnOk.TabIndex = 24;
-            this.btnOk.Text = "ดึงช้อมูล";
+            this.btnOk.Text = "เตรียมช้อมูล";
             this.c1ThemeController1.SetTheme(this.btnOk, "Office2007Blue");
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-            // 
-            // btnView
-            // 
-            this.btnView.Location = new System.Drawing.Point(505, 82);
-            this.btnView.Name = "btnView";
-            this.btnView.Size = new System.Drawing.Size(118, 37);
-            this.btnView.TabIndex = 23;
-            this.btnView.Text = "ดูข้อมูล";
-            this.c1ThemeController1.SetTheme(this.btnView, "Office2007Blue");
-            this.btnView.UseVisualStyleBackColor = true;
-            this.btnView.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
-            this.btnView.Click += new System.EventHandler(this.btnView_Click);
-            // 
-            // pB1
-            // 
-            this.pB1.Location = new System.Drawing.Point(6, 638);
-            this.pB1.Name = "pB1";
-            this.pB1.Size = new System.Drawing.Size(652, 23);
-            this.pB1.TabIndex = 18;
             // 
             // groupBox2
             // 
@@ -636,8 +646,13 @@ namespace SSData
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.groupBox3.Controls.Add(this.pB2);
+            this.groupBox3.Controls.Add(this.cboMonthGen);
             this.groupBox3.Controls.Add(this.txtHName);
+            this.groupBox3.Controls.Add(this.cboYearGen);
+            this.groupBox3.Controls.Add(this.label24);
             this.groupBox3.Controls.Add(this.btnZip);
+            this.groupBox3.Controls.Add(this.label25);
             this.groupBox3.Controls.Add(this.btnSendEmail);
             this.groupBox3.Controls.Add(this.btnGenFileName);
             this.groupBox3.Controls.Add(this.txtFileName);
@@ -673,13 +688,31 @@ namespace SSData
             this.groupBox3.Text = "Gen XML";
             this.c1ThemeController1.SetTheme(this.groupBox3, "Office2007Blue");
             // 
+            // pB2
+            // 
+            this.pB2.Location = new System.Drawing.Point(6, 638);
+            this.pB2.Name = "pB2";
+            this.pB2.Size = new System.Drawing.Size(1042, 23);
+            this.pB2.TabIndex = 63;
+            // 
+            // cboMonthGen
+            // 
+            this.cboMonthGen.BackColor = System.Drawing.Color.White;
+            this.cboMonthGen.ForeColor = System.Drawing.Color.Black;
+            this.cboMonthGen.FormattingEnabled = true;
+            this.cboMonthGen.Location = new System.Drawing.Point(170, 41);
+            this.cboMonthGen.Name = "cboMonthGen";
+            this.cboMonthGen.Size = new System.Drawing.Size(121, 21);
+            this.cboMonthGen.TabIndex = 53;
+            this.c1ThemeController1.SetTheme(this.cboMonthGen, "Office2007Blue");
+            // 
             // txtHName
             // 
             this.txtHName.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(147)))), ((int)(((byte)(207)))));
             this.txtHName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtHName.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.txtHName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtHName.Location = new System.Drawing.Point(665, 75);
+            this.txtHName.Location = new System.Drawing.Point(665, 158);
             this.txtHName.Name = "txtHName";
             this.txtHName.Size = new System.Drawing.Size(281, 24);
             this.txtHName.TabIndex = 53;
@@ -687,9 +720,32 @@ namespace SSData
             this.c1ThemeController1.SetTheme(this.txtHName, "Office2007Blue");
             this.txtHName.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
             // 
+            // cboYearGen
+            // 
+            this.cboYearGen.BackColor = System.Drawing.Color.White;
+            this.cboYearGen.ForeColor = System.Drawing.Color.Black;
+            this.cboYearGen.FormattingEnabled = true;
+            this.cboYearGen.Location = new System.Drawing.Point(410, 41);
+            this.cboYearGen.Name = "cboYearGen";
+            this.cboYearGen.Size = new System.Drawing.Size(121, 21);
+            this.cboYearGen.TabIndex = 52;
+            this.c1ThemeController1.SetTheme(this.cboYearGen, "Office2007Blue");
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label24.ForeColor = System.Drawing.Color.Black;
+            this.label24.Location = new System.Drawing.Point(335, 41);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(49, 13);
+            this.label24.TabIndex = 51;
+            this.label24.Text = "ประจำปี :";
+            this.c1ThemeController1.SetTheme(this.label24, "Office2007Blue");
+            // 
             // btnZip
             // 
-            this.btnZip.Location = new System.Drawing.Point(805, 139);
+            this.btnZip.Location = new System.Drawing.Point(805, 222);
             this.btnZip.Name = "btnZip";
             this.btnZip.Size = new System.Drawing.Size(141, 37);
             this.btnZip.TabIndex = 52;
@@ -699,9 +755,21 @@ namespace SSData
             this.btnZip.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
             this.btnZip.Click += new System.EventHandler(this.btnZip_Click);
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label25.ForeColor = System.Drawing.Color.Black;
+            this.label25.Location = new System.Drawing.Point(72, 41);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(68, 13);
+            this.label25.TabIndex = 50;
+            this.label25.Text = "ประจำเดือน :";
+            this.c1ThemeController1.SetTheme(this.label25, "Office2007Blue");
+            // 
             // btnSendEmail
             // 
-            this.btnSendEmail.Location = new System.Drawing.Point(805, 242);
+            this.btnSendEmail.Location = new System.Drawing.Point(805, 325);
             this.btnSendEmail.Name = "btnSendEmail";
             this.btnSendEmail.Size = new System.Drawing.Size(141, 37);
             this.btnSendEmail.TabIndex = 51;
@@ -712,7 +780,7 @@ namespace SSData
             // 
             // btnGenFileName
             // 
-            this.btnGenFileName.Location = new System.Drawing.Point(567, 184);
+            this.btnGenFileName.Location = new System.Drawing.Point(567, 267);
             this.btnGenFileName.Name = "btnGenFileName";
             this.btnGenFileName.Size = new System.Drawing.Size(24, 37);
             this.btnGenFileName.TabIndex = 50;
@@ -728,7 +796,7 @@ namespace SSData
             this.txtFileName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFileName.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.txtFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFileName.Location = new System.Drawing.Point(597, 189);
+            this.txtFileName.Location = new System.Drawing.Point(597, 272);
             this.txtFileName.Name = "txtFileName";
             this.txtFileName.Size = new System.Drawing.Size(374, 24);
             this.txtFileName.TabIndex = 49;
@@ -742,7 +810,7 @@ namespace SSData
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(489, 191);
+            this.label5.Location = new System.Drawing.Point(489, 274);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(57, 13);
             this.label5.TabIndex = 48;
@@ -754,7 +822,7 @@ namespace SSData
             this.txtPeriodSub.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(147)))), ((int)(((byte)(207)))));
             this.txtPeriodSub.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPeriodSub.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.txtPeriodSub.Location = new System.Drawing.Point(665, 139);
+            this.txtPeriodSub.Location = new System.Drawing.Point(665, 222);
             this.txtPeriodSub.Name = "txtPeriodSub";
             this.txtPeriodSub.Size = new System.Drawing.Size(43, 18);
             this.txtPeriodSub.TabIndex = 47;
@@ -767,7 +835,7 @@ namespace SSData
             this.txtPeriod.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(147)))), ((int)(((byte)(207)))));
             this.txtPeriod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPeriod.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.txtPeriod.Location = new System.Drawing.Point(600, 139);
+            this.txtPeriod.Location = new System.Drawing.Point(600, 222);
             this.txtPeriod.Name = "txtPeriod";
             this.txtPeriod.Size = new System.Drawing.Size(54, 18);
             this.txtPeriod.TabIndex = 46;
@@ -780,7 +848,7 @@ namespace SSData
             this.txtSSOPBIL.AutoSize = true;
             this.txtSSOPBIL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.txtSSOPBIL.ForeColor = System.Drawing.Color.Black;
-            this.txtSSOPBIL.Location = new System.Drawing.Point(597, 107);
+            this.txtSSOPBIL.Location = new System.Drawing.Point(597, 190);
             this.txtSSOPBIL.Name = "txtSSOPBIL";
             this.txtSSOPBIL.Size = new System.Drawing.Size(57, 13);
             this.txtSSOPBIL.TabIndex = 45;
@@ -792,7 +860,7 @@ namespace SSData
             this.txtHCODE.AutoSize = true;
             this.txtHCODE.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.txtHCODE.ForeColor = System.Drawing.Color.Black;
-            this.txtHCODE.Location = new System.Drawing.Point(597, 75);
+            this.txtHCODE.Location = new System.Drawing.Point(597, 158);
             this.txtHCODE.Name = "txtHCODE";
             this.txtHCODE.Size = new System.Drawing.Size(57, 13);
             this.txtHCODE.TabIndex = 44;
@@ -804,7 +872,7 @@ namespace SSData
             this.txtFileNameOPS.AutoSize = true;
             this.txtFileNameOPS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.txtFileNameOPS.ForeColor = System.Drawing.Color.Black;
-            this.txtFileNameOPS.Location = new System.Drawing.Point(16, 229);
+            this.txtFileNameOPS.Location = new System.Drawing.Point(16, 312);
             this.txtFileNameOPS.Name = "txtFileNameOPS";
             this.txtFileNameOPS.Size = new System.Drawing.Size(52, 13);
             this.txtFileNameOPS.TabIndex = 43;
@@ -816,7 +884,7 @@ namespace SSData
             this.txtFileNameBD.AutoSize = true;
             this.txtFileNameBD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.txtFileNameBD.ForeColor = System.Drawing.Color.Black;
-            this.txtFileNameBD.Location = new System.Drawing.Point(16, 165);
+            this.txtFileNameBD.Location = new System.Drawing.Point(16, 248);
             this.txtFileNameBD.Name = "txtFileNameBD";
             this.txtFileNameBD.Size = new System.Drawing.Size(52, 13);
             this.txtFileNameBD.TabIndex = 42;
@@ -828,7 +896,7 @@ namespace SSData
             this.txtFileNameBT.AutoSize = true;
             this.txtFileNameBT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.txtFileNameBT.ForeColor = System.Drawing.Color.Black;
-            this.txtFileNameBT.Location = new System.Drawing.Point(16, 104);
+            this.txtFileNameBT.Location = new System.Drawing.Point(16, 187);
             this.txtFileNameBT.Name = "txtFileNameBT";
             this.txtFileNameBT.Size = new System.Drawing.Size(52, 13);
             this.txtFileNameBT.TabIndex = 41;
@@ -840,7 +908,7 @@ namespace SSData
             this.txtEmailSSOPBIL.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(147)))), ((int)(((byte)(207)))));
             this.txtEmailSSOPBIL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEmailSSOPBIL.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.txtEmailSSOPBIL.Location = new System.Drawing.Point(597, 261);
+            this.txtEmailSSOPBIL.Location = new System.Drawing.Point(597, 344);
             this.txtEmailSSOPBIL.Name = "txtEmailSSOPBIL";
             this.txtEmailSSOPBIL.Size = new System.Drawing.Size(202, 18);
             this.txtEmailSSOPBIL.TabIndex = 38;
@@ -851,7 +919,7 @@ namespace SSData
             // 
             // btnOpenOPS
             // 
-            this.btnOpenOPS.Location = new System.Drawing.Point(333, 217);
+            this.btnOpenOPS.Location = new System.Drawing.Point(333, 300);
             this.btnOpenOPS.Name = "btnOpenOPS";
             this.btnOpenOPS.Size = new System.Drawing.Size(141, 37);
             this.btnOpenOPS.TabIndex = 37;
@@ -862,7 +930,7 @@ namespace SSData
             // 
             // btnOpenBD
             // 
-            this.btnOpenBD.Location = new System.Drawing.Point(333, 153);
+            this.btnOpenBD.Location = new System.Drawing.Point(333, 236);
             this.btnOpenBD.Name = "btnOpenBD";
             this.btnOpenBD.Size = new System.Drawing.Size(141, 37);
             this.btnOpenBD.TabIndex = 36;
@@ -874,7 +942,7 @@ namespace SSData
             // 
             // btnOpenBT
             // 
-            this.btnOpenBT.Location = new System.Drawing.Point(333, 92);
+            this.btnOpenBT.Location = new System.Drawing.Point(333, 175);
             this.btnOpenBT.Name = "btnOpenBT";
             this.btnOpenBT.Size = new System.Drawing.Size(141, 37);
             this.btnOpenBT.TabIndex = 35;
@@ -886,7 +954,7 @@ namespace SSData
             // 
             // btnGenOpS
             // 
-            this.btnGenOpS.Location = new System.Drawing.Point(184, 217);
+            this.btnGenOpS.Location = new System.Drawing.Point(184, 300);
             this.btnGenOpS.Name = "btnGenOpS";
             this.btnGenOpS.Size = new System.Drawing.Size(126, 37);
             this.btnGenOpS.TabIndex = 34;
@@ -894,10 +962,11 @@ namespace SSData
             this.c1ThemeController1.SetTheme(this.btnGenOpS, "Office2007Blue");
             this.btnGenOpS.UseVisualStyleBackColor = true;
             this.btnGenOpS.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnGenOpS.Click += new System.EventHandler(this.btnGenOpS_Click);
             // 
             // btnGenBD
             // 
-            this.btnGenBD.Location = new System.Drawing.Point(184, 153);
+            this.btnGenBD.Location = new System.Drawing.Point(184, 236);
             this.btnGenBD.Name = "btnGenBD";
             this.btnGenBD.Size = new System.Drawing.Size(126, 37);
             this.btnGenBD.TabIndex = 33;
@@ -912,7 +981,7 @@ namespace SSData
             this.label9.AutoSize = true;
             this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.label9.ForeColor = System.Drawing.Color.Black;
-            this.label9.Location = new System.Drawing.Point(487, 263);
+            this.label9.Location = new System.Drawing.Point(487, 346);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(79, 13);
             this.label9.TabIndex = 32;
@@ -924,7 +993,7 @@ namespace SSData
             this.label10.AutoSize = true;
             this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(487, 75);
+            this.label10.Location = new System.Drawing.Point(487, 158);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(86, 13);
             this.label10.TabIndex = 31;
@@ -936,7 +1005,7 @@ namespace SSData
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(489, 139);
+            this.label8.Location = new System.Drawing.Point(489, 222);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(42, 13);
             this.label8.TabIndex = 30;
@@ -948,7 +1017,7 @@ namespace SSData
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(489, 107);
+            this.label6.Location = new System.Drawing.Point(489, 190);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(57, 13);
             this.label6.TabIndex = 29;
@@ -960,7 +1029,7 @@ namespace SSData
             this.txtPath.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(147)))), ((int)(((byte)(207)))));
             this.txtPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPath.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.txtPath.Location = new System.Drawing.Point(176, 31);
+            this.txtPath.Location = new System.Drawing.Point(176, 114);
             this.txtPath.Name = "txtPath";
             this.txtPath.Size = new System.Drawing.Size(541, 18);
             this.txtPath.TabIndex = 28;
@@ -970,7 +1039,7 @@ namespace SSData
             // 
             // btnPath
             // 
-            this.btnPath.Location = new System.Drawing.Point(124, 19);
+            this.btnPath.Location = new System.Drawing.Point(124, 102);
             this.btnPath.Name = "btnPath";
             this.btnPath.Size = new System.Drawing.Size(46, 37);
             this.btnPath.TabIndex = 27;
@@ -985,7 +1054,7 @@ namespace SSData
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(24, 31);
+            this.label4.Location = new System.Drawing.Point(24, 114);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(80, 13);
             this.label4.TabIndex = 26;
@@ -994,7 +1063,7 @@ namespace SSData
             // 
             // btnGenBT
             // 
-            this.btnGenBT.Location = new System.Drawing.Point(184, 92);
+            this.btnGenBT.Location = new System.Drawing.Point(184, 175);
             this.btnGenBT.Name = "btnGenBT";
             this.btnGenBT.Size = new System.Drawing.Size(126, 37);
             this.btnGenBT.TabIndex = 25;
@@ -1004,37 +1073,13 @@ namespace SSData
             this.btnGenBT.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
             this.btnGenBT.Click += new System.EventHandler(this.btnGenBT_Click);
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // grdView
-            // 
-            this.grdView.AccessibleDescription = "";
-            this.grdView.Dock = System.Windows.Forms.DockStyle.Right;
-            this.grdView.Location = new System.Drawing.Point(673, 0);
-            this.grdView.Name = "grdView";
-            this.grdView.Sheets.AddRange(new FarPoint.Win.Spread.SheetView[] {
-            this.grdView_Sheet1});
-            this.grdView.Size = new System.Drawing.Size(386, 667);
-            this.grdView.TabIndex = 6;
-            // 
-            // grdView_Sheet1
-            // 
-            this.grdView_Sheet1.Reset();
-            this.grdView_Sheet1.SheetName = "Sheet1";
-            // 
-            // c1DockingManager1
-            // 
-            this.c1DockingManager1.ParentContainer = this;
-            // 
             // TabMain
             // 
             this.TabMain.Alignment = System.Windows.Forms.TabAlignment.Bottom;
             this.TabMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
             this.TabMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TabMain.Controls.Add(this.TabPrepare);
+            this.TabMain.Controls.Add(this.TabRetrive);
             this.TabMain.Controls.Add(this.TabGen);
             this.TabMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabMain.HotTrack = true;
@@ -1059,6 +1104,274 @@ namespace SSData
             this.TabPrepare.TabIndex = 0;
             this.TabPrepare.Text = "Page1";
             // 
+            // grdView
+            // 
+            this.grdView.AccessibleDescription = "";
+            this.grdView.Dock = System.Windows.Forms.DockStyle.Right;
+            this.grdView.Location = new System.Drawing.Point(673, 0);
+            this.grdView.Name = "grdView";
+            this.grdView.Sheets.AddRange(new FarPoint.Win.Spread.SheetView[] {
+            this.grdView_Sheet1});
+            this.grdView.Size = new System.Drawing.Size(386, 667);
+            this.grdView.TabIndex = 6;
+            // 
+            // grdView_Sheet1
+            // 
+            this.grdView_Sheet1.Reset();
+            this.grdView_Sheet1.SheetName = "Sheet1";
+            // 
+            // TabRetrive
+            // 
+            this.TabRetrive.Controls.Add(this.groupBox4);
+            this.TabRetrive.Controls.Add(this.grdViewRet);
+            this.TabRetrive.Location = new System.Drawing.Point(1, 1);
+            this.TabRetrive.Name = "TabRetrive";
+            this.TabRetrive.Size = new System.Drawing.Size(1059, 667);
+            this.TabRetrive.TabIndex = 2;
+            this.TabRetrive.Text = "ดึงข้อมูล";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.groupBox4.Controls.Add(this.pB1);
+            this.groupBox4.Controls.Add(this.txtSsdId);
+            this.groupBox4.Controls.Add(this.txtSspId);
+            this.groupBox4.Controls.Add(this.txtDateEnd);
+            this.groupBox4.Controls.Add(this.txtDateStart);
+            this.groupBox4.Controls.Add(this.label23);
+            this.groupBox4.Controls.Add(this.label22);
+            this.groupBox4.Controls.Add(this.label20);
+            this.groupBox4.Controls.Add(this.txtTimeCurrentRet);
+            this.groupBox4.Controls.Add(this.label21);
+            this.groupBox4.Controls.Add(this.txtAutoStartRet);
+            this.groupBox4.Controls.Add(this.btnView);
+            this.groupBox4.Controls.Add(this.cboMonthRet);
+            this.groupBox4.Controls.Add(this.cboYearRet);
+            this.groupBox4.Controls.Add(this.btnRet);
+            this.groupBox4.Controls.Add(this.label18);
+            this.groupBox4.Controls.Add(this.label19);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox4.ForeColor = System.Drawing.Color.Black;
+            this.groupBox4.Location = new System.Drawing.Point(0, 0);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(667, 667);
+            this.groupBox4.TabIndex = 45;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "groupBox4";
+            this.c1ThemeController1.SetTheme(this.groupBox4, "Office2007Blue");
+            // 
+            // pB1
+            // 
+            this.pB1.Location = new System.Drawing.Point(3, 638);
+            this.pB1.Name = "pB1";
+            this.pB1.Size = new System.Drawing.Size(652, 23);
+            this.pB1.TabIndex = 62;
+            // 
+            // txtSsdId
+            // 
+            this.txtSsdId.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(147)))), ((int)(((byte)(207)))));
+            this.txtSsdId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSsdId.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.txtSsdId.Location = new System.Drawing.Point(107, 265);
+            this.txtSsdId.Name = "txtSsdId";
+            this.txtSsdId.Size = new System.Drawing.Size(100, 18);
+            this.txtSsdId.TabIndex = 61;
+            this.txtSsdId.Tag = null;
+            this.c1ThemeController1.SetTheme(this.txtSsdId, "Office2007Blue");
+            this.txtSsdId.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // txtSspId
+            // 
+            this.txtSspId.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(147)))), ((int)(((byte)(207)))));
+            this.txtSspId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSspId.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.txtSspId.Location = new System.Drawing.Point(107, 241);
+            this.txtSspId.Name = "txtSspId";
+            this.txtSspId.Size = new System.Drawing.Size(100, 18);
+            this.txtSspId.TabIndex = 60;
+            this.txtSspId.Tag = null;
+            this.c1ThemeController1.SetTheme(this.txtSspId, "Office2007Blue");
+            this.txtSspId.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // txtDateEnd
+            // 
+            this.txtDateEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.txtDateEnd.Location = new System.Drawing.Point(347, 199);
+            this.txtDateEnd.Name = "txtDateEnd";
+            this.txtDateEnd.Size = new System.Drawing.Size(121, 20);
+            this.txtDateEnd.TabIndex = 59;
+            // 
+            // txtDateStart
+            // 
+            this.txtDateStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.txtDateStart.Location = new System.Drawing.Point(107, 199);
+            this.txtDateStart.Name = "txtDateStart";
+            this.txtDateStart.Size = new System.Drawing.Size(127, 20);
+            this.txtDateStart.TabIndex = 59;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label23.ForeColor = System.Drawing.Color.Black;
+            this.label23.Location = new System.Drawing.Point(272, 199);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(46, 13);
+            this.label23.TabIndex = 58;
+            this.label23.Text = "ถึงวันที่ :";
+            this.c1ThemeController1.SetTheme(this.label23, "Office2007Blue");
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label22.ForeColor = System.Drawing.Color.Black;
+            this.label22.Location = new System.Drawing.Point(11, 199);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(67, 13);
+            this.label22.TabIndex = 57;
+            this.label22.Text = "วันที่เริ่มต้น :";
+            this.c1ThemeController1.SetTheme(this.label22, "Office2007Blue");
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label20.ForeColor = System.Drawing.Color.Black;
+            this.label20.Location = new System.Drawing.Point(268, 340);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(61, 16);
+            this.label20.TabIndex = 54;
+            this.label20.Text = "เวลาปัจจุบัน";
+            this.c1ThemeController1.SetTheme(this.label20, "Office2007Blue");
+            // 
+            // txtTimeCurrentRet
+            // 
+            this.txtTimeCurrentRet.BackColor = System.Drawing.Color.White;
+            this.txtTimeCurrentRet.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtTimeCurrentRet.ForeColor = System.Drawing.Color.Black;
+            this.txtTimeCurrentRet.Location = new System.Drawing.Point(347, 331);
+            this.txtTimeCurrentRet.Mask = "00:00";
+            this.txtTimeCurrentRet.Name = "txtTimeCurrentRet";
+            this.txtTimeCurrentRet.Size = new System.Drawing.Size(65, 29);
+            this.txtTimeCurrentRet.TabIndex = 53;
+            this.c1ThemeController1.SetTheme(this.txtTimeCurrentRet, "Office2007Blue");
+            this.txtTimeCurrentRet.ValidatingType = typeof(System.DateTime);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label21.ForeColor = System.Drawing.Color.Black;
+            this.label21.Location = new System.Drawing.Point(268, 300);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(67, 16);
+            this.label21.TabIndex = 52;
+            this.label21.Text = "เวลาดึงข้อมูล";
+            this.c1ThemeController1.SetTheme(this.label21, "Office2007Blue");
+            // 
+            // txtAutoStartRet
+            // 
+            this.txtAutoStartRet.BackColor = System.Drawing.Color.White;
+            this.txtAutoStartRet.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtAutoStartRet.ForeColor = System.Drawing.Color.Black;
+            this.txtAutoStartRet.Location = new System.Drawing.Point(347, 291);
+            this.txtAutoStartRet.Mask = "00:00";
+            this.txtAutoStartRet.Name = "txtAutoStartRet";
+            this.txtAutoStartRet.Size = new System.Drawing.Size(65, 29);
+            this.txtAutoStartRet.TabIndex = 51;
+            this.c1ThemeController1.SetTheme(this.txtAutoStartRet, "Office2007Blue");
+            this.txtAutoStartRet.ValidatingType = typeof(System.DateTime);
+            // 
+            // btnView
+            // 
+            this.btnView.Location = new System.Drawing.Point(488, 316);
+            this.btnView.Name = "btnView";
+            this.btnView.Size = new System.Drawing.Size(118, 37);
+            this.btnView.TabIndex = 50;
+            this.btnView.Text = "ดูข้อมูล";
+            this.c1ThemeController1.SetTheme(this.btnView, "Office2007Blue");
+            this.btnView.UseVisualStyleBackColor = true;
+            this.btnView.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            // 
+            // cboMonthRet
+            // 
+            this.cboMonthRet.BackColor = System.Drawing.Color.White;
+            this.cboMonthRet.ForeColor = System.Drawing.Color.Black;
+            this.cboMonthRet.FormattingEnabled = true;
+            this.cboMonthRet.Location = new System.Drawing.Point(107, 139);
+            this.cboMonthRet.Name = "cboMonthRet";
+            this.cboMonthRet.Size = new System.Drawing.Size(121, 21);
+            this.cboMonthRet.TabIndex = 49;
+            this.c1ThemeController1.SetTheme(this.cboMonthRet, "Office2007Blue");
+            this.cboMonthRet.SelectedIndexChanged += new System.EventHandler(this.cboMonthRet_SelectedIndexChanged);
+            // 
+            // cboYearRet
+            // 
+            this.cboYearRet.BackColor = System.Drawing.Color.White;
+            this.cboYearRet.ForeColor = System.Drawing.Color.Black;
+            this.cboYearRet.FormattingEnabled = true;
+            this.cboYearRet.Location = new System.Drawing.Point(347, 139);
+            this.cboYearRet.Name = "cboYearRet";
+            this.cboYearRet.Size = new System.Drawing.Size(121, 21);
+            this.cboYearRet.TabIndex = 48;
+            this.c1ThemeController1.SetTheme(this.cboYearRet, "Office2007Blue");
+            // 
+            // btnRet
+            // 
+            this.btnRet.Location = new System.Drawing.Point(488, 127);
+            this.btnRet.Name = "btnRet";
+            this.btnRet.Size = new System.Drawing.Size(118, 37);
+            this.btnRet.TabIndex = 47;
+            this.btnRet.Text = "ดึงช้อมูล";
+            this.c1ThemeController1.SetTheme(this.btnRet, "Office2007Blue");
+            this.btnRet.UseVisualStyleBackColor = true;
+            this.btnRet.VisualStyleBaseStyle = C1.Win.C1Input.VisualStyle.Office2010Blue;
+            this.btnRet.Click += new System.EventHandler(this.btnRet_Click);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label18.ForeColor = System.Drawing.Color.Black;
+            this.label18.Location = new System.Drawing.Point(272, 139);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(49, 13);
+            this.label18.TabIndex = 46;
+            this.label18.Text = "ประจำปี :";
+            this.c1ThemeController1.SetTheme(this.label18, "Office2007Blue");
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.label19.ForeColor = System.Drawing.Color.Black;
+            this.label19.Location = new System.Drawing.Point(9, 139);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(68, 13);
+            this.label19.TabIndex = 45;
+            this.label19.Text = "ประจำเดือน :";
+            this.c1ThemeController1.SetTheme(this.label19, "Office2007Blue");
+            // 
+            // grdViewRet
+            // 
+            this.grdViewRet.AccessibleDescription = "";
+            this.grdViewRet.Dock = System.Windows.Forms.DockStyle.Right;
+            this.grdViewRet.Location = new System.Drawing.Point(673, 0);
+            this.grdViewRet.Name = "grdViewRet";
+            this.grdViewRet.Sheets.AddRange(new FarPoint.Win.Spread.SheetView[] {
+            this.grdViewRet_Sheet1});
+            this.grdViewRet.Size = new System.Drawing.Size(386, 667);
+            this.grdViewRet.TabIndex = 7;
+            this.grdViewRet.CellClick += new FarPoint.Win.Spread.CellClickEventHandler(this.grdViewRet_CellClick);
+            // 
+            // grdViewRet_Sheet1
+            // 
+            this.grdViewRet_Sheet1.Reset();
+            this.grdViewRet_Sheet1.SheetName = "Sheet1";
+            // 
             // TabGen
             // 
             this.TabGen.Controls.Add(this.groupBox3);
@@ -1067,6 +1380,15 @@ namespace SSData
             this.TabGen.Size = new System.Drawing.Size(1059, 667);
             this.TabGen.TabIndex = 1;
             this.TabGen.Text = "Page2";
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // c1DockingManager1
+            // 
+            this.c1DockingManager1.ParentContainer = this;
             // 
             // FrmSSDataAdd
             // 
@@ -1089,7 +1411,6 @@ namespace SSData
             ((System.ComponentModel.ISupportInitialize)(this.txtSplit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkSplit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOk)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnView)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.c1Button8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.c1Button7)).EndInit();
@@ -1120,13 +1441,22 @@ namespace SSData
             ((System.ComponentModel.ISupportInitialize)(this.txtPath)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnPath)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnGenBT)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.c1DockingManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TabMain)).EndInit();
             this.TabMain.ResumeLayout(false);
             this.TabPrepare.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdView_Sheet1)).EndInit();
+            this.TabRetrive.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSsdId)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSspId)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnRet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdViewRet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdViewRet_Sheet1)).EndInit();
             this.TabGen.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.c1DockingManager1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1145,13 +1475,11 @@ namespace SSData
         private C1.Win.C1Input.C1Button c1Button4;
         private C1.Win.C1Input.C1Button c1Button1;
         private C1.Win.C1Input.C1Button c1Button2;
-        private System.Windows.Forms.ProgressBar pB1;
         private C1.Win.C1Input.C1Button c1Button5;
         private C1.Win.C1Input.C1Button c1Button6;
         private C1.Win.C1Input.C1Button c1Button8;
         private C1.Win.C1Input.C1Button c1Button7;
         private C1.Win.C1Input.C1Button btnOk;
-        private C1.Win.C1Input.C1Button btnView;
         private System.Windows.Forms.GroupBox groupBox3;
         private C1.Win.C1Input.C1Button btnGenBT;
         private System.Windows.Forms.Label label4;
@@ -1203,6 +1531,32 @@ namespace SSData
         private C1.Win.C1Command.C1DockingTab TabMain;
         private C1.Win.C1Command.C1DockingTabPage TabPrepare;
         private C1.Win.C1Command.C1DockingTabPage TabGen;
+        private C1.Win.C1Command.C1DockingTabPage TabRetrive;
+        private FarPoint.Win.Spread.FpSpread grdViewRet;
+        private FarPoint.Win.Spread.SheetView grdViewRet_Sheet1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.MaskedTextBox txtTimeCurrentRet;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.MaskedTextBox txtAutoStartRet;
+        private C1.Win.C1Input.C1Button btnView;
+        private System.Windows.Forms.ComboBox cboMonthRet;
+        private System.Windows.Forms.ComboBox cboYearRet;
+        private C1.Win.C1Input.C1Button btnRet;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.DateTimePicker txtDateStart;
+        private System.Windows.Forms.DateTimePicker txtDateEnd;
+        private C1.Win.C1Input.C1TextBox txtSspId;
+        private C1.Win.C1Input.C1TextBox txtSsdId;
+        private System.Windows.Forms.ProgressBar pB1;
+        private System.Windows.Forms.ComboBox cboMonthGen;
+        private System.Windows.Forms.ComboBox cboYearGen;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.ProgressBar pB2;
     }
 }
 

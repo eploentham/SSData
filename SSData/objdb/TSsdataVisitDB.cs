@@ -57,6 +57,7 @@ namespace SSData.objdb
             ssdV.itemcnt = "itemcnt";
             ssdV.prescb = "prescb";
             ssdV.svid = "svid";
+            ssdV.ssdata_split_id = "ssdata_split_id";
 
             ssdV.table = "t_ssdata_visit";
             ssdV.pkField = "ssdata_visit_id";
@@ -78,7 +79,7 @@ namespace SSData.objdb
                 ssdV.amount + "," + ssdV.paid + "," + ssdV.payplan + "," +
                 ssdV.claimamt + "," + ssdV.otherpayplan + "," + ssdV.otherpay + "," +
                 ssdV.prescdt + "," + ssdV.dispdt + "," + ssdV.itemcnt + "," +
-                ssdV.prescb + "," + ssdV.svid +
+                ssdV.prescb + "," + ssdV.svid + "," + ssdV.ssdata_split_id +
                 ") " +
                 "Values('" + p.active + "','" + p.birth_day + "','" + p.branch_id + "','" +
                 p.hcode + "','" + p.hcode_owner + "','" + p.hn_no + "','" +
@@ -91,7 +92,7 @@ namespace SSData.objdb
                 p.amount + "','" + p.paid + "','" + p.payplan + "','" +
                 p.claimamt + "','" + p.otherpayplan + "','" + p.otherpay + "','" +
                 p.prescdt + "','" + p.dispdt + "','" + p.itemcnt + "','" +
-                p.prescb + "','" + p.svid +
+                p.prescb + "','" + p.svid + "','" + p.ssdata_split_id +
                 "') ";
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
 

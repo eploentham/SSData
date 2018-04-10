@@ -16,5 +16,9 @@ namespace SSData.object1
         public String date_time_end { get; set; }
         public String active { get; set; }
         public String status_process { get; set; }
+        public String date_start { get; set; }
+        public String date_end { get; set; }
+        public String cnt_visit_start { get; set; }
+        public String cnt_visit_end { get; set; }
     }
 }

@@ -128,7 +128,7 @@ namespace SSData.gui
             txtClinic.Value = opS.clinic;
             txtCodeSet.Value = opS.codeset;
             txtCompletion.Value = opS.completion;
-            txtDegDt.Value = opS.degdt;
+            txtDegDt.Value = opS.begdt;
             txtDtAppoint.Value = opS.dtappoint;
             txtEndDt.Value = opS.enddt;
             txtHCode.Value = opS.hcode;
@@ -154,7 +154,7 @@ namespace SSData.gui
             opS.clinic = txtClinic.Value.ToString();
             opS.codeset = txtCodeSet.Value.ToString();
             opS.completion = txtCompletion.Value.ToString();
-            opS.degdt = txtDegDt.Value.ToString();
+            opS.begdt = txtDegDt.Value.ToString();
             opS.dtappoint  = txtDtAppoint.Value.ToString();
             opS.enddt = txtEndDt.Value.ToString();
             opS.hcode = txtHCode.Value.ToString();

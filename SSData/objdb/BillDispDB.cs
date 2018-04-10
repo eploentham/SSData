@@ -42,6 +42,7 @@ namespace SSData.objdb
             bd.ssdata_id = "ssdata_id";
             bd.ssdata_visit_id = "ssdata_visit_id";
             bd.svid = "svid";
+            bd.ssdata_split_id = "ssdata_split_id";
 
             bd.table = "t_billdisp";
             bd.pkField = "billdisp_id";
@@ -58,7 +59,8 @@ namespace SSData.objdb
                 bd.itemcnt + "," + bd.otherpay + "," + bd.paid + "," +
                 bd.pid + "," + bd.prescb + "," + bd.prescdt + "," +
                 bd.providerid + "," + bd.reimburser + "," +
-                bd.ssdata_id + "," + bd.ssdata_visit_id + "," + bd.svid + " " +                
+                bd.ssdata_id + "," + bd.ssdata_visit_id + "," + bd.svid + "," +
+                bd.ssdata_split_id + " " +
                 ") " +
                 "Values('" + p.benefitplan + "','" + p.chargeamt + "','" + p.claimamt + "','" +
                 p.daycover + "','" + p.dispdt + "','" + p.dispestat + "','" +
@@ -66,7 +68,8 @@ namespace SSData.objdb
                 p.itemcnt + "','" + p.otherpay + "','" + p.paid + "','" +
                 p.pid + "','" + p.prescb + "','" + p.prescdt + "','" +
                 p.providerid + "','" + p.reimburser + "','" +
-                p.ssdata_id + "','" + p.ssdata_visit_id + "','" + p.svid + "' " +
+                p.ssdata_id + "','" + p.ssdata_visit_id + "','" + p.svid + "','" +
+                p.ssdata_split_id + "' " +
                 ") ";
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
 
@@ -108,7 +111,8 @@ namespace SSData.objdb
                 "From " + bd.table + " bd " +
                 "Left Join t_ssdata_visit ssv On ssv.ssdata_visit_id = bd." + bd.ssdata_visit_id + " " +
                 "Left Join t_ssdata ss On ss.ssdata_id = ssv.ssdata_id " +
-                "Where ss.year_id ='" + yearId + "' and ss.month_id ='" + monthId + "' and ssv.active = '1' ";
+                "Where ss.year_id ='" + yearId + "' and ss.month_id ='" + monthId + "' and ssv.active = '1' " +
+                "Order By bd."+bd.billdisp_id;
             dt = conn.selectData(conn.connSSData, sql);
             return dt;
         }

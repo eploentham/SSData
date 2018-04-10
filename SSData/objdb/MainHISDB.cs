@@ -29,7 +29,7 @@ namespace SSData.objdb
         public BillDispItemsDB bdIDB;
         public OpServicesDB opSDB;
         public OpServicesOpdXDB opdXDB;
-        public TSsdataSplitDB spDB;
+        public TSsdataSplitDB sspDB;
 
         private List<Doctor> lDoctor;
 
@@ -53,7 +53,7 @@ namespace SSData.objdb
             bdIDB = new BillDispItemsDB(conn);
             opSDB = new OpServicesDB(conn);
             opdXDB = new OpServicesOpdXDB(conn);
-            spDB = new TSsdataSplitDB(conn);
+            sspDB = new TSsdataSplitDB(conn);
 
             lDoctor = new List<Doctor>();
 
@@ -148,16 +148,16 @@ namespace SSData.objdb
             //}
             return chk;
         }
-        public String selectCountHN(String hcode, String yearId, String monthId)
+        public String selectCountHN(String hcode, String dateStart, String dateEnd)
         {
             String whereHCODE = "", startDate = "", endDate = "", whereDate = "", re="";
-            DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId) + 1, 1);
-            dateEnd = dateEnd.AddDays(-1);
+            //DateTime dateEnd = new DateTime(int.Parse(dateStart), int.Parse(dateEnd) + 1, 1);
+            //dateEnd = dateEnd.AddDays(-1);
             whereHCODE = whereHCODE.Equals("") ? "" : " AND (fint01.MNC_PRAKUN_CODE = '" + hcode + "' OR " + "fint01.MNC_PRAKUN_CODE IS NULL) " +
                 "AND(dbo.PRAKUN_M01_TEMP.PrakanCode = '" + hcode + "' OR " + "dbo.PRAKUN_M01_TEMP.PrakanCode IS NULL) ";
-            startDate = yearId + "-" + monthId + "-01";
-            endDate = yearId + "-" + dateEnd.Month.ToString("00") + "-" + dateEnd.Day.ToString("00");
-            whereDate = "AND (patt01.MNC_DATE BETWEEN '" + startDate + "' AND '" + endDate + "') ";
+            //startDate = dateStart + "-" + dateEnd + "-01";
+            //endDate = dateStart + "-" + dateEnd.Month.ToString("00") + "-" + dateEnd.Day.ToString("00");
+            whereDate = "AND (patt01.MNC_DATE BETWEEN '" + dateStart + "' AND '" + dateEnd + "') ";
 
             DataTable dt = new DataTable();
             sqlOPD = "select count(*) as cnt from (  SELECT patt01.MNC_HN_NO  " +                        
@@ -184,16 +184,16 @@ namespace SSData.objdb
             }
             return re;
         }
-        public DataTable selectSSData(String hcode,String yearId, String monthId)
+        public DataTable selectSSData(String hcode,String dateStart, String dateEnd)
         {
             String whereHCODE = "", startDate="", endDate="", whereDate="";
-            DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId)+1, 1);
-            dateEnd = dateEnd.AddDays(-1);
+            //DateTime dateEnd = new DateTime(int.Parse(dateStart), int.Parse(dateEnd)+1, 1);
+            //dateEnd = dateEnd.AddDays(-1);
             whereHCODE = whereHCODE.Equals("") ? "" : " AND (fint01.MNC_PRAKUN_CODE = '"+ hcode + "' OR " + "fint01.MNC_PRAKUN_CODE IS NULL) " +
                 "AND(dbo.PRAKUN_M01_TEMP.PrakanCode = '" + hcode + "' OR " + "dbo.PRAKUN_M01_TEMP.PrakanCode IS NULL) ";
-            startDate = yearId + "-"+ monthId + "-01";
-            endDate = yearId + "-" + dateEnd.Month.ToString("00") + "-" + dateEnd.Day.ToString("00");
-            whereDate = "AND (patt01.MNC_DATE BETWEEN '"+ startDate + "' AND '"+ endDate + "') ";
+            //startDate = dateStart + "-"+ dateEnd + "-01";
+            //endDate = dateStart + "-" + dateEnd.Month.ToString("00") + "-" + dateEnd.Day.ToString("00");
+            whereDate = "AND (patt01.MNC_DATE BETWEEN '"+ dateStart + "' AND '"+ dateEnd + "') ";
 
             DataTable dt = new DataTable();
             sqlOPD = "SELECT patt01.MNC_HN_YR, patt01.MNC_HN_NO, patt01.MNC_DATE, patm01.MNC_FNAME_T, patm01.MNC_LNAME_T, " +
@@ -311,21 +311,18 @@ namespace SSData.objdb
 
             return dt;
         }
-        public DataTable selectOPx(String hn, String vnno, String preno, String docDate, String docCD, String docNO)
+        public DataTable selectOPx(String hn, String preno, String docDate)
         {
             String sql = "", where = "";
 
-            where = " Where fint01.mnc_hn_no = '" + hn + "' and fint01.mnc_pre_no = '" + preno + "' and fint01.mnc_doc_dat = '" + docDate + "' ";
+            where = " Where pt09.mnc_hn_no = '" + hn + "' and pt09.mnc_pre_no = '" + preno + "' and pt09.mnc_date = '" + docDate + "' ";
 
             DataTable dt = new DataTable();
-            sql = "Select fint02.*, finm01.MNC_FN_DSCT, finm01.MNC_GRP_SS, finm01.MNC_FN_GRP " +
-                "From Finance_t01 fint01 " +
-                "Left Join Finance_t02 fint02 On fint01.mnc_doc_cd = fint02.mnc_doc_cd and fint01.MNC_DOC_YR = fint02.MNC_DOC_YR and fint01.MNC_DOC_NO = fint02.MNC_DOC_NO " +
-                "   and fint01.MNC_DOC_DAT = fint02.MNC_DOC_DAT " +
-                "Left Join FINANCE_M01 finm01 On fint02.MNC_FN_CD = finm01.MNC_FN_CD " +
+            sql = "Select pt09.* " +
+                "From patient_t09 pt09 " +
                 " " +
                 where + " " +
-                "Order By fint02.mnc_no ";
+                "Order By pt09.MNC_DIA_CD ";
 
             dt = conn.selectData(conn.connMainHIS, sql);
 
@@ -475,27 +472,21 @@ namespace SSData.objdb
 
             pb1.Hide();
         }
-        public void insertTSSData(String hcode, String branchId, String yearId, String monthId, ProgressBar pb1
-            , Label label1, Label label2, Form frm, List<TSsdataSplit> lSplit)
+        public void createTSSData(String hcode, String branchId, String yearId, String monthId, List<TSsdataSplit> lSplit)
         {
-            String cntHN = "";
-            label1.Text = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
-            pb1.Show();
             DataTable dt = new DataTable();
-            DataTable dtItem = new DataTable();
-            DataTable dtBillDispItem = new DataTable();
-            DataTable dtBillDisp = new DataTable();
-            DataTable dtOPs = new DataTable();
-            DataTable dtOPx = new DataTable();
-            int rowNo = 0;
 
-            conn.OpenConnectionSSData();
-            dt =selectSSData(hcode, yearId, monthId);
-            cntHN = selectCountHN(hcode, yearId, monthId);
-            pb1.Minimum = 1;
-            pb1.Maximum = dt.Rows.Count + 1;
-            pb1.Value = 1;
-            //txtCnt.Value = dt.Rows.Count;
+            String cntHN = "", cntVn="";
+
+            String startDate = "", endDate = "";
+            DateTime dateEnd = new DateTime(int.Parse(yearId), int.Parse(monthId) + 1, 1);
+            dateEnd = dateEnd.AddDays(-1);
+            startDate = yearId + "-" + monthId + "-01";
+            endDate = dateEnd.Year.ToString() + "-" + dateEnd.Month.ToString("00") + "-" + dateEnd.Day.ToString("00");
+
+            cntHN = selectCountHN(hcode, startDate, endDate);
+            dt = selectSSData(hcode, startDate, endDate);
+
             TSsdata ssd = new TSsdata();
             ssd.branch_id = branchId;
             ssd.branch_visit_id = "";
@@ -504,270 +495,340 @@ namespace SSData.objdb
             ssd.month_id = monthId;
             ssd.year_id = yearId;
             ssd.status_precess = "0";
-            ssd.ssdata_id =  ssdDB.insert(ssd);
+            ssd.ssdata_id = ssdDB.insert(ssd);
+            insertTSSSplit(lSplit, ssd.ssdata_id);
+        }
+        public void insertTSSSplit(List<TSsdataSplit> lSplit, String ssdId)
+        {
 
-            foreach(TSsdataSplit sp in lSplit)
+            foreach (TSsdataSplit sp in lSplit)
             {
-                sp.ssdata_id = ssd.ssdata_id;
-                spDB.insert(sp);
+                sp.ssdata_id = ssdId;
+                sspDB.insert(sp);
             }
+        }
+        public void insertTSSData(String hcode, String branchId, String dateStart, String dateEnd, ProgressBar pb1
+            , Label label1, Label label2, Form frm, String ssdId, String sspId)
+        {
+            String cntHN = "", spId="";
+            label1.Text = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            pb1.Show();
+            DataTable dt = new DataTable();
+            DataTable dtItem = new DataTable();
+            DataTable dtBillDispItem = new DataTable();
+            DataTable dtBillDisp = new DataTable();
+            DataTable dtOPs = new DataTable();
+            DataTable dtOPx = new DataTable();
+            int rowNo = 0, cntEnd=0;
 
-            foreach (DataRow row in dt.Rows)
+            conn.OpenConnectionSSData();
+            sspDB.updateDateStart(sspId);
+
+            dt = selectSSData(hcode, dateStart, dateEnd);
+            //cntHN = selectCountHN(hcode, dateStart, dateEnd);
+
+            pb1.Minimum = 1;
+            pb1.Maximum = dt.Rows.Count + 1;
+            pb1.Value = 1;
+            //txtCnt.Value = dt.Rows.Count;
+            //TSsdata ssd = new TSsdata();
+            //ssd.branch_id = branchId;
+            //ssd.branch_visit_id = "";
+            //ssd.cnt_hn = cntHN;
+            //ssd.cnt_visit = dt.Rows.Count.ToString();
+            //ssd.month_id = dateEnd;
+            //ssd.year_id = dateStart;
+            //ssd.status_precess = "0";
+            //ssd.ssdata_id =  ssdDB.insert(ssd);
+
+            //if (flag.Equals("new"))
+            //{
+            //    //foreach (TSsdataSplit sp in lSplit)
+            //    //{
+            //    //    sp.ssdata_id = ssd.ssdata_id;
+            //    //    spDB.insert(sp);
+            //    //}
+            //}
+            //TSsdataSplit sp1 = new TSsdataSplit();
+            //sp1 = lSplit[0];
+            //if (sp1.status_process.Equals("0"))
+            //{
+
+            //}
+
+
+
+            try
             {
-                pb1.Value++;
-                if ((pb1.Value % 100)== 0){
-                    frm.Refresh();
-                }
-                
-                TSsdataVisit ssV = new TSsdataVisit();
-                String visitDate = "", ssVid="", dispdt="", prescdt="", btId="", docDate="", bdId="", opId="", visitTime="";
-                String birDate = "";
-
-                visitDate = datetoDB(row["MNC_DATE"].ToString());
-                visitTime = setTime(row["MNC_TIME"].ToString());
-                //visitTime = "0000" + visitTime;
-                //visitTime = visitTime.Substring(visitTime.Length - 4);
-                //visitTime = visitTime.Substring(0,2)+":"+ visitTime.Substring(visitTime.Length-2)+":00";
-
-                birDate = datetoDB(row["MNC_BDAY"].ToString());
-
-                ssV.birth_day = birDate;
-                ssV.branch_id = branchId;
-                ssV.hcode = hcode;
-                ssV.hcode_owner = row["PrakanCode"].ToString();
-                ssV.hn_no = row["MNC_HN_NO"].ToString();
-                ssV.hn_yr = row["MNC_HN_YR"].ToString();
-                ssV.pid = row["MNC_ID_NO"].ToString();
-                ssV.patient_fname = row["MNC_FNAME_T"].ToString();
-                ssV.patient_lname = row["MNC_LNAME_T"].ToString();
-                ssV.prefix = row["MNC_PFIX_DSC"].ToString();
-
-                ssV.pre_no = row["mnc_pre_no"].ToString();
-                ssV.sex = row["MNC_SEX"].ToString();
-                ssV.ssdata_id = ssd.ssdata_id;
-                ssV.visit_date = visitDate;
-                ssV.visit_time = visitTime;
-                ssV.vn = row["mnc_vn_no"].ToString()+"."+ row["mnc_vn_seq"].ToString() + "." + row["mnc_vn_sum"].ToString();
-                ssV.vn_no = row["mnc_vn_no"].ToString();
-                ssV.vn_seq = row["mnc_vn_seq"].ToString();
-                ssV.vn_sum = row["mnc_vn_sum"].ToString();
-                ssV.paid = "0.0";
-                ssV.month_id = monthId;
-                ssV.year_id = yearId;
-
-                ssV.invno = setInvNO(row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString(), row["mnc_doc_yr"].ToString());
-                ssV.billno = "";
-                Double amt1 = 0.0;
-                Double.TryParse(row["MNC_SUM_PRI"].ToString(), out amt1);
-                ssV.amount = amt1.ToString("0.00");
-                //ssV.paid = "paid";
-                ssV.payplan = "80";
-                ssV.claimamt = ssV.amount;
-                ssV.otherpayplan = "";
-                ssV.otherpay = "";
-                ssV.prescdt = "";
-                ssV.dispdt = "";
-                ssV.itemcnt = "";
-                ssV.prescb = row["MNC_dot_cd"].ToString();
-                ssV.svid = ssV.vn;
-                //prescdt = selectPrescdt(row["MNC_HN_NO"].ToString(), row["mnc_pre_no"].ToString(), visitDate);
-                //prescdt = datetoDB(prescdt);
-
-                ssVid = ssdVDB.insert(ssV);        //fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD
-                
-                BillTran bt = new BillTran();
-                bt.amount = ssV.amount;     //ยอดเงินรวมการเรียกเก็บเก็บค่ารักษา
-                bt.authcode = "";           //เลขที่อนุมัติของธุรกรรม ได้จากระบบตรวจอนุมัติ
-                bt.billno = "";             //เลขที่ใบเสร็จ
-                bt.billtran_id = "";
-                bt.claimamt = bt.amount;
-                bt.dttran = DateTimeSSData(row["MNC_DATE"].ToString(), row["MNC_TIME"].ToString());      //วันที่และเวลาของการเรียกเก็บค่ารักษาครั้งน้
-                bt.hcode = hcode;           //รหัส ร.พ. ที่ทำธุรกรรม
-                bt.hmain = ssV.hcode_owner;              //รหัสสถานพยาบาลหลัก ตามบัตร
-                bt.hn = ssV.hn_no;
-                bt.invno = ssV.invno;       //เลขที่ invoice
-                bt.memberno = "";
-                bt.name = ssV.prefix + " " + ssV.patient_fname + " " + ssV.patient_lname;
-                bt.otherpayplan = "";
-                bt.paid = "";               //ยอดเงินรวมที่ผู้รับบริการจ่ายในธุรกรรมนี้
-                bt.payplan = "";            //รหัสสิทธิประกันสุขภาพหลักที่ใช้กับธุรกรรมยี้
-                bt.pid = ssV.pid;           //เลขที่ประจำตัวผู้มีสิทธิ
-                bt.otherpay = "0.00";           // ไม่มี ทำเผื่อไว้
-                bt.ssdata_id = ssV.ssdata_id;
-                bt.ssdata_visit_id = ssVid;
-                bt.station = "0001";            //จุดเก็บค่ารักษา (สถานที่) ที่บันทึกธรรกรรมนี้
-                bt.tflag = "";              //สัญญาณการทำธุรกรรม
-                bt.vercode = "";            //รหัสตรวจยืนยัน รับจากการแจ้งธุรกรรมผ่านบัตร หรือผ่านการตรวจสอบลายนิ้วมือ
-
-                btId = btDB.insert(bt);
-
-                docDate = datetoDB(row["MNC_DOC_DAT"].ToString());
-                dtItem.Clear();
-                dtItem = selectBillItem(ssV.hn_no, ssV.vn, ssV.pre_no, docDate, row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString());
-                foreach(DataRow rowI in dtItem.Rows)
+                foreach (DataRow row in dt.Rows)
                 {
-                    BillTranItems btI = new BillTranItems();
-                    btI.billmuad = rowI["MNC_GRP_SS"].ToString();
-                    btI.billtran_id = btId;
-                    btI.billtran_items_id = "";
-                    btI.chargeamt = rowI["MNC_FN_AMT"].ToString();            //ราคาที่เรียกเก็บ
-                    btI.claimamount = btI.chargeamt;
-                    btI.claimcat = "OP1";
-                    btI.claimup = "";
-                    btI.desc1 = rowI["MNC_FN_DSCT"].ToString();
-                    btI.invno = bt.invno;                               
-                    btI.lccode = rowI["MNC_FN_GRP"].ToString()+ rowI["MNC_FN_CD"].ToString();                  //รหัสบริการหรือผลิตภัณฑ์ที่สถานพยาบาลกำหนด
-                    btI.qty = "";
-                    btI.stdcode = "";
-                    btI.svdate = datetoDB(rowI["MNC_DOC_DAT"].ToString());
-                    btI.svrefid = rowI["MNC_DOC_YR"].ToString()+rowI["MNC_DOC_NO"].ToString() + rowI["MNC_NO"].ToString();                //รหัสอ้างอิง PK ที่ให้ รายอการอื่น ชี้มาที่รายการนี้ 
-                    btI.up = "";
-                    btIDB.insert(btI);
-                }
-
-                dtBillDisp = selectSSDataBillDisp(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date);
-                foreach (DataRow rowB in dtBillDisp.Rows)
-                {
-                    rowNo = 0;
-                    dtBillDispItem.Clear();
-                    dtBillDispItem = selectBillDispItem(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date, rowB["MNC_CFR_NO"].ToString());
-
-                    String ssdvBId = "";
-                    BillDisp bd = new BillDisp();
-                    bd.benefitplan = "";
-                    bd.chargeamt = rowB["pri"].ToString();
-                    bd.claimamt = rowB["amt"].ToString();
-                    bd.daycover = "";
-                    bd.dispdt = DateTimeSSData(rowB["mnc_req_dat"].ToString(), rowB["mnc_req_tim"].ToString());//วัน-เวลา สั่งยา
-                    bd.dispestat = "";
-                    bd.dispid = rowB["MNC_CFR_NO"].ToString();
-                    bd.hn = ssV.hn_no;
-                    bd.invno = ssV.invno;
-                    bd.itemcnt = rowB["cnt"].ToString();
-                    bd.otherpay = "";
-                    bd.paid = rowB["amt"].ToString();
-                    bd.pid = ssV.pid;
-                    bd.prescb = row["MNC_dot_cd"].ToString();
-                    bd.prescdt = DateTimeSSData(rowB["mnc_cfg_dat"].ToString(), rowB["mnc_cfr_time"].ToString());//วัน-เวลา รับยา
-                    bd.providerid = hcode;
-                    bd.reimburser = "";
-                    //bd.ssdata_billdisp_id = "";
-                    bd.ssdata_id = ssd.ssdata_id;
-                    bd.ssdata_visit_id = ssVid;
-                    bd.svid = ssV.vn;
-                    //bd.active = "1";
-                    bdId = bdDB.insert(bd);
-
-                    foreach (DataRow rowI in dtBillDispItem.Rows)
+                    pb1.Value++;
+                    if ((pb1.Value % 100) == 0)
                     {
-                        BillDispItems bdI = new BillDispItems();
-                        double price = 0, qty = 0, amt = 0;
-                        Double.TryParse(dtBillDispItem.Rows[rowNo]["mnc_ph_pri01"].ToString(), out price);
-                        Double.TryParse(dtBillDispItem.Rows[rowNo]["qty"].ToString(), out qty);
-                        amt = price * qty;
-                        bdI.billdisp_id = bdId;
-                        bdI.chargeamt = amt.ToString();
-                        bdI.claimcat = "OP1";          //ประเภทบัญชีการเบิก
-                        bdI.claimcont = "OD";
-                        bdI.dfscode = dtBillDispItem.Rows[rowNo]["MNC_DOSAGE_FORM"] == null ? "" : dtBillDispItem.Rows[rowNo]["MNC_DOSAGE_FORM"].ToString() 
-                            + dtBillDispItem.Rows[rowNo]["MNC_PH_STRENGTH"] == null ? "" : dtBillDispItem.Rows[rowNo]["MNC_PH_STRENGTH"].ToString();
-                        bdI.dfstext = dtBillDispItem.Rows[rowNo]["MNC_DOSAGE_FORM"].ToString() + dtBillDispItem.Rows[rowNo]["MNC_PH_STRENGTH"].ToString();
-                        bdI.dispid = dtBillDispItem.Rows[rowNo]["MNC_DOC_CD"].ToString() + dtBillDispItem.Rows[rowNo]["MNC_CFR_YR"].ToString() + dtBillDispItem.Rows[rowNo]["MNC_CFR_NO"].ToString();
-                        bdI.drgid = "";
-                        bdI.hospdrgid = dtBillDispItem.Rows[rowNo]["mnc_ph_cd"].ToString();
-                        bdI.multidisp = "1";                //การจ่ายยาหลายครั้ง
-                        bdI.packsize = "";
-                        bdI.prdcat = "1";
-                        bdI.prdsecode = "";        //รหัสการจ่ายยา generic แทนตามที่ผู้สั่งยากำหนด หรือไม่
-                        bdI.quantity = dtBillDispItem.Rows[rowNo]["qty"].ToString();
-                        bdI.reimbamt = "";
-                        bdI.reimbprice = "";
-                        bdI.sigcode = dtBillDispItem.Rows[rowNo]["mnc_ph_dir_cd"] == null ? "" : dtBillDispItem.Rows[rowNo]["mnc_ph_dir_cd"].ToString()
-                            + dtBillDispItem.Rows[rowNo]["mnc_ph_fre_cd"] == null ? "" : dtBillDispItem.Rows[rowNo]["mnc_ph_fre_cd"].ToString()
-                            + dtBillDispItem.Rows[rowNo]["mnc_ph_tim_cd"] == null ? "" : dtBillDispItem.Rows[rowNo]["mnc_ph_tim_cd"].ToString();
-                        bdI.sigtext = dtBillDispItem.Rows[rowNo]["mnc_ph_dir_dsc"].ToString();            //ข้อความแสดงวิธีใช้
-                        bdI.supplyfor = "";        //ระบุระยะเวลาที่ผู้ป่วยใช้ยา
-                        bdI.unitprice = price.ToString();        //ราคาขายต่อหน่วย
-                        bdIDB.insert(bdI);
-                        rowNo++;
+                        frm.Refresh();
                     }
-                }
 
-                dtOPs.Clear();
-                dtOPs = selectOPService(ssV.hn_no, ssV.vn, ssV.pre_no, docDate, row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString());                
-                foreach (DataRow rowS in dtOPs.Rows)
-                {
-                    OpServices opS = new OpServices();
-                    String doccode = "", df="";
-                    
-                    doccode = rowS["mnc_dot_cd_df"].ToString();
-                    if (doccode.Length > 0)
+                    TSsdataVisit ssV = new TSsdataVisit();
+                    String visitDate = "", ssVid = "", dispdt = "", prescdt = "", btId = "", docDate = "", bdId = "", opId = "", visitTime = "";
+                    String birDate = "";
+
+                    visitDate = datetoDB(row["MNC_DATE"].ToString());
+                    visitTime = setTime(row["MNC_TIME"].ToString());
+                    //visitTime = "0000" + visitTime;
+                    //visitTime = visitTime.Substring(visitTime.Length - 4);
+                    //visitTime = visitTime.Substring(0,2)+":"+ visitTime.Substring(visitTime.Length-2)+":00";
+
+                    birDate = datetoDB(row["MNC_BDAY"].ToString());
+
+                    ssV.birth_day = birDate;
+                    ssV.branch_id = branchId;
+                    ssV.hcode = hcode;
+                    ssV.hcode_owner = row["PrakanCode"].ToString();
+                    ssV.hn_no = row["MNC_HN_NO"].ToString();
+                    ssV.hn_yr = row["MNC_HN_YR"].ToString();
+                    ssV.pid = row["MNC_ID_NO"].ToString();
+                    ssV.patient_fname = row["MNC_FNAME_T"].ToString();
+                    ssV.patient_lname = row["MNC_LNAME_T"].ToString();
+                    ssV.prefix = row["MNC_PFIX_DSC"].ToString();
+
+                    ssV.pre_no = row["mnc_pre_no"].ToString();
+                    ssV.sex = row["MNC_SEX"].ToString();
+                    ssV.ssdata_split_id = sspId;
+                    ssV.ssdata_id = ssdId;
+                    ssV.visit_date = visitDate;
+                    ssV.visit_time = visitTime;
+                    ssV.vn = row["mnc_vn_no"].ToString() + "." + row["mnc_vn_seq"].ToString() + "." + row["mnc_vn_sum"].ToString();
+                    ssV.vn_no = row["mnc_vn_no"].ToString();
+                    ssV.vn_seq = row["mnc_vn_seq"].ToString();
+                    ssV.vn_sum = row["mnc_vn_sum"].ToString();
+                    ssV.paid = "0.0";
+                    ssV.month_id = dateEnd;
+                    ssV.year_id = dateStart;
+
+                    ssV.invno = setInvNO(row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString(), row["mnc_doc_yr"].ToString());
+                    ssV.billno = "";
+                    Double amt1 = 0.0;
+                    Double.TryParse(row["MNC_SUM_PRI"].ToString(), out amt1);
+                    ssV.amount = amt1.ToString("0.00");
+                    //ssV.paid = "paid";
+                    ssV.payplan = "80";
+                    ssV.claimamt = ssV.amount;
+                    ssV.otherpayplan = "";
+                    ssV.otherpay = "";
+                    ssV.prescdt = "";
+                    ssV.dispdt = "";
+                    ssV.itemcnt = "";
+                    ssV.prescb = row["MNC_dot_cd"].ToString();
+                    ssV.svid = ssV.vn;
+                    //prescdt = selectPrescdt(row["MNC_HN_NO"].ToString(), row["mnc_pre_no"].ToString(), visitDate);
+                    //prescdt = datetoDB(prescdt);
+
+                    ssVid = ssdVDB.insert(ssV);        //fint01.mnc_doc_cd, fint01.mnc_doc_no, fint01.MNC_Doc_CD
+
+                    BillTran bt = new BillTran();
+                    bt.amount = ssV.amount;     //ยอดเงินรวมการเรียกเก็บเก็บค่ารักษา
+                    bt.authcode = "";           //เลขที่อนุมัติของธุรกรรม ได้จากระบบตรวจอนุมัติ
+                    bt.billno = "";             //เลขที่ใบเสร็จ
+                    bt.billtran_id = "";
+                    bt.claimamt = bt.amount;
+                    bt.dttran = DateTimeSSData(row["MNC_DATE"].ToString(), row["MNC_TIME"].ToString());      //วันที่และเวลาของการเรียกเก็บค่ารักษาครั้งน้
+                    bt.hcode = hcode;           //รหัส ร.พ. ที่ทำธุรกรรม
+                    bt.hmain = getMapPayPlan(ssV.hcode_owner);              //รหัสสถานพยาบาลหลัก ตามบัตร
+                    bt.hn = ssV.hn_no;
+                    bt.invno = ssV.invno;       //เลขที่ invoice
+                    bt.memberno = "";
+                    bt.name = ssV.prefix + " " + ssV.patient_fname + " " + ssV.patient_lname;
+                    bt.otherpayplan = "";
+                    bt.paid = "";               //ยอดเงินรวมที่ผู้รับบริการจ่ายในธุรกรรมนี้
+                    bt.payplan = "";            //รหัสสิทธิประกันสุขภาพหลักที่ใช้กับธุรกรรมยี้
+                    bt.pid = ssV.pid;           //เลขที่ประจำตัวผู้มีสิทธิ
+                    bt.otherpay = "0.00";           // ไม่มี ทำเผื่อไว้
+                    bt.ssdata_id = ssV.ssdata_id;
+                    bt.ssdata_visit_id = ssVid;
+                    bt.ssdata_split_id = sspId;
+                    bt.station = "0001";            //จุดเก็บค่ารักษา (สถานที่) ที่บันทึกธรรกรรมนี้
+                    bt.tflag = "";              //สัญญาณการทำธุรกรรม
+                    bt.vercode = "";            //รหัสตรวจยืนยัน รับจากการแจ้งธุรกรรมผ่านบัตร หรือผ่านการตรวจสอบลายนิ้วมือ
+
+                    btId = btDB.insert(bt);
+
+                    docDate = datetoDB(row["MNC_DOC_DAT"].ToString());
+                    dtItem.Clear();
+                    dtItem = selectBillItem(ssV.hn_no, ssV.vn, ssV.pre_no, docDate, row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString());
+                    foreach (DataRow rowI in dtItem.Rows)
                     {
-                        if (doccode.IndexOf("=")>0)
+                        BillTranItems btI = new BillTranItems();
+                        btI.billmuad = rowI["MNC_GRP_SS"].ToString();
+                        btI.billtran_id = btId;
+                        btI.billtran_items_id = "";
+                        btI.chargeamt = rowI["MNC_FN_AMT"].ToString();            //ราคาที่เรียกเก็บ
+                        btI.claimamount = btI.chargeamt;
+                        btI.claimcat = "OP1";
+                        btI.claimup = "";
+                        btI.desc1 = rowI["MNC_FN_DSCT"].ToString();
+                        btI.invno = bt.invno;
+                        btI.lccode = rowI["MNC_FN_GRP"].ToString() + rowI["MNC_FN_CD"].ToString();                  //รหัสบริการหรือผลิตภัณฑ์ที่สถานพยาบาลกำหนด
+                        btI.qty = "";
+                        btI.stdcode = "";
+                        btI.svdate = datetoDB(rowI["MNC_DOC_DAT"].ToString());
+                        btI.svrefid = rowI["MNC_DOC_YR"].ToString() + rowI["MNC_DOC_NO"].ToString() + rowI["MNC_NO"].ToString();                //รหัสอ้างอิง PK ที่ให้ รายอการอื่น ชี้มาที่รายการนี้ 
+                        btI.up = "";
+                        btIDB.insert(btI);
+                    }
+
+                    dtBillDisp = selectSSDataBillDisp(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date);
+                    foreach (DataRow rowB in dtBillDisp.Rows)
+                    {
+                        rowNo = 0;
+                        dtBillDispItem.Clear();
+                        dtBillDispItem = selectBillDispItem(ssV.hn_no, ssV.vn_no, ssV.pre_no, ssV.visit_date, rowB["MNC_CFR_NO"].ToString());
+
+                        String ssdvBId = "";
+                        BillDisp bd = new BillDisp();
+                        bd.benefitplan = "";
+                        bd.chargeamt = rowB["pri"].ToString();
+                        bd.claimamt = rowB["amt"].ToString();
+                        bd.daycover = "";
+                        bd.dispdt = DateTimeSSData(rowB["mnc_req_dat"].ToString(), rowB["mnc_req_tim"].ToString());//วัน-เวลา สั่งยา
+                        bd.dispestat = "";
+                        bd.dispid = rowB["MNC_CFR_NO"].ToString();
+                        bd.hn = ssV.hn_no;
+                        bd.invno = ssV.invno;
+                        bd.itemcnt = rowB["cnt"].ToString();
+                        bd.otherpay = "";
+                        bd.paid = rowB["amt"].ToString();
+                        bd.pid = ssV.pid;
+                        bd.prescb = row["MNC_dot_cd"].ToString();
+                        bd.prescdt = DateTimeSSData(rowB["mnc_cfg_dat"].ToString(), rowB["mnc_cfr_time"].ToString());//วัน-เวลา รับยา
+                        bd.providerid = hcode;
+                        bd.reimburser = "";
+                        bd.ssdata_split_id = sspId;
+                        //bd.ssdata_id = ssd.ssdata_id;
+                        bd.ssdata_id = ssdId;
+                        bd.ssdata_visit_id = ssVid;
+                        bd.svid = ssV.vn;
+                        //bd.active = "1";
+                        bdId = bdDB.insert(bd);
+
+                        foreach (DataRow rowI in dtBillDispItem.Rows)
                         {
-                            //String[] aa = doccode.Split('=');
-                            //if (aa.Length > 0)
-                            //{
-                            //    doccode = aa[0];
-                            //    df = aa[1];
-                            //}
-                            doccode = doccode.Substring(0, doccode.IndexOf("="));
-                            doccode = doccode.Substring(0,(doccode.Length - 1));
+                            BillDispItems bdI = new BillDispItems();
+                            double price = 0, qty = 0, amt = 0;
+                            Double.TryParse(dtBillDispItem.Rows[rowNo]["mnc_ph_pri01"].ToString(), out price);
+                            Double.TryParse(dtBillDispItem.Rows[rowNo]["qty"].ToString(), out qty);
+                            amt = price * qty;
+                            bdI.billdisp_id = bdId;
+                            bdI.chargeamt = amt.ToString();
+                            bdI.claimcat = "OP1";          //ประเภทบัญชีการเบิก
+                            bdI.claimcont = "OD";
+                            bdI.dfscode = dtBillDispItem.Rows[rowNo]["MNC_DOSAGE_FORM"] == null ? "" : dtBillDispItem.Rows[rowNo]["MNC_DOSAGE_FORM"].ToString()
+                                + dtBillDispItem.Rows[rowNo]["MNC_PH_STRENGTH"] == null ? "" : dtBillDispItem.Rows[rowNo]["MNC_PH_STRENGTH"].ToString();
+                            bdI.dfstext = dtBillDispItem.Rows[rowNo]["MNC_DOSAGE_FORM"].ToString() + dtBillDispItem.Rows[rowNo]["MNC_PH_STRENGTH"].ToString();
+                            bdI.dispid = dtBillDispItem.Rows[rowNo]["MNC_DOC_CD"].ToString() + dtBillDispItem.Rows[rowNo]["MNC_CFR_YR"].ToString() + dtBillDispItem.Rows[rowNo]["MNC_CFR_NO"].ToString();
+                            bdI.drgid = "";
+                            bdI.hospdrgid = dtBillDispItem.Rows[rowNo]["mnc_ph_cd"].ToString();
+                            bdI.multidisp = "1";                //การจ่ายยาหลายครั้ง
+                            bdI.packsize = "";
+                            bdI.prdcat = "1";
+                            bdI.prdsecode = "";        //รหัสการจ่ายยา generic แทนตามที่ผู้สั่งยากำหนด หรือไม่
+                            bdI.quantity = dtBillDispItem.Rows[rowNo]["qty"].ToString();
+                            bdI.reimbamt = "";
+                            bdI.reimbprice = "";
+                            bdI.sigcode = dtBillDispItem.Rows[rowNo]["mnc_ph_dir_cd"] == null ? "" : dtBillDispItem.Rows[rowNo]["mnc_ph_dir_cd"].ToString()
+                                + dtBillDispItem.Rows[rowNo]["mnc_ph_fre_cd"] == null ? "" : dtBillDispItem.Rows[rowNo]["mnc_ph_fre_cd"].ToString()
+                                + dtBillDispItem.Rows[rowNo]["mnc_ph_tim_cd"] == null ? "" : dtBillDispItem.Rows[rowNo]["mnc_ph_tim_cd"].ToString();
+                            bdI.sigtext = dtBillDispItem.Rows[rowNo]["mnc_ph_dir_dsc"].ToString();            //ข้อความแสดงวิธีใช้
+                            bdI.supplyfor = "";        //ระบุระยะเวลาที่ผู้ป่วยใช้ยา
+                            bdI.unitprice = price.ToString();        //ราคาขายต่อหน่วย
+                            bdIDB.insert(bdI);
+                            rowNo++;
+                        }
+                    }
+
+                    dtOPs.Clear();
+                    dtOPs = selectOPService(ssV.hn_no, ssV.vn, ssV.pre_no, docDate, row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString());
+                    foreach (DataRow rowS in dtOPs.Rows)
+                    {
+                        OpServices opS = new OpServices();
+                        String doccode = "", df = "";
+
+                        doccode = rowS["mnc_dot_cd_df"].ToString();
+                        if (doccode.Length > 0)
+                        {
+                            if (doccode.IndexOf("=") > 0)
+                            {
+                                //String[] aa = doccode.Split('=');
+                                //if (aa.Length > 0)
+                                //{
+                                //    doccode = aa[0];
+                                //    df = aa[1];
+                                //}
+                                doccode = doccode.Substring(0, doccode.IndexOf("="));
+                                doccode = doccode.Substring(0, (doccode.Length - 1));
+                            }
+                            else
+                            {
+                                doccode = "=0";
+                            }
                         }
                         else
                         {
-                            doccode = "=0";
+                            doccode = "<0";
+                        }
+                        opS.careaccount = "1";
+                        opS.claimcat = "";
+                        opS.class1 = "";
+                        opS.clinic = "";
+                        opS.codeset = "";
+                        opS.completion = "";
+                        opS.begdt = "";
+                        opS.dtappoint = "";
+                        opS.enddt = "";
+                        opS.hcode = hcode;
+                        opS.hn = ssV.hn_no;
+                        opS.invno = ssV.invno;
+                        opS.lccode = rowS["mnc_fn_grp"].ToString() + rowS["mnc_fn_cd"].ToString();
+                        opS.opservices_id = "";
+                        opS.pid = ssV.pid;
+                        opS.ssdata_id = ssV.ssdata_id;
+                        opS.ssdata_visit_id = ssVid;
+                        opS.stdcode = "";
+                        opS.svcharge = df;
+                        opS.svid = ssV.vn;
+                        opS.svpid = doccode;
+                        opS.svtxcode = "";
+                        opS.typein = "1";
+                        opS.typeout = "1";
+                        opS.typeserv = "01";
+                        opS.ssdata_split_id = sspId;
+                        opId = opSDB.insert(opS);
+
+                        dtOPx.Clear();
+                        dtOPx = selectOPx(ssV.hn_no, ssV.pre_no, docDate);
+                        foreach (DataRow rowX in dtOPx.Rows)
+                        {
+                            OpServicesOpdX opdX = new OpServicesOpdX();
+                            opdX.class1 = opS.class1;
+                            opdX.code = rowX["mnc_dia_cd"].ToString();
+                            opdX.codeset = opdX.code;
+                            opdX.desc1 = "";
+                            opdX.opservices_id = opId;
+                            opdX.opservices_opdx_id = "";
+                            opdX.sl = "";
+                            opdX.svid = opS.svid;
+                            
+                            opdXDB.insert(opdX);
                         }
                     }
-                    else
-                    {
-                        doccode = "<0";
-                    }
-                    opS.careaccount = "1";
-                    opS.claimcat = "";
-                    opS.class1 = "";
-                    opS.clinic = "";
-                    opS.codeset = "";
-                    opS.completion = "";
-                    opS.degdt = "";
-                    opS.dtappoint = "";
-                    opS.enddt = "";
-                    opS.hcode = hcode;
-                    opS.hn = ssV.hn_no;
-                    opS.invno = ssV.invno;
-                    opS.lccode = rowS["mnc_fn_grp"].ToString() + rowS["mnc_fn_cd"].ToString();
-                    opS.opservices_id = "";
-                    opS.pid = ssV.pid;
-                    opS.ssdata_id = ssV.ssdata_id;
-                    opS.ssdata_visit_id = ssVid;
-                    opS.stdcode = "";
-                    opS.svcharge = df;
-                    opS.svid = ssV.vn;
-                    opS.svpid = doccode;
-                    opS.svtxcode = "";
-                    opS.typein = "1";
-                    opS.typeout = "1";
-                    opS.typeserv = "01";
-                    opId = opSDB.insert(opS);
-
-                    dtOPx.Clear();
-                    //dtOPx = selectOPx(ssV.hn_no, ssV.vn, ssV.pre_no, docDate, row["mnc_doc_cd"].ToString(), row["mnc_doc_no"].ToString());
-                    //foreach (DataRow rowX in dtOPs.Rows)
-                    //{
-                    //    OpServicesOpdX opdX = new OpServicesOpdX();
-                    //    opdX.class1 = opS.class1;
-                    //    opdX.code = "";
-                    //    opdX.codeset = "";
-                    //    opdX.desc1 = "";
-                    //    opdX.opservices_id = opId;
-                    //    opdX.opservices_opdx_id = "";
-                    //    opdX.sl = "";
-                    //    opdX.svid = opS.svid;
-                    //    opdXDB.insert(opdX);
-                    //}
+                    cntEnd++;
                 }
             }
-            ssdDB.updateDateEnd(ssd.ssdata_id);
+            catch (Exception ex)
+            {
+
+            }
+            
+            sspDB.updateDateEnd(sspId, dt.Rows.Count.ToString(), cntEnd.ToString());
             conn.CloseConnectionSSData();
             pb1.Hide();
             label2.Text = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
@@ -841,6 +902,23 @@ namespace SSData.objdb
             ti = ti.Substring(ti.Length - 4);
             ti = ti.Substring(0, 2) + ":" + ti.Substring(ti.Length - 2);
             return da+"T"+ti+":00";
+        }
+        public String getMapPayPlan(String payplan)
+        {
+            String re = "";
+            if (payplan.Equals("2211041"))
+            {
+                re = "24036";       //บางนา5
+            }
+            else if (payplan.Equals("2211006"))
+            {
+                re = "11772";       //บางนา2
+            }
+            else if (payplan.Equals("2210028"))
+            {
+                re = "11592";       //บางนา1
+            }
+            return re;
         }
     }
 }

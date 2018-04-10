@@ -91,15 +91,16 @@ namespace SSData.objdb
             String toReturn = "";
 
             SqlCommand comMainhis = new SqlCommand();
-            comMainhis.CommandText = sql;
+            comMainhis.CommandText = sql + "; SELECT SCOPE_IDENTITY();";
             comMainhis.CommandType = CommandType.Text;
             comMainhis.Connection = con;
             try
             {
                 con.Open();
                 //_rowsAffected = comMainhis.ExecuteNonQuery();
-                _rowsAffected = (int)comMainhis.ExecuteScalar();
-                toReturn = _rowsAffected.ToString();
+                //_rowsAffected = (int)comMainhis.ExecuteScalar();
+                var aaa = comMainhis.ExecuteScalar();
+                toReturn = aaa.ToString();
             }
             catch (Exception ex)
             {

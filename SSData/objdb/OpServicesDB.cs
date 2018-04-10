@@ -27,7 +27,7 @@ namespace SSData.objdb
             opS.clinic = "clinic";
             opS.codeset = "codeset";
             opS.completion = "completion";
-            opS.degdt = "degdt";
+            opS.begdt = "degdt";
             opS.dtappoint = "dtappoint";
             opS.enddt = "enddt";
             opS.hcode = "hcode";
@@ -46,6 +46,7 @@ namespace SSData.objdb
             opS.typeout = "typeout";
             opS.typeserv = "typeserv";
             opS.ssdata_visit_id = "ssdata_visit_id";
+            opS.ssdata_split_id = "ssdata_split_id";
 
             opS.table = "t_opservices";
             opS.pkField = "opservices_id";
@@ -58,21 +59,23 @@ namespace SSData.objdb
 
             sql = "Insert Into " + opS.table + "(" + opS.careaccount + "," + opS.claimcat + "," + opS.class1 + "," +
                 opS.clinic + "," + opS.codeset + "," + opS.completion + "," +
-                opS.degdt + "," + opS.dtappoint + "," + opS.enddt + "," +
+                opS.begdt + "," + opS.dtappoint + "," + opS.enddt + "," +
                 opS.hcode + "," + opS.hn + "," + opS.invno + "," +
                 opS.lccode + "," + opS.pid + "," + opS.ssdata_id + "," +
                 opS.stdcode + "," + opS.svcharge + "," + opS.svid + "," +
                 opS.svpid + "," + opS.svtxcode + "," + opS.typein + "," +
-                opS.typeout + "," + opS.typeserv + ", " + opS.ssdata_visit_id + " " +
+                opS.typeout + "," + opS.typeserv + ", " + opS.ssdata_visit_id + "," +
+                opS.ssdata_split_id + " "+
                 ") " +
                 "Values('" + p.careaccount + "','" + p.claimcat + "','" + p.class1 + "','" +
                 p.clinic + "','" + p.codeset + "','" + p.completion + "','" +
-                p.degdt + "','" + p.dtappoint + "','" + p.enddt + "','" +
+                p.begdt + "','" + p.dtappoint + "','" + p.enddt + "','" +
                 p.hcode + "','" + p.hn + "','" + p.invno + "','" +
                 p.lccode + "','" + p.pid + "','" + p.ssdata_id + "','" +
                 p.stdcode + "','" + p.svcharge + "','" + p.svid + "','" +
                 p.svpid + "','" + p.svtxcode + "','" + p.typein + "','" +
-                p.typeout + "','" + p.typeserv + "','" + p.ssdata_visit_id + "' " +
+                p.typeout + "','" + p.typeserv + "','" + p.ssdata_visit_id + "','" +
+                p.ssdata_split_id + "' " +
                 ") ";
             re = conn.ExecuteNonQueryNoClose(conn.connSSDataNoClose, sql);
 
@@ -89,7 +92,7 @@ namespace SSData.objdb
                 "," + opS.clinic + "='" + p.clinic + "'" +
                 "," + opS.codeset + "='" + p.codeset + "'" +
                 "," + opS.completion + "='" + p.completion + "'" +
-                "," + opS.degdt + "='" + p.degdt + "'" +
+                "," + opS.begdt + "='" + p.begdt + "'" +
                 "," + opS.dtappoint + "='" + p.dtappoint + "'" +
                 "," + opS.enddt + "='" + p.enddt + "'" +
                 "," + opS.hcode + "='" + p.hcode + "'" +
@@ -110,6 +113,18 @@ namespace SSData.objdb
             re = conn.ExecuteNonQuery1(conn.connSSData, sql);
 
             return re;
+        }
+        public DataTable selectByYearMonth(String yearId, String monthId)
+        {
+            DataTable dt = new DataTable();
+            String sql = "select ops.* " +
+                "From " + opS.table + " ops " +
+                "Left Join t_ssdata_visit ssv On ssv.ssdata_visit_id = ops." + opS.ssdata_visit_id + " " +
+                "Left Join t_ssdata ss On ss.ssdata_id = ssv.ssdata_id " +
+                "Where ss.year_id ='" + yearId + "' and ss.month_id ='" + monthId + "' and ssv.active = '1' " +
+                "Order By ops."+opS.opservices_id;
+            dt = conn.selectData(conn.connSSData, sql);
+            return dt;
         }
         public DataTable selectByssvID(String ssvId)
         {
@@ -148,7 +163,7 @@ namespace SSData.objdb
                 opS1.clinic = dt.Rows[0][opS.clinic].ToString();
                 opS1.codeset = dt.Rows[0][opS.codeset].ToString();
                 opS1.completion = dt.Rows[0][opS.completion].ToString();
-                opS1.degdt = dt.Rows[0][opS.degdt].ToString();
+                opS1.begdt = dt.Rows[0][opS.begdt].ToString();
                 opS1.dtappoint = dt.Rows[0][opS.dtappoint].ToString();
                 opS1.enddt = dt.Rows[0][opS.enddt].ToString();
                 opS1.hcode = dt.Rows[0][opS.hcode].ToString();

@@ -873,7 +873,7 @@ namespace SSData.gui
                 grdView.Sheets[index].Cells[i, colOPsdtappoint].Value = row[sC.mHisDB.opSDB.opS.dtappoint].ToString();
                 grdView.Sheets[index].Cells[i, colOPssvpid].Value = row[sC.mHisDB.opSDB.opS.svpid].ToString();
                 grdView.Sheets[index].Cells[i, colclinic].Value = row[sC.mHisDB.opSDB.opS.clinic].ToString();
-                grdView.Sheets[index].Cells[i, colOPsdegdt].Value = row[sC.mHisDB.opSDB.opS.degdt].ToString();
+                grdView.Sheets[index].Cells[i, colOPsdegdt].Value = row[sC.mHisDB.opSDB.opS.begdt].ToString();
                 grdView.Sheets[index].Cells[i, colOPsenddt].Value = row[sC.mHisDB.opSDB.opS.enddt].ToString();
                 grdView.Sheets[index].Cells[i, colOPslccode].Value = row[sC.mHisDB.opSDB.opS.lccode].ToString();
                 grdView.Sheets[index].Cells[i, colOPscodeset].Value = row[sC.mHisDB.opSDB.opS.codeset].ToString();
