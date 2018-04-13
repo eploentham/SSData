@@ -31,7 +31,14 @@ namespace SSData.objdb
         public OpServicesOpdXDB opdXDB;
         public TSsdataSplitDB sspDB;
 
+        public FinanceM01DB fm01DB;
+        public FinanceM06DB fm06DB;
+        public FinanceM20DB fm20DB;
+
         private List<Doctor> lDoctor;
+        public List<FinanceM20> lFm20;
+
+        public String[] fm20;
 
         TSsdata ssd;
         public MainHISDB(ConnectDB c)
@@ -54,10 +61,15 @@ namespace SSData.objdb
             opSDB = new OpServicesDB(conn);
             opdXDB = new OpServicesOpdXDB(conn);
             sspDB = new TSsdataSplitDB(conn);
+            fm01DB = new FinanceM01DB(conn);
+            fm06DB = new FinanceM06DB(conn);
+            fm20DB = new FinanceM20DB(conn);
 
             lDoctor = new List<Doctor>();
+            lFm20 = new List<FinanceM20>();
 
             getListDoctor();
+            getLisFinanceM20();
             sqlIPD = "SELECT DISTINCT " +
                         "patt08.MNC_HN_YR, patt08.MNC_HN_NO, patt08.MNC_DATE, patt08.MNC_PRE_NO, fint01.MNC_FN_TYP_CD,  " +
                         "patm02.MNC_PFIX_DSC + ' ' + patm01.MNC_FNAME_T + ' ' + patm01.MNC_LNAME_T AS FName, patm01.MNC_ID_NO, patt08.MNC_AN_NO,  " +
@@ -131,6 +143,36 @@ namespace SSData.objdb
                 item.pFix = row["mnc_pfix_dsc"].ToString();
                 lDoctor.Add(item);
             }
+        }
+        private void getLisFinanceM20()
+        {
+            lFm20.Clear();
+            int i = 0;
+            DataTable dt = fm20DB.selectAll();
+            fm20 = new String[dt.Rows.Count];
+            foreach (DataRow row in dt.Rows)
+            {
+                FinanceM20 item = new FinanceM20();
+                item.MNC_GRP_SS2 = row[fm20DB.fm20.MNC_GRP_SS2].ToString();
+                item.MNC_GRP_SS2_DSC = row[fm20DB.fm20.MNC_GRP_SS2_DSC].ToString();
+                fm20[i] = row[fm20DB.fm20.MNC_GRP_SS2_DSC].ToString();
+                //item.pFix = row["mnc_pfix_dsc"].ToString();
+                lFm20.Add(item);
+                i++;
+            }
+        }
+        public String getFM20Code(String desc)
+        {
+            String code = "";
+            foreach (FinanceM20 item in lFm20)
+            {
+                if (item.MNC_GRP_SS2_DSC.Equals(desc))
+                {
+                    code = item.MNC_GRP_SS2;
+                    break;
+                }
+            }
+            return code;
         }
         private Boolean getDoctorCD(String ordId, String item_code)
         {

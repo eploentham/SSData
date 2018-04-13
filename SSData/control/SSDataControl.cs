@@ -29,6 +29,7 @@ namespace SSData.control
 
         public enum TypeOut { Discharge=1, Admin=2, Refer=3, Dead=4, Escape=5, Other=9}
         public List<TSsdataSplit> lSplit;
+        public String[] fm20;
 
         public SSDataControl()
         {
@@ -53,6 +54,7 @@ namespace SSData.control
             conn = new ConnectDB(iniC);
             mHisDB = new MainHISDB(conn);
             lSplit = new List<TSsdataSplit>();
+            //fm20 = new String[]();
         }
         public void GetConfig()
         {
@@ -81,6 +83,8 @@ namespace SSData.control
             iniC.EmailSSOPBIL = iniF.Read("EmailSSOPBIL");
             iniC.HNAME = iniF.Read("HNAME");
             iniC.pathFileZip = iniF.Read("pathFileZip");
+
+
         }
         public String getValueCboItem(ComboBox c)
         {

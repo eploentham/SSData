@@ -40,6 +40,7 @@ namespace SSData
             this.tilExit = new C1.Win.C1Tile.Tile();
             this.tile1 = new C1.Win.C1Tile.Tile();
             this.c1ThemeController1 = new C1.Win.C1Themes.C1ThemeController();
+            this.tilBillMuad = new C1.Win.C1Tile.Tile();
             ((System.ComponentModel.ISupportInitialize)(this.c1ThemeController1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,6 +71,7 @@ namespace SSData
             this.group1.Tiles.Add(this.tilSSDataAdd);
             this.group1.Tiles.Add(this.tilExit);
             this.group1.Tiles.Add(this.tile1);
+            this.group1.Tiles.Add(this.tilBillMuad);
             // 
             // tilSSDataView
             // 
@@ -102,6 +104,12 @@ namespace SSData
             // 
             this.c1ThemeController1.Theme = "Office2010Black";
             // 
+            // tilBillMuad
+            // 
+            this.tilBillMuad.Name = "tilBillMuad";
+            this.tilBillMuad.Text = "Bill Muad";
+            this.tilBillMuad.Click += new System.EventHandler(this.tilBillMuad_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -132,5 +140,6 @@ namespace SSData
         private C1.Win.C1Tile.Tile tilExit;
         private C1ThemeController c1ThemeController1;
         private C1.Win.C1Tile.Tile tile1;
+        private C1.Win.C1Tile.Tile tilBillMuad;
     }
 }

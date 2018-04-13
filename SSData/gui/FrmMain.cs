@@ -92,5 +92,12 @@ namespace SSData
         {
 
         }
+
+        private void tilBillMuad_Click(object sender, EventArgs e)
+        {
+            FrmBillMuad frm = new FrmBillMuad(sC, this);
+            frm.Show(this);
+            this.Hide();
+        }
     }
 }

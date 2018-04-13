@@ -93,6 +93,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="control\SSDataControl.cs" />
+    <Compile Include="gui\FrmBillMuad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gui\FrmBillMuad.Designer.cs">
+      <DependentUpon>FrmBillMuad.cs</DependentUpon>
+    </Compile>
     <Compile Include="gui\FrmDrugCatalogue.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,6 +171,9 @@
     <Compile Include="objdb\BillTranDB.cs" />
     <Compile Include="objdb\BillTranItemsDB.cs" />
     <Compile Include="objdb\ConnectDB.cs" />
+    <Compile Include="objdb\FinanceM06DB.cs" />
+    <Compile Include="objdb\FinanceM01DB.cs" />
+    <Compile Include="objdb\FinanceM20DB.cs" />
     <Compile Include="objdb\MainHISDB.cs" />
     <Compile Include="objdb\OpServicesDB.cs" />
     <Compile Include="objdb\OpServicesOpdXDB.cs" />
@@ -180,6 +189,9 @@
     <Compile Include="object1\BillTranItems.cs" />
     <Compile Include="object1\ComboBoxItem.cs" />
     <Compile Include="object1\Doctor.cs" />
+    <Compile Include="object1\FinanceM06.cs" />
+    <Compile Include="object1\FinanceM01.cs" />
+    <Compile Include="object1\FinanceM20.cs" />
     <Compile Include="object1\IniFile.cs" />
     <Compile Include="object1\InitConfig.cs" />
     <Compile Include="object1\OpServices.cs" />
@@ -193,6 +205,9 @@
     <Compile Include="object1\Visit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="gui\FrmBillMuad.resx">
+      <DependentUpon>FrmBillMuad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="gui\FrmDrugCatalogue.resx">
       <DependentUpon>FrmDrugCatalogue.cs</DependentUpon>
     </EmbeddedResource>
